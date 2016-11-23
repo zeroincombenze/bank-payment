@@ -1,6 +1,6 @@
 [![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/173/9.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-bank-payment-173)
-[![Build Status](https://travis-ci.org/OCA/bank-payment.svg?branch=9.0)](https://travis-ci.org/OCA/bank-payment)
-[![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=9.0)](https://coveralls.io/r/OCA/bank-payment?branch=9.0)
+[![Build Status](https://travis-ci.org/zeroincombenze/bank-payment.svg?branch=9.0)](https://travis-ci.org/zeroincombenze/bank-payment)
+[![Coverage Status](https://coveralls.io/repos/zeroincombenze/bank-payment/badge.png?branch=9.0)](https://coveralls.io/r/zeroincombenze/bank-payment?branch=9.0)
 
 OCA banking payment addons for Odoo
 ===================================
