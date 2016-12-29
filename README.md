@@ -43,6 +43,7 @@ Differenze rispetto localizzazione ufficiale Odoo/OCA:
 - [account_banking_pain_base](https://github.com/OCA/bank-payment/tree/7.0/account_banking_pain_base) sostituito
 dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_pain_base)
 - [account_banking_payment_export](https://github.com/OCA/bank-payment/tree/7.0/account_banking_payment_export) sostituito dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_payment_export)
+- [account_banking_sepa_credit_transfer](https://github.com/OCA/bank-payment/tree/7.0/account_banking_sepa_credit_transfer) sostituito dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_sepa_credit_transfer)
 
 Modificheremo al più presto posssibile questi moduli per integrarli con i moduli standard ma, al momento, se volete gestire i bonifici Sepa con Odoo in Italia, dovete sostituire i moduli sopra elencati.
 
