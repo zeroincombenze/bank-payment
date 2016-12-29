@@ -6,6 +6,9 @@
 [![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-7.svg)](http://wiki.zeroincombenze.org/en/Odoo/7.0/man/)
 [![try it](https://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-7.svg)](http://erp7.zeroincombenze.it)
 
+
+[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+
 Banking addons for OpenERP
 ==========================
 
@@ -28,10 +31,25 @@ of (an extension of) the new, native reconciliation functionality.
 
 A number of other modules are available for legacy format bank statement files.
 
+
+[![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+
+Moduli aggiuntivi per Banche
+============================
+
+Differenze rispetto localizzazione ufficiale Odoo/OCA:
+
+- Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
+- [account_banking_pain_base](https://github.com/OCA/bank-payment/tree/7.0/account_banking_pain_base) sostituito
+dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental)
+
+Modificheremo al più presto posssibile questi moduli per integrarli con i moduli standard ma, al momento, se volete gestire i bonifici Sepa con Odoo in Italia, dovete sostituire i moduli sopra elencati.
+
+
 ----
 
-OCA, or the Odoo Community Association, is a nonprofit organization whose 
-mission is to support the collaborative development of Odoo features and 
+OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 http://odoo-community.org/
@@ -54,5 +72,6 @@ is mainly designed for Italian law and markeplace.
 Everytime, every Odoo DB and customized code can be replicated on local server.
 
 [//]: # (end copyright)
+
 
 [![chat with us](http://www.shs-av.com/wp-content/chat_with_us.png)](https://www.zeroincombenze.it/chi-siamo/contatti/)
