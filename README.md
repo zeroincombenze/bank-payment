@@ -22,6 +22,7 @@ Other features can now be found in these repositories:
  * https://github.com/OCA/bank-statement-reconcile
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
@@ -45,6 +46,7 @@ addon | version | summary
 [account_payment_transfer_reconcile_batch](account_payment_transfer_reconcile_batch/) | 8.0.1.0.0 | Batch Reconciliation for transfer moves
 [account_voucher_killer](account_voucher_killer/) | 8.0.1.0.0 | Accounting voucher killer
 [portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 | Adds payment mode ACL's for portal users
+
 
 Unported addons
 ---------------

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-payment (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 00:07+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2017-03-28 01:26+0000\n"
+"PO-Revision-Date: 2017-04-19 11:44+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-payment-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -41,12 +41,12 @@ msgstr ""
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form
 msgid "Back to Draft"
-msgstr ""
+msgstr "Zurück auf Entwurf"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,partner_bank_id:0
 msgid "Bank Account"
-msgstr ""
+msgstr "Bankkonto"
 
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_res_partner_bank
@@ -56,7 +56,7 @@ msgstr "Bankkonten"
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_bank_payment_line
 msgid "Bank Payment Lines"
-msgstr ""
+msgstr "Bank Zahlungszeilen"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form
@@ -106,7 +106,7 @@ msgstr "Abbrechen"
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
 msgid "Cancelled"
-msgstr ""
+msgstr "Storniert"
 
 #. module: account_banking_mandate
 #: code:addons/account_banking_mandate/models/account_banking_mandate.py:104
@@ -183,12 +183,12 @@ msgstr "Entwurf"
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
 msgid "Expired"
-msgstr ""
+msgstr "Abgelaufen"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Follower"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form
@@ -206,7 +206,7 @@ msgstr "Gruppieren nach"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Beinhaltet die Dialogzusammenfassung (Anzahl Mitteilungen, ...). Diese Zusammenfassung liegt in HTML vor, um direkt in Kanban-Ansichten verwendet werden zu können."
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,id:0
@@ -216,7 +216,7 @@ msgstr "ID"
 #. module: account_banking_mandate
 #: help:account.banking.mandate,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Wenn angehakt, erfordern neue Mitteilungen Ihre Aufmerksamkeit."
 
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_account_invoice
@@ -226,12 +226,12 @@ msgstr "Rechnung"
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Ist Follower"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Datum letzte Nachricht"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,__last_update:0
@@ -295,12 +295,12 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Nachrichten"
 
 #. module: account_banking_mandate
 #: help:account.banking.mandate,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Meldungs- und Kommunikationsverlauf"
 
 #. module: account_banking_mandate
 #: help:account.banking.mandate,state:0
@@ -322,7 +322,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_tree
 msgid "Reference"
-msgstr ""
+msgstr "Referenz"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
@@ -333,7 +333,7 @@ msgstr ""
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form
 #: field:account.banking.mandate,payment_line_ids:0
 msgid "Related Payment Lines"
-msgstr ""
+msgstr "Zugehörige Zahlungszeilen"
 
 #. module: account_banking_mandate
 #: model:ir.ui.menu,name:account_banking_mandate.mandate_menu
@@ -369,7 +369,7 @@ msgstr "Status"
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Zusammenfassung"
 
 #. module: account_banking_mandate
 #: code:addons/account_banking_mandate/models/account_banking_mandate.py:83
@@ -402,7 +402,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Ungelesene Nachrichten"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search

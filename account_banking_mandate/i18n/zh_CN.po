@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-payment (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 00:07+0000\n"
-"PO-Revision-Date: 2016-11-25 14:56+0000\n"
+"POT-Creation-Date: 2017-03-28 01:26+0000\n"
+"PO-Revision-Date: 2017-04-19 01:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/oca/OCA-bank-payment-8-0/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "公司"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,create_uid:0
@@ -162,7 +162,7 @@ msgstr "发布到记录上的最后消息的日期"
 #: field:account.invoice,mandate_id:0 field:bank.payment.line,mandate_id:0
 #: field:payment.line,mandate_id:0
 msgid "Direct Debit Mandate"
-msgstr ""
+msgstr "直接付款授权"
 
 #. module: account_banking_mandate
 #: view:res.partner.bank:account_banking_mandate.mandate_partner_bank_form
@@ -178,7 +178,7 @@ msgstr "显示名称"
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
 msgid "Draft"
-msgstr ""
+msgstr "草稿"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
@@ -206,7 +206,7 @@ msgstr "分组"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "HTML格式的简介，包括了各种项目的总结信息（比如消息数，作业数……）"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,id:0
@@ -221,12 +221,12 @@ msgstr "查看是否有需要留意的新信息。"
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "发票"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "关注者"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_last_post:0
@@ -312,7 +312,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,partner_id:0
 msgid "Partner"
-msgstr ""
+msgstr "业务伙伴"
 
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_payment_line
@@ -322,7 +322,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_tree
 msgid "Reference"
-msgstr ""
+msgstr "引用"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
@@ -364,7 +364,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,state:0
 msgid "Status"
-msgstr ""
+msgstr "状态"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_summary:0

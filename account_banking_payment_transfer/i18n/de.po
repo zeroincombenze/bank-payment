@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-payment (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-21 10:50+0000\n"
-"PO-Revision-Date: 2016-09-20 19:23+0000\n"
+"POT-Creation-Date: 2017-03-04 01:10+0000\n"
+"PO-Revision-Date: 2017-03-05 10:11+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-payment-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,7 @@ msgstr ""
 #. module: account_banking_payment_transfer
 #: model:ir.model,name:account_banking_payment_transfer.model_bank_payment_line
 msgid "Bank Payment Lines"
-msgstr ""
+msgstr "Bank Zahlungszeilen"
 
 #. module: account_banking_payment_transfer
 #: code:addons/account_banking_payment_transfer/model/bank_payment_line.py:70
@@ -87,7 +87,7 @@ msgstr ""
 #. module: account_banking_payment_transfer
 #: field:payment.line,msg:0
 msgid "Message"
-msgstr ""
+msgstr "Meldung"
 
 #. module: account_banking_payment_transfer
 #: code:addons/account_banking_payment_transfer/model/bank_payment_line.py:76
@@ -142,7 +142,7 @@ msgstr ""
 #. module: account_banking_payment_transfer
 #: model:ir.model,name:account_banking_payment_transfer.model_payment_mode
 msgid "Payment Mode"
-msgstr ""
+msgstr "Zahlweise"
 
 #. module: account_banking_payment_transfer
 #: model:ir.model,name:account_banking_payment_transfer.model_payment_order

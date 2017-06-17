@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-payment (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 00:07+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2017-05-01 15:07+0000\n"
+"PO-Revision-Date: 2017-05-11 14:14+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-bank-payment-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -46,17 +46,17 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,partner_bank_id:0
 msgid "Bank Account"
-msgstr ""
+msgstr "Pankkitili"
 
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_res_partner_bank
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Pankkitilit"
 
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_bank_payment_line
 msgid "Bank Payment Lines"
-msgstr ""
+msgstr "Maksurivit"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form
@@ -125,7 +125,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: field:account.banking.mandate,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Yritys"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,create_uid:0
@@ -199,7 +199,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_search
 msgid "Group By"
-msgstr ""
+msgstr "Ryhmittele"
 
 #. module: account_banking_mandate
 #: help:account.banking.mandate,message_summary:0
@@ -221,7 +221,7 @@ msgstr "Jos valittuna, uudet viestit vaatii toimenpiteitä."
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Lasku"
 
 #. module: account_banking_mandate
 #: field:account.banking.mandate,message_is_follower:0
@@ -317,7 +317,7 @@ msgstr "Kumppani"
 #. module: account_banking_mandate
 #: model:ir.model,name:account_banking_mandate.model_payment_line
 msgid "Payment Line"
-msgstr ""
+msgstr "Maksurivi"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_tree
@@ -412,7 +412,7 @@ msgstr ""
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form
 msgid "Validate"
-msgstr ""
+msgstr "Hyväksy"
 
 #. module: account_banking_mandate
 #: view:account.banking.mandate:account_banking_mandate.view_mandate_form

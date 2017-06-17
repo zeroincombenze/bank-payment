@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-payment (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-20 00:07+0000\n"
+"POT-Creation-Date: 2017-02-18 01:12+0000\n"
 "PO-Revision-Date: 2016-04-06 00:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-payment-8-0/language/de/)\n"
@@ -31,7 +31,7 @@ msgstr ""
 #. module: account_payment_partner
 #: field:res.partner,customer_payment_mode:0
 msgid "Customer Payment Mode"
-msgstr ""
+msgstr "Kundenzahlweise"
 
 #. module: account_payment_partner
 #: model:ir.model,name:account_payment_partner.model_account_invoice
@@ -47,13 +47,13 @@ msgstr "Partner"
 #: field:account.invoice,payment_mode_id:0
 #: model:ir.model,name:account_payment_partner.model_payment_mode
 msgid "Payment Mode"
-msgstr ""
+msgstr "Zahlweise"
 
 #. module: account_payment_partner
 #: field:payment.mode,default_payment_mode:0
 #: field:payment.order.create,payment_mode:0
 msgid "Payment Mode on Invoice"
-msgstr ""
+msgstr "Zahlungsweise der Rechnung"
 
 #. module: account_payment_partner
 #: view:website:account.report_invoice_document
@@ -69,23 +69,23 @@ msgstr ""
 #: selection:payment.mode,default_payment_mode:0
 #: selection:payment.order.create,payment_mode:0
 msgid "Same"
-msgstr ""
+msgstr "Gleich"
 
 #. module: account_payment_partner
 #: selection:payment.mode,default_payment_mode:0
 #: selection:payment.order.create,payment_mode:0
 msgid "Same or empty"
-msgstr ""
+msgstr "Gleich oder leer"
 
 #. module: account_payment_partner
 #: help:res.partner,customer_payment_mode:0
 msgid "Select the default payment mode for this customer."
-msgstr ""
+msgstr "Wählen Sie die Standardzahlweise dieses Kunden."
 
 #. module: account_payment_partner
 #: help:res.partner,supplier_payment_mode:0
 msgid "Select the default payment mode for this supplier."
-msgstr ""
+msgstr "Wählen Sie die Standardzahlweise bei diesem Lieferanten."
 
 #. module: account_payment_partner
 #: view:account.invoice:account_payment_partner.invoice_filter
@@ -95,4 +95,4 @@ msgstr "Status"
 #. module: account_payment_partner
 #: field:res.partner,supplier_payment_mode:0
 msgid "Supplier Payment Mode"
-msgstr ""
+msgstr "Lieferantenzahlweise"
