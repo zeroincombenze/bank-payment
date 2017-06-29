@@ -40,7 +40,7 @@ BNK_IT_ACC_NUMBER = 'IT31Z0306909420615282446606'
 class Test_company(SingleTransactionCase):
     # Function with xt prefix are common library function
     # They help testing process
-    def xtr(self, model):
+    def env7(self, model):
         """Return object model to test
         """
         return self.registry(model)
@@ -51,12 +51,12 @@ class Test_company(SingleTransactionCase):
         obj = self.browse_ref(xid)
         return obj.write(values)
 
-    def xtcreate(self, model, values):
+    def env_create(self, model, values):
         """ Create a new record for test
         """
-        return self.xtr(model).create(self.cr,
-                                      self.uid,
-                                      values)
+        return self.env7(model).create(self.cr,
+                                       self.uid,
+                                       values)
 
     def setup_company(self, country_code=None):
         """Setup company (should be customized for specific country)
@@ -96,8 +96,8 @@ class Test_company(SingleTransactionCase):
             }
         else:
             vals = {}
-        self.bank_id = self.xtcreate('res.bank',
-                                     vals)
+        self.bank_id = self.env_create('res.bank',
+                                       vals)
         self.partner_id = self.ref('base.main_partner')
         self.company_id = self.ref('base.main_company')
         if self.country_code == 'nl':
@@ -120,12 +120,12 @@ class Test_company(SingleTransactionCase):
             }
         else:
             vals = {}
-        self.partner_bank_id = self.xtcreate('res.partner.bank',
-                                             vals)
-        self.xtr('res.users').write(
+        self.partner_bank_id = self.env_create('res.partner.bank',
+                                               vals)
+        self.env7('res.users').write(
             self.cr, self.uid, [self.uid],
             {'company_ids': [(4, self.company_id)]})
-        self.xtr('res.users').write(
+        self.env7('res.users').write(
             self.cr, self.uid, [self.uid],
             {'company_id': self.company_id})
         self.partner_id = self.ref('base.res_partner_2')

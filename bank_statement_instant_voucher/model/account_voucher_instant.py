@@ -21,7 +21,7 @@
 
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
-from openerp.addons.decimal_precision import decimal_precision as dp
+from decimal_precision import decimal_precision as dp
 
 
 class instant_voucher(orm.TransientModel):

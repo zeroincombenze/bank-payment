@@ -40,7 +40,7 @@ from openerp.addons.account_banking.parsers import models
 from openerp.addons.account_banking.parsers import convert
 from openerp.addons.account_banking.struct import struct
 from openerp.addons.account_banking.wizard import banktools
-from openerp.addons.decimal_precision import decimal_precision as dp
+from decimal_precision import decimal_precision as dp
 
 bt = models.mem_bank_transaction
 
