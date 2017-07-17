@@ -7,7 +7,6 @@
 [![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-7.svg)](http://wiki.zeroincombenze.org/en/Odoo/7.0/FI)
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-7.svg)](http://erp7.zeroincombenze.it)
 
-![License: AGPL-3]
 
 Account Banking PAIN Base Module
 ================================
@@ -74,11 +73,6 @@ This module is maintained by the Odoo Italia Associazione
 
 To contribute to this module, please visit <https://www.odoo-italia.org>.
 
-  [GitHub Issues]: https://github.com/OCA/bank-payment/issues
-  [here]: https://github.com/OCA/bank-payment/issues/new?body=module:%20account_banking_pain_base%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**
-  [Odoo Italia Associazione]: https://odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20250x112%20-%20Bianco%20dietro%20e%20nella%20scritta.png
-  [![Odoo Italia Associazione]]: https://odoo-italia.org
-  
 
 [//]: # (copyright)
 
@@ -100,3 +94,9 @@ Odoo Italia Associazione distributes code just under A-GPL license.
 [//]: # (end copyright)
 
 [![chat with us](https://www.shs-av.com/wp-content/chat_with_us.gif)](https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b)
+
+
+[GitHub Issues]: https://github.com/OCA/bank-payment/issues
+[here]: https://github.com/OCA/bank-payment/issues/new?body=module:%20account_banking_pain_base%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**
+[Odoo Italia Associazione]: https://odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20250x112%20-%20Bianco%20dietro%20e%20nella%20scritta.png
+[![Odoo Italia Associazione]]: https://odoo-italia.org
