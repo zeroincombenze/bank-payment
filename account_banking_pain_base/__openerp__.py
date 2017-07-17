@@ -33,9 +33,9 @@
         'python': ['unidecode', 'lxml'],
     },
     'data': [
-        'payment_line_view.xml',
-        'payment_mode_view.xml',
-        'company_view.xml',
+        'views/payment_line_view.xml',
+        'views/payment_mode_view.xml',
+        'views/res_company_view.xml',
     ],
     'description': '''
 Base module for PAIN file generation
