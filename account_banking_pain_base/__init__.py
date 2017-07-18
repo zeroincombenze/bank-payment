@@ -19,8 +19,3 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from . import payment_line
-from . import payment_mode
-from . import company
-from . import banking_export_pain
