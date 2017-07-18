@@ -3,12 +3,15 @@
 [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=9.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=9.0)
 [![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/9.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/9.0)
 [![OCA_project](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-oca-9.svg)](https://github.com/OCA/bank-payment/tree/9.0)
-[![Tech Doc](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-9.svg)](http://wiki.zeroincombenze.org/en/Odoo/dev/9.0)
-[![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-9.svg)](http://wiki.zeroincombenze.org/en/Odoo/9.0/bank-)
+[![Tech Doc](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-9.svg)](http://wiki.zeroincombenze.org/en/Odoo/9.0/dev)
+[![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-9.svg)](http://wiki.zeroincombenze.org/en/Odoo/9.0/man/FI)
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-9.svg)](http://erp9.zeroincombenze.it)
 
+
+[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+================================================================================================
+
 OCA banking payment addons for Odoo
-===================================
 
 On version 9.0, this project focus on payment interface. The indentation below 
 indicates the dependency graph of the main modules.
@@ -29,7 +32,6 @@ Other features can now be found in these repositories:
 [//]: # (addons)
 
 Available addons
-----------------
 addon | version | summary
 --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 9.0.1.1.0 | Banking mandates
@@ -46,7 +48,6 @@ addon | version | summary
 
 
 Unported addons
----------------
 addon | version | summary
 --- | --- | ---
 [account_banking_tests](account_banking_tests/) | 8.0.0.1.0 (unported) | Banking Addons - Tests
