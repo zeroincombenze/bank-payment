@@ -51,6 +51,26 @@ class banking_export_pain(orm.AbstractModel):
             raise orm.except_orm(
                 _('Error:'), _("This IBAN is not valid : %s") % iban)
 
+    def _cvt2bankcodeset(self, value, gen_args=None, context=None):
+        # [antoniov: 2015-06-29] code extracted from body of prepare_field
+        # SEPA uses XML ; XML = UTF-8 ; UTF-8 = support for all characters
+        # But we are dealing with banks...
+        # and many banks don't want non-ASCCI characters !
+        # cf section 1.4 "Character set" of the SEPA Credit Transfer
+        # Scheme Customer-to-bank guidelines
+        if gen_args.get('convert_to_ascii'):
+            # [antoniov: 2015-06-29] value may be bool
+            if isinstance(value, basestring):
+                value = unidecode(value)
+                unallowed_ascii_chars = [
+                    '"', '#', '$', '%', '&', '*', ';', '<', '>', '=', '@',
+                    '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
+                for unallowed_ascii_char in unallowed_ascii_chars:
+                    value = value.replace(unallowed_ascii_char, '-')
+            else:
+                value = ''
+        return value
+
     def _prepare_field(
             self, cr, uid, field_name, field_value, eval_ctx, max_size=0,
             gen_args=None, context=None):
@@ -60,18 +80,7 @@ class banking_export_pain(orm.AbstractModel):
         assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
         try:
             value = safe_eval(field_value, eval_ctx)
-            # SEPA uses XML ; XML = UTF-8 ; UTF-8 = support for all characters
-            # But we are dealing with banks...
-            # and many banks don't want non-ASCCI characters !
-            # cf section 1.4 "Character set" of the SEPA Credit Transfer
-            # Scheme Customer-to-bank guidelines
-            if gen_args.get('convert_to_ascii'):
-                value = unidecode(value)
-                unallowed_ascii_chars = [
-                    '"', '#', '$', '%', '&', '*', ';', '<', '>', '=', '@',
-                    '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
-                for unallowed_ascii_char in unallowed_ascii_chars:
-                    value = value.replace(unallowed_ascii_char, '-')
+            value = self._cvt2bankcodeset(value, gen_args, context)
         except:
             line = eval_ctx.get('line')
             if line:
@@ -136,16 +145,29 @@ class banking_export_pain(orm.AbstractModel):
                 % str(e))
         return True
 
-    def finalize_sepa_file_creation(
-            self, cr, uid, ids, xml_root, total_amount, transactions_count,
-            gen_args, context=None):
+    def _declare_sepa_file_header(
+            self, cr, uid, ids, xml_root, gen_args, context=None):
         xml_string = etree.tostring(
             xml_root, pretty_print=True, encoding='UTF-8',
             xml_declaration=True)
+        # [antoniov: 2015-06-29] Customizing for Italian CBI
+        if gen_args.get('variant_xsd') == 'CBI-IT':
+            xattr = 'xsi:schemaLocation='
+            xattr += '"urn:CBI:xsd:CBIPaymentRequest.00.04.00'
+            xattr += ' CBIPaymentRequest.00.04.00.xsd"'
+            i = xml_string.find('xmlns:')
+            xml_string = xml_string[:i] + xattr + ' ' + xml_string[i:]
         logger.debug(
             "Generated SEPA XML file in format %s below"
             % gen_args['pain_flavor'])
         logger.debug(xml_string)
+        return xml_string
+
+    def finalize_sepa_file_creation(
+            self, cr, uid, ids, xml_root, total_amount, transactions_count,
+            gen_args, context=None):
+        xml_string = self._declare_sepa_file_header(
+            cr, uid, ids, xml_root, gen_args, context=context)
         self._validate_xml(cr, uid, xml_string, gen_args, context=context)
 
         file_id = gen_args['file_obj'].create(
@@ -188,8 +210,8 @@ class banking_export_pain(orm.AbstractModel):
             # batch_booking is in "Group header" with pain.001.001.02
             # and in "Payment info" in pain.001.001.03/04
             batch_booking = etree.SubElement(group_header_1_0, 'BtchBookg')
-            batch_booking.text = str(gen_args[
-                'sepa_export'].batch_booking).lower()
+            batch_booking.text = \
+                str(gen_args['sepa_export'].batch_booking).lower()
         nb_of_transactions_1_6 = etree.SubElement(
             group_header_1_0, 'NbOfTxs')
         control_sum_1_7 = etree.SubElement(group_header_1_0, 'CtrlSum')
@@ -215,6 +237,9 @@ class banking_export_pain(orm.AbstractModel):
             gen_args=gen_args, context=context)
         payment_method_2_2 = etree.SubElement(payment_info_2_0, 'PmtMtd')
         payment_method_2_2.text = gen_args['payment_method']
+        # [antoniov: 2015-06-29] Follow 2 lines are for Italian CBI
+        nb_of_transactions_2_4 = None
+        control_sum_2_5 = None
         if gen_args.get('pain_flavor') != 'pain.001.001.02':
             batch_booking_2_3 = etree.SubElement(payment_info_2_0, 'BtchBookg')
             batch_booking_2_3.text = \
@@ -223,9 +248,11 @@ class banking_export_pain(orm.AbstractModel):
         # Implementation guidelines" for SCT and SDD says that control sum
         # and nb_of_transactions should be present
         # at both "group header" level and "payment info" level
-            nb_of_transactions_2_4 = etree.SubElement(
-                payment_info_2_0, 'NbOfTxs')
-            control_sum_2_5 = etree.SubElement(payment_info_2_0, 'CtrlSum')
+        # But not for Italy!?
+            if gen_args.get('variant_xsd') != 'CBI-IT':
+                nb_of_transactions_2_4 = etree.SubElement(
+                    payment_info_2_0, 'NbOfTxs')
+                control_sum_2_5 = etree.SubElement(payment_info_2_0, 'CtrlSum')
         payment_type_info_2_6 = etree.SubElement(
             payment_info_2_0, 'PmtTpInf')
         if priority:

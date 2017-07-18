@@ -13,8 +13,6 @@
 Account Banking PAIN Base Module
 ================================
 
-Account Banking PAIN Base Module
-
 This module contains fields and functions that are used by the module for SEPA Credit Transfer (account_banking_sepa_credit_transfer) and SEPA Direct Debit (account_banking_sepa_direct_debit).
 This module doesn’t provide any functionality by itself.
 
