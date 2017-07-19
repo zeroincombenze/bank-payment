@@ -1,28 +1,15 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
+# -*- coding: utf-8 -*-
+#    Copyright (C) 2013-2017 Akretion (http://www.akretion.com)
+#    Copyright (C) 2016-2017 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
-#    PAIN base module for OpenERP
-#    Copyright (C) 2013 Akretion (http://www.akretion.com)
-#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# [2013: Akretion] First version
+# [2017: SHS-AV] Italian localization
 {
     'name': 'Account Banking PAIN Base Module',
     'summary': 'Base module for PAIN file generation',
-    'version': '0.1',
+    'version': '7.0.0.1.1',
     'license': 'AGPL-3',
     'author': "Akretion, Noviat,Odoo Community Association (OCA)",
     'website': 'http://openerp-community-association.org/',
@@ -54,9 +41,6 @@ November 21st 2013 in Epiais les Louvres (France).
 
 Module contains some pieces of code not ISO 20022 but used by Italian Banks.
     ''',
-    # 'test': [
-    #     'test/test_company.yml',
-    # ],
     'active': False,
-    'installable': False,
+    'installable': True,
 }
