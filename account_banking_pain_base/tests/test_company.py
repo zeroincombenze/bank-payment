@@ -23,8 +23,6 @@ BNK_IT_ACC_NUMBER = 'IT31Z0306909420615282446606'
 
 
 class Test_company(SingleTransactionCase):
-    # Function with xt prefix are common library function
-    # They help testing process
     def env7(self, model):
         """Return object model to test
         """
@@ -67,34 +65,23 @@ class Test_company(SingleTransactionCase):
         self.company = self.write_ref('base.main_company',
                                       vals)
         self.currency_id = self.ref('base.EUR')
-        if self.country_code == 'nl':
-            vals = {
-                'name': BNK_NL_NAME,
-                'bic': BNK_NL_BIC,
-                'country': self.country_id,
-            }
-        elif self.country_code == 'it':
+        if self.country_code == 'it':
             vals = {
                 'name': BNK_IT_NAME,
                 'bic': BNK_IT_BIC,
                 'country': self.country_id,
             }
         else:
-            vals = {}
+            vals = {
+                'name': BNK_NL_NAME,
+                'bic': BNK_NL_BIC,
+                'country': self.country_id,
+            }
         self.bank_id = self.env_create('res.bank',
                                        vals)
         self.partner_id = self.ref('base.main_partner')
         self.company_id = self.ref('base.main_company')
-        if self.country_code == 'nl':
-            vals = {
-                'state': 'iban',
-                'acc_number': BNK_NL_ACC_NUMBER,
-                'bank': self.bank_id,
-                'bank_bic': BNK_NL_BIC,
-                'partner_id': self.partner_id,
-                'company_id': self.company_id,
-            }
-        elif self.country_code == 'it':
+        if self.country_code == 'it':
             vals = {
                 'state': 'iban',
                 'acc_number': BNK_IT_ACC_NUMBER,
@@ -104,7 +91,14 @@ class Test_company(SingleTransactionCase):
                 'company_id': self.company_id,
             }
         else:
-            vals = {}
+            vals = {
+                'state': 'iban',
+                'acc_number': BNK_NL_ACC_NUMBER,
+                'bank': self.bank_id,
+                'bank_bic': BNK_NL_BIC,
+                'partner_id': self.partner_id,
+                'company_id': self.company_id,
+            }
         self.partner_bank_id = self.env_create('res.partner.bank',
                                                vals)
         self.env7('res.users').write(
@@ -121,14 +115,17 @@ class Test_company(SingleTransactionCase):
     def test_company(self):
         cr, uid = self.cr, self.uid
         company_model = self.registry('res.company')
-        if self.country_code == 'be':
-            val = COMPANY_BE_VAT[2:]
-        else:
-            val = False
-        res = company_model.\
-            _get_initiating_party_identifier(cr,
-                                             uid,
-                                             self.company_id)
-        assert res == val, \
-            'Invalid "%s" party issuer: expected "%s"' % (res,
-                                                          val)
+        for country_code in ('', 'it'):
+            if country_code:
+                self.setup_company(country_code=country_code)
+            if self.country_code == 'be':
+                val = COMPANY_BE_VAT[2:]
+            else:
+                val = False
+            res = company_model.\
+                _get_initiating_party_identifier(cr,
+                                                 uid,
+                                                 self.company_id)
+            assert res == val, \
+                'Invalid party issuer value "%s": expected "%s"' % (res,
+                                                                    val)
