@@ -58,11 +58,11 @@ Modificheremo al più presto posssibile questi moduli per integrarli con i modul
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-**Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
-is the Italian Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo designed for Italian law and markeplace.
-Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code with legacy license.
-Odoo Italia Associazione distributes code only under A-GPL free license.
+**zeroincombenze®** is a trademark of [SHS-AV s.r.l.](http://www.shs-av.com/)
+which distributes and promotes **Odoo** ready-to-use on its own cloud infrastructure.
+[Zeroincombenze® distribution](http://wiki.zeroincombenze.org/en/Odoo)
+is mainly designed for Italian law and markeplace.
+Everytime, every Odoo DB and customized code can be deployed on local server too.
 
 [//]: # (end copyright)
 

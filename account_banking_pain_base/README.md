@@ -20,6 +20,33 @@ This module was started during the Akretion-Noviat code sprint of November 21st 
 
 It was updated by Antonio Maria Vigliotti in order to work in Italy.
 
+Differences
+-----------
+
+This module differs from standard OCA module:
+ 
+- Added code to Italian localization
+- Added Unit test
+
+
+[![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+
+Modulo Account Banking PAIN Base
+================================
+
+Questo modulo contiene le funzione del core dei moduli SEPA Credit Transfer (account_banking_sepa_credit_transfer) e  SEPA Direct Debit (account_banking_sepa_direct_debit).
+
+
+Differenze
+----------
+
+Questo modulo differisce dalla versiona standard OCA:
+ 
+- Aggiunto codice per la localizzazione italiana
+- Aggiunte le Test Unit
+
+
+[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 
 Installation
 ------------
@@ -74,7 +101,9 @@ Credits
 
 ### Funders
 
-- This module has been financially supported by nobody.
+This module has been financially supported by
+
+- shs-av s.r.l. <www.shs-av.com>
 
 
 ### Maintainer
