@@ -3,12 +3,15 @@
 [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=8.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=8.0)
 [![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/8.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/8.0)
 [![OCA_project](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-oca-8.svg)](https://github.com/OCA/bank-payment/tree/8.0)
-[![Tech Doc](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-8.svg)](http://wiki.zeroincombenze.org/en/Odoo/dev/8.0)
-[![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-8.svg)](http://wiki.zeroincombenze.org/en/Odoo/8.0/bank-)
+[![Tech Doc](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-8.svg)](http://wiki.zeroincombenze.org/en/Odoo/8.0/dev)
+[![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-8.svg)](http://wiki.zeroincombenze.org/en/Odoo/8.0/man/FI)
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg)](http://erp8.zeroincombenze.it)
 
+
+[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+================================================================================================
+
 OCA banking payment addons for Odoo
-===================================
 
 On version 8.0, this project focus on payment interface. The indentation below 
 indicates the dependency graph of the main modules.
@@ -29,7 +32,6 @@ Other features can now be found in these repositories:
 [//]: # (addons)
 
 Available addons
-----------------
 addon | version | summary
 --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 8.0.0.2.0 | Banking mandates
@@ -54,7 +56,6 @@ addon | version | summary
 
 
 Unported addons
----------------
 addon | version | summary
 --- | --- | ---
 [bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | Bank statement instant voucher

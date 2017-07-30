@@ -26,7 +26,7 @@ class BankingExportPain(models.AbstractModel):
     _name = 'banking.export.pain'
 
     @api.model
-    def _validate_iban(self, iban):
+    def _validate_iban(self, iban, context=None):
         """if IBAN is valid, returns IBAN
         if IBAN is NOT valid, raises an error message"""
         if self.env['res.partner.bank'].is_iban_valid(iban):
@@ -34,27 +34,36 @@ class BankingExportPain(models.AbstractModel):
         else:
             raise Warning(_("This IBAN is not valid : %s") % iban)
 
-    @api.model
-    def _prepare_field(self, field_name, field_value, eval_ctx,
-                       max_size=0, gen_args=None):
-        """This function is designed to be inherited !"""
-        if gen_args is None:
-            gen_args = {}
-        assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
-        try:
-            value = safe_eval(field_value, eval_ctx)
-            # SEPA uses XML ; XML = UTF-8 ; UTF-8 = support for all characters
-            # But we are dealing with banks...
-            # and many banks don't want non-ASCCI characters !
-            # cf section 1.4 "Character set" of the SEPA Credit Transfer
-            # Scheme Customer-to-bank guidelines
-            if gen_args.get('convert_to_ascii'):
+    def _cvt2bankcodeset(self, value, gen_args=None, context=None):
+        # [antoniov: 2017-06-29] code extracted from body of prepare_field
+        # SEPA uses XML ; XML = UTF-8 ; UTF-8 = support for all characters
+        # But we are dealing with banks...
+        # and many banks don't want non-ASCCI characters !
+        # cf section 1.4 "Character set" of the SEPA Credit Transfer
+        # Scheme Customer-to-bank guidelines
+        if gen_args.get('convert_to_ascii'):
+            # [antoniov: 2017-06-29] value may be bool
+            if isinstance(value, basestring):
                 value = unidecode(value)
                 unallowed_ascii_chars = [
                     '"', '#', '$', '%', '&', '*', ';', '<', '>', '=', '@',
                     '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
                 for unallowed_ascii_char in unallowed_ascii_chars:
                     value = value.replace(unallowed_ascii_char, '-')
+            else:
+                value = ''
+        return value
+
+    @api.model
+    def _prepare_field(self, field_name, field_value, eval_ctx,
+                       max_size=0, gen_args=None, context=None):
+        """This function is designed to be inherited !"""
+        if gen_args is None:
+            gen_args = {}
+        assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
+        try:
+            value = safe_eval(field_value, eval_ctx)
+            value = self._cvt2bankcodeset(value, gen_args, context)
         except:
             line = eval_ctx.get('line')
             if line:
