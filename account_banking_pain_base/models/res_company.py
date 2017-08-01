@@ -101,6 +101,8 @@ class res_company(orm.Model):
         add an entry in the dict "party_issuer_per_country" here
         or inherit this function in the localization modules for
         your country'''
+        context = {} if context is None else context
+
         initiating_party_issuer = ''
         # If your country require the 'Initiating Party Issuer', you should
         # contribute the entry for your country in the dict below
