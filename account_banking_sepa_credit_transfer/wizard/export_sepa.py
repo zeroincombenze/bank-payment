@@ -23,7 +23,7 @@
 
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
-from openerp import netsvc
+from openerp import netsvc, addons
 from lxml import etree
 
 
@@ -84,6 +84,39 @@ class banking_export_sepa_wizard(orm.TransientModel):
         'state': 'create',
     }
 
+    def _get_name_n_params(self, name, deflt=None):
+        """Extract name and params from string like 'name(params)'"""
+        deflt = '' if deflt is None else deflt
+        i = name.find('(')
+        j = name.rfind(')')
+        if i >= 0 and j >= i:
+            n = name[:i]
+            p = name[i + 1:j]
+        else:
+            n = name
+            p = deflt
+        return n, p
+
+    def _get_pain_file_name(self, cr, uid, pain_name, pain_flavor):
+        """Manage variant schema (i.e. Italian banks in CBI)
+        based on pain xsd file name.
+        Pain_name MUST BE in form 'pain' or 'pain(variant)'
+        Standard pain name is 'pain.001.001.VV.xsd' where VV is pain version,
+        variant name is 'pain.001.001.VV-LLL.xsd' where LLL is variant name.
+        If variant file does not exist, standard file is used"""
+        pain_xsd_file = 'account_banking_sepa_credit_transfer/data/%s.xsd'\
+            % pain_flavor
+        xsd_file, variant = self._get_name_n_params(pain_name)
+        if variant:
+            xsd_file = pain_flavor + '-' + variant + '.xsd'
+            xsd_file = addons.\
+                get_module_resource('account_banking_sepa_credit_transfer',
+                                    'data',
+                                    xsd_file)
+            if xsd_file:
+                pain_xsd_file = xsd_file
+        return pain_xsd_file
+
     def create(self, cr, uid, vals, context=None):
         payment_order_ids = context.get('active_ids', [])
         vals.update({
@@ -96,10 +129,14 @@ class banking_export_sepa_wizard(orm.TransientModel):
         '''
         Creates the SEPA Credit Transfer file. That's the important code !
         '''
-        if context is None:
-            context = {}
+        context = {} if context is None else context
         sepa_export = self.browse(cr, uid, ids[0], context=context)
+        # Get country id for any customization
+        country_id, country_code = self.pool['res.company'].\
+            _get_country(cr, uid,
+                         sepa_export.payment_order_ids[0].company_id, context)
         pain_flavor = sepa_export.payment_order_ids[0].mode.type.code
+        # pain_name = sepa_export.payment_order_ids[0].mode.type.name
         convert_to_ascii = \
             sepa_export.payment_order_ids[0].mode.convert_to_ascii
         if pain_flavor == 'pain.001.001.02':
