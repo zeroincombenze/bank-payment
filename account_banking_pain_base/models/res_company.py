@@ -25,18 +25,16 @@ class ResCompany(models.Model):
     @api.model
     def _default_initiating_party(self, company):
         '''This method is called from post_install.py, which itself is also
-        called from migrations/8.0.0.2/post-migration.py'''
-        party_issuer_per_country = {
-            'BE': 'KBO-BCE',  # KBO-BCE = the registry of companies in Belgium
-        }
+        called from migrations/7.0.0.2/post-migration.py'''
+        party_issuer = self._get_initiating_party_identifier(
+            company.id, context=None)
         logger.debug(
             'Calling _default_initiating_party on company %s', company.name)
         country_code = company.country_id.code
         if not company.initiating_party_issuer:
-            if country_code and country_code in party_issuer_per_country:
+            if party_issuer:
                 company.write({
-                    'initiating_party_issuer':
-                    party_issuer_per_country[country_code]})
+                    'initiating_party_issuer': party_issuer})
                 logger.info(
                     'Updated initiating_party_issuer on company %s',
                     company.name)
@@ -51,3 +49,42 @@ class ResCompany(models.Model):
                 logger.info(
                     'Updated initiating_party_identifier on company %s',
                     company.name)
+
+    @api.model
+    def _get_country(self, company_obj, context=None):
+        """Some fields are country dependent"""
+        context = {} if context is None else context
+        country_id = None
+        country_code = None
+        if company_obj.country_id:
+            country_id = company_obj.country_id.id
+            c_obj = self.env['res.country'].browse(country_id)
+            country_code = c_obj.code
+        elif company_obj.vat:
+            country_code = company_obj.vat[0:2].upper()
+            ids = self.env['res.country'].search([('code', '=', country_code)])
+            if ids:
+                country_id = ids[0].id
+        return country_id, country_code
+
+    @api.model
+    def _get_initiating_party_identifier(
+            self, company_id, party_type=None, context=None):
+        '''The code here may be different from one country to another.
+        If you need to add support for an additionnal country, you can
+        contribute your code here or inherit this function in the
+        localization modules for your country'''
+        context = {} if context is None else context
+        assert isinstance(company_id, int), 'Only one company ID'
+        country_code = context.get('country_code')
+        company = self.browse(company_id)
+        if not country_code:
+            country_id, country_code = self._get_country(company,
+                                                         context=context)
+        company_vat = company.vat
+        party_identifier = False
+        if country_code == 'BE':
+            party_identifier = company_vat[2:].replace(' ', '')
+        elif country_code == 'IT':
+            party_identifier = company_vat[2:].replace(' ', '')
+        return party_identifier
