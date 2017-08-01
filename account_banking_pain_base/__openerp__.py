@@ -6,13 +6,21 @@
 #
 # [2013: Akretion] First version
 # [2017: SHS-AV] Italian localization
+
 {
     'name': 'Account Banking PAIN Base Module',
     'summary': 'Base module for PAIN file generation',
     'version': '7.0.0.2.0',
     'license': 'AGPL-3',
-    'author': "Akretion, Noviat,Odoo Community Association (OCA)",
-    'website': 'http://openerp-community-association.org/',
+    'author': "Akretion, "
+              "Noviat, "
+              "Odoo Community Association (OCA), "
+              "Odoo Italia Associazione",
+    'website': 'https://odoo-italia.org',
+    'contributors': [
+        'Alexis de Lattre <alexis.delattre@akretion.com>',
+        'Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>'
+    ],
     'category': 'Hidden',
     'depends': ['account_banking_payment_export',
                 'account_payment'],
@@ -41,7 +49,6 @@ November 21st 2013 in Epiais les Louvres (France).
 
 Module contains some pieces of code not ISO 20022 but used by Italian Banks.
     ''',
-    'active': False,
     'post_init_hook': 'set_default_initiating_party',
     'installable': True,
 }

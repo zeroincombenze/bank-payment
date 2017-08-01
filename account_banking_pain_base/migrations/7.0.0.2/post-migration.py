@@ -7,5 +7,14 @@
 # [2013: Akretion] First version
 # [2017: SHS-AV] Italian localization
 
-from . import models
-from .post_install import set_default_initiating_party
+from openerp.addons.account_banking_pain_base.post_install\
+    import set_default_initiating_party
+from openerp import pooler
+
+
+def migrate(cr, version):
+    if not version:
+        return
+
+    pool = pooler.get_pool(cr.dbname)
+    set_default_initiating_party(cr, pool)

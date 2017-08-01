@@ -89,14 +89,14 @@ Credits
 
 -   Alexis de Lattre
 -   Pedro M. Baeza
--   Stéphane Bidoul &lt;<stephane.bidoul@acsone.eu>&gt;
+-   Stéphane Bidoul <stephane.bidoul@acsone.eu>
 -   Ignacio Ibeas - Acysos S.L.
 -   Alexandre Fayolle
 -   Raphaël Valyi
 -   Sandy Carter
 -   Stefan Rijnhart (Therp)
--   Antonio Espinosa &lt;<antonioea@antiun.com>&gt;
--   Antonio Maria Vigliotti &lt;<antoniomaria.vigliotti@gmail.com>&gt;
+-   Antonio Espinosa <antonioea@antiun.com>
+-   Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 
 
 ### Funders
