@@ -9,7 +9,7 @@
 {
     'name': 'Account Banking PAIN Base Module',
     'summary': 'Base module for PAIN file generation',
-    'version': '7.0.0.1.1',
+    'version': '7.0.0.2.0',
     'license': 'AGPL-3',
     'author': "Akretion, Noviat,Odoo Community Association (OCA)",
     'website': 'http://openerp-community-association.org/',
@@ -42,5 +42,6 @@ November 21st 2013 in Epiais les Louvres (France).
 Module contains some pieces of code not ISO 20022 but used by Italian Banks.
     ''',
     'active': False,
+    'post_init_hook': 'set_default_initiating_party',
     'installable': True,
 }

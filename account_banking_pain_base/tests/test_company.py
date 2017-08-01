@@ -103,12 +103,17 @@ BNK_NL = {
     'cci': BNK_NL_CCI,
 }
 
+COMPANY_XX_VAT = ''
+BNK_XX_BIC = 'EBATBEBB'
+BNK_XX_NAME = 'ABE CLEARING SAS - BRUSSELS'
+BNK_XX_IBAN = 'BE68539007547034'
+BNK_XX_CCI = 'BE81ZZZ0123456749'
 BNK_XX = {
-    'vat': '',
-    'bic': BNK_BE_BIC,
-    'name': BNK_BE_NAME,
-    'iban': BNK_BE_IBAN,
-    'cci': BNK_BE_CCI,
+    'vat': COMPANY_XX_VAT,
+    'bic': BNK_XX_BIC,
+    'name': BNK_XX_NAME,
+    'iban': BNK_XX_IBAN,
+    'cci': BNK_XX_CCI,
 }
 
 BNK = {
@@ -120,6 +125,17 @@ BNK = {
     'fr': BNK_FR,
     'it': BNK_IT,
     'nl': BNK_NL,
+}
+
+RES_PARTY_IDENTIFIER = {
+    '': False,
+    'be': '0123456749',
+    'ch': False,
+    'de': False,
+    'es': False,
+    'fr': False,
+    'it': '12345670017',
+    'nl': False,
 }
 
 
@@ -162,7 +178,12 @@ class Test_company(SingleTransactionCase):
             country_code = ''
             self.country_id = False
         vals = {'initiating_party_issuer': INIT_PARTY_ISSUE,
+                'initiating_party_identifier': BNK[country_code]['cci'],
                 'vat': BNK[country_code]['vat']}
+        if country_code == 'be' or country_code == 'nl':
+            vals['country_id'] = self.country_id
+        else:
+            vals['country_id'] = False
         self.company = self.write_ref('base.main_company',
                                       vals)
         self.currency_id = self.ref789('base.EUR')
@@ -197,19 +218,13 @@ class Test_company(SingleTransactionCase):
     def test_company(self):
         cr, uid = self.cr, self.uid
         company_model = self.env789('res.company')
-        for country_code in ('', 'it',):
+        for country_code in ('', 'be', 'ch', 'de',  'es', 'fr', 'it', 'nl'):
             if country_code:
                 self.setup_company(country_code=country_code)
-            if self.country_code == 'be':
-                val = COMPANY_BE_VAT[2:]
-            elif self.country_code == 'es':
-                val = BNK_ES_CCI
-            else:
-                val = False
             res = company_model.\
                 _get_initiating_party_identifier(cr,
                                                  uid,
                                                  self.company_id)
-            assert res == val, \
-                'Invalid party issuer value "%s": expected "%s"' % (res,
-                                                                    val)
+            assert res == RES_PARTY_IDENTIFIER[country_code], \
+                'Invalid default party identifier "%s": expected "%s"' % (
+                    res, RES_PARTY_IDENTIFIER[country_code])
