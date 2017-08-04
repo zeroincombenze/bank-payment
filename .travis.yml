@@ -34,15 +34,6 @@ install:
   - pip install unidecode BeautifulSoup
 
 script:
-  # Patch to avoid failing due error in official Odoo/OCA repository
-  - : ${ODOO_REPO:="odoo/odoo"}  # default value, if not set
-  - IFS="/" read -a REPO <<< "${ODOO_REPO}"
-  - export REMOTE="${REPO[0],,}"
-  - export REPO_NAME="${REPO[1]}"
-  - export BRANCH="${VERSION}"
-  - export ODOO_PATH=${HOME}/$REPO_NAME-$BRANCH
-  - ln -s ${ODOO_PATH}/addons/decimal_precision ${ODOO_PATH}/openerp/addons
-  # End od patch
   - travis_run_tests
 
 after_success:
