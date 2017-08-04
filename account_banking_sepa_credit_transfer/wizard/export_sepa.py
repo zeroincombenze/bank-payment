@@ -5,7 +5,8 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
-from openerp import workflow, addons
+from openerp import workflow
+from openerp.modules.module import get_module_resource
 from lxml import etree
 
 
@@ -61,7 +62,6 @@ class BankingExportSepaWizard(models.TransientModel):
             p = deflt
         return n, p
 
-    @api.model
     def _get_pain_file_name(self, pain_name, pain_flavor):
         """Manage variant schema (i.e. Italian banks in CBI)
         based on pain xsd file name.
@@ -69,37 +69,22 @@ class BankingExportSepaWizard(models.TransientModel):
         Standard pain name is 'pain.001.001.VV.xsd' where VV is pain version,
         variant name is 'pain.001.001.VV-LLL.xsd' where LLL is variant name.
         If variant file does not exist, standard file is used"""
-        pain_xsd_file = 'account_banking_sepa_credit_transfer/data/%s.xsd'\
-            % pain_flavor
         xsd_file, variant = self._get_name_n_params(pain_name)
+        module_path = 'account_banking_sepa_credit_transfer'
         if variant:
-            xsd_file = pain_flavor + '-' + variant + '.xsd'
-            xsd_file = addons.\
-                get_module_resource('account_banking_sepa_credit_transfer',
-                                    'data',
-                                    xsd_file)
-            if xsd_file:
-                pain_xsd_file = xsd_file
-        return pain_xsd_file
+            xsd_file = '%s-%s.xsd' % (pain_flavor, variant)
+        else:
+            xsd_file = '%s.xsd' % pain_flavor
+        xsd_file = get_module_resource(module_path,
+                                       'data',
+                                       xsd_file)
+        if xsd_file:
+            pain_xsd_file = xsd_file
+        else:
+            pain_xsd_file = '%s/%s/%s.xsd' % (module_path, 'data', pain_flavor)
+        return pain_xsd_file, variant
 
-    @api.model
-    def create(self, vals):
-        payment_order_ids = self._context.get('active_ids', [])
-        vals.update({
-            'payment_order_ids': [[6, 0, payment_order_ids]],
-        })
-        return super(BankingExportSepaWizard, self).create(vals)
-
-    @api.multi
-    def create_sepa(self):
-        """Creates the SEPA Credit Transfer file. That's the important code!"""
-        sepa_export = self[0]
-        # Get country id for any customization
-        country_id, country_code = self.env['res.company'].\
-            _get_country(sepa_export.payment_order_ids[0].company_id)
-        pain_flavor = self.payment_order_ids[0].mode.type.code
-        convert_to_ascii = \
-            self.payment_order_ids[0].mode.convert_to_ascii
+    def _get_pain_tags(self, pain_flavor):
         if pain_flavor == 'pain.001.001.02':
             bic_xml_tag = 'BIC'
             name_maxsize = 70
@@ -134,11 +119,59 @@ class BankingExportSepaWizard(models.TransientModel):
         else:
             raise Warning(
                 _("Payment Type Code '%s' is not supported. The only "
-                  "Payment Type Codes supported for SEPA Credit Transfers "
-                  "are 'pain.001.001.02', 'pain.001.001.03', "
-                  "'pain.001.001.04', 'pain.001.001.05'"
-                  " and 'pain.001.003.03'.") %
-                pain_flavor)
+                    "Payment Type Codes supported for SEPA Credit Transfers "
+                    "are 'pain.001.001.02', 'pain.001.001.03', "
+                    "'pain.001.001.04', 'pain.001.001.05' "
+                    "and 'pain.001.003.03'.")
+                % pain_flavor)
+        return bic_xml_tag, name_maxsize, root_xml_tag
+
+    def _get_nsmap(self, pain_xsd_file, pain_flavor):
+        """Read nsmap from xsd file TODO: best code"""
+        pain_ns = {
+            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+            None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
+        }
+        try:
+            fd = open(pain_xsd_file, 'r')
+            schema = fd.read()
+            fd.close()
+            i = schema.find('xmlns:xs=')
+            j = schema.find('"', i) + 1
+            k = schema.find('"', j)
+            pain_ns['xsi'] = '%s-instance' % schema[j:k]
+            i = schema.find('targetNamespace=')
+            j = schema.find('"', i) + 1
+            k = schema.find('"', j)
+            pain_ns[None] = schema[j:k]
+        except:
+            pass
+        return pain_ns
+
+    @api.model
+    def create(self, vals):
+        payment_order_ids = self._context.get('active_ids', [])
+        vals.update({
+            'payment_order_ids': [[6, 0, payment_order_ids]],
+        })
+        return super(BankingExportSepaWizard, self).create(vals)
+
+    @api.multi
+    def create_sepa(self):
+        """Creates the SEPA Credit Transfer file. That's the important code!"""
+        sepa_export = self[0]
+        # Get country id for any customization
+        country_id, country_code = self.env['res.company'].\
+            _get_country(sepa_export.payment_order_ids[0].company_id)
+        pain_flavor = self.payment_order_ids[0].mode.type.code
+        pain_name = self.payment_order_ids[0].mode.type.name
+        convert_to_ascii = \
+            self.payment_order_ids[0].mode.convert_to_ascii
+        bic_xml_tag, name_maxsize, root_xml_tag = self._get_pain_tags(
+            pain_flavor)
+        # code to manage variant schema (i.e. Italian banks in CBI)
+        pain_xsd_file, variant = self._get_pain_file_name(
+            pain_name, pain_flavor)
         gen_args = {
             'bic_xml_tag': bic_xml_tag,
             'name_maxsize': name_maxsize,
@@ -146,14 +179,15 @@ class BankingExportSepaWizard(models.TransientModel):
             'payment_method': 'TRF',
             'file_prefix': 'sct_',
             'pain_flavor': pain_flavor,
-            'pain_xsd_file':
-            'account_banking_sepa_credit_transfer/data/%s.xsd'
-            % pain_flavor,
+            'pain_xsd_file': pain_xsd_file,
+            'variant_xsd': variant,
+            'country': country_code
         }
-        pain_ns = {
-            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-            None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
-        }
+        # pain_ns = {
+        #     'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        #     None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
+        # }
+        pain_ns = self._get_nsmap(pain_xsd_file, pain_flavor)
         xml_root = etree.Element('Document', nsmap=pain_ns)
         pain_root = etree.SubElement(xml_root, root_xml_tag)
         pain_03_to_05 = [
