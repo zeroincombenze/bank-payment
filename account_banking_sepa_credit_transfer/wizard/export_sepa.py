@@ -5,7 +5,7 @@
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
-from openerp import workflow
+from openerp import workflow, addons
 from lxml import etree
 
 
@@ -48,6 +48,40 @@ class BankingExportSepaWizard(models.TransientModel):
         'payment.order', 'wiz_sepa_payorders_rel', 'wizard_id',
         'payment_order_id', string='Payment Orders', readonly=True)
 
+    def _get_name_n_params(self, name, deflt=None):
+        """Extract name and params from string like 'name(params)'"""
+        deflt = '' if deflt is None else deflt
+        i = name.find('(')
+        j = name.rfind(')')
+        if i >= 0 and j >= i:
+            n = name[:i]
+            p = name[i + 1:j]
+        else:
+            n = name
+            p = deflt
+        return n, p
+
+    @api.model
+    def _get_pain_file_name(self, pain_name, pain_flavor):
+        """Manage variant schema (i.e. Italian banks in CBI)
+        based on pain xsd file name.
+        Pain_name MUST BE in form 'pain' or 'pain(variant)'
+        Standard pain name is 'pain.001.001.VV.xsd' where VV is pain version,
+        variant name is 'pain.001.001.VV-LLL.xsd' where LLL is variant name.
+        If variant file does not exist, standard file is used"""
+        pain_xsd_file = 'account_banking_sepa_credit_transfer/data/%s.xsd'\
+            % pain_flavor
+        xsd_file, variant = self._get_name_n_params(pain_name)
+        if variant:
+            xsd_file = pain_flavor + '-' + variant + '.xsd'
+            xsd_file = addons.\
+                get_module_resource('account_banking_sepa_credit_transfer',
+                                    'data',
+                                    xsd_file)
+            if xsd_file:
+                pain_xsd_file = xsd_file
+        return pain_xsd_file
+
     @api.model
     def create(self, vals):
         payment_order_ids = self._context.get('active_ids', [])
@@ -59,6 +93,10 @@ class BankingExportSepaWizard(models.TransientModel):
     @api.multi
     def create_sepa(self):
         """Creates the SEPA Credit Transfer file. That's the important code!"""
+        sepa_export = self[0]
+        # Get country id for any customization
+        country_id, country_code = self.env['res.company'].\
+            _get_country(sepa_export.payment_order_ids[0].company_id)
         pain_flavor = self.payment_order_ids[0].mode.type.code
         convert_to_ascii = \
             self.payment_order_ids[0].mode.convert_to_ascii

@@ -31,7 +31,7 @@ class ResCompany(models.Model):
         '''This method is called from post_install.py, which itself is also
         called from migrations/7.0.0.2/post-migration.py'''
         party_issuer = self._get_initiating_party_identifier(
-            company.id, context=None)
+            company.id)
         logger.debug(
             'Calling _default_initiating_party on company %s', company.name)
         country_code = company.country_id.code
@@ -55,9 +55,8 @@ class ResCompany(models.Model):
                     company.name)
 
     @api.model
-    def _get_country(self, company_obj, context=None):
+    def _get_country(self, company_obj):
         """Some fields are country dependent"""
-        context = {} if context is None else context
         country_id = None
         country_code = None
         if company_obj.country_id:
@@ -73,18 +72,16 @@ class ResCompany(models.Model):
 
     @api.model
     def _get_initiating_party_identifier(
-            self, company_id, party_type=None, context=None):
+            self, company_id, party_type=None):
         '''The code here may be different from one country to another.
         If you need to add support for an additionnal country, you can
         contribute your code here or inherit this function in the
         localization modules for your country'''
-        context = {} if context is None else context
         assert isinstance(company_id, int), 'Only one company ID'
-        country_code = context.get('country_code')
+        country_code = self.env.context.get('country_code')
         company = self.browse(company_id)
         if not country_code:
-            country_id, country_code = self._get_country(company,
-                                                         context=context)
+            country_id, country_code = self._get_country(company)
         company_vat = company.vat
         party_identifier = False
         if country_code == 'BE':
