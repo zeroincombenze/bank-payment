@@ -10,6 +10,7 @@
 
 [![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 ================================================================================================
+================================================================================================
 
 Banking addons for Odoo
 
@@ -36,6 +37,7 @@ A number of other modules are available for legacy format bank statement files.
 [![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 
 Moduli aggiuntivi per Banche
+============================
 
 Differenze rispetto localizzazione ufficiale Odoo/OCA:
 

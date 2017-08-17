@@ -257,6 +257,9 @@ class banking_export_sepa_wizard(orm.TransientModel):
                     requested_date = payment_order.date_scheduled or today
                 else:
                     requested_date = today
+                # [antoniov: 2015-07-14] no date in past
+                if requested_date < today:
+                    requested_date = today
                 key = (requested_date, priority)
                 if key in lines_per_group:
                     lines_per_group[key].append(line)
@@ -303,6 +306,13 @@ class banking_export_sepa_wizard(orm.TransientModel):
                     payment_info_2_0, 'CdtTrfTxInf')
                 payment_identification_2_28 = etree.SubElement(
                     credit_transfer_transaction_info_2_27, 'PmtId')
+                if variant == 'CBI-IT':
+                    IT_instrid_2_30 = etree.SubElement(
+                        payment_identification_2_28, 'InstrId')
+                    IT_instrid_2_30.text = self._prepare_field(
+                        cr, uid, 'Instructions', 'line.name',
+                        {'line': line}, 35, gen_args=gen_args,
+                        context=context)
                 end2end_identification_2_30 = etree.SubElement(
                     payment_identification_2_28, 'EndToEndId')
                 end2end_identification_2_30.text = self._prepare_field(
@@ -313,6 +323,15 @@ class banking_export_sepa_wizard(orm.TransientModel):
                     cr, uid, 'Currency Code', 'line.currency.name',
                     {'line': line}, 3, gen_args=gen_args,
                     context=context)
+                if variant == 'CBI-IT':
+                    IT_credit_transfer_transaction_info = etree.SubElement(
+                        credit_transfer_transaction_info_2_27, 'PmtTpInf')
+                    IT_catpurp_2_27 = etree.SubElement(
+                        IT_credit_transfer_transaction_info, 'CtgyPurp')
+                    IT_catpurpid_2_27 = etree.SubElement(
+                        IT_catpurp_2_27, 'Cd')
+                    # TODO: Category for other SCT type
+                    IT_catpurpid_2_27.text = 'SUPP'
                 amount_2_42 = etree.SubElement(
                     credit_transfer_transaction_info_2_27, 'Amt')
                 instructed_amount_2_43 = etree.SubElement(
@@ -337,7 +356,7 @@ class banking_export_sepa_wizard(orm.TransientModel):
                     cr, uid, credit_transfer_transaction_info_2_27,
                     line, gen_args, context=context)
 
-            if pain_flavor in pain_03_to_05:
+            if pain_flavor in pain_03_to_05 and variant != 'CBI-IT':
                 nb_of_transactions_2_4.text = str(transactions_count_2_4)
                 control_sum_2_5.text = '%.2f' % amount_control_sum_2_5
 
