@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/zeroincombenze/bank-payment.svg?branch=7.0)](https://travis-ci.org/zeroincombenze/bank-payment)
 [![license agpl](https://img.shields.io/badge/licence-AGPL--3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0.html)
 [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0)
-[![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0)
+[![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0/account_banking_nl_girotel)
 [![OCA_project](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-oca-7.svg)](https://github.com/OCA/bank-payment/tree/7.0)
 [![Tech Doc](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-7.svg)](http://wiki.zeroincombenze.org/en/Odoo/7.0/dev)
 [![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-7.svg)](http://wiki.zeroincombenze.org/en/Odoo/7.0/man/FI)
@@ -40,6 +40,8 @@ Moduli aggiuntivi per Banche
 
 Differenze rispetto localizzazione ufficiale Odoo/OCA:
 
+- Disabilitati test con repository OCA e Odoo e corretto [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
+- Maggiore copertura coverage tramite unit test aggiuntive
 - Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
 - [account_banking_pain_base](https://github.com/OCA/bank-payment/tree/7.0/account_banking_pain_base) sostituito
 dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_pain_base)
