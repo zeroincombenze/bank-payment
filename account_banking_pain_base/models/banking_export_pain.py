@@ -19,7 +19,7 @@ import base64
 
 try:
     from unidecode import unidecode
-except ImportError:
+except ImportError:                                         # pragma: no cover
     unidecode = None
 
 logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ class banking_export_pain(orm.AbstractModel):
         partner_bank_obj = self.pool.get('res.partner.bank')
         if partner_bank_obj.is_iban_valid(cr, uid, iban, context=context):
             return iban.replace(' ', '')
-        else:
+        else:                                               # pragma: no cover
             raise orm.except_orm(
                 _('Error:'), _("This IBAN is not valid : %s") % iban)
 
@@ -68,7 +68,7 @@ class banking_export_pain(orm.AbstractModel):
         try:
             value = safe_eval(field_value, eval_ctx)
             value = self._cvt2bankcodeset(value, gen_args, context)
-        except:
+        except:                                             # pragma: no cover
             line = eval_ctx.get('line')
             if line:
                 raise orm.except_orm(
@@ -80,13 +80,13 @@ class banking_export_pain(orm.AbstractModel):
                 raise orm.except_orm(
                     _('Error:'),
                     _("Cannot compute the '%s'.") % field_name)
-        if not isinstance(value, (str, unicode)):
+        if not isinstance(value, (str, unicode)):           # pragma: no cover
             raise orm.except_orm(
                 _('Field type error:'),
                 _("The type of the field '%s' is %s. It should be a string "
                     "or unicode.")
                 % (field_name, type(value)))
-        if not value:
+        if not value:                                       # pragma: no cover
             raise orm.except_orm(
                 _('Error:'),
                 _("The '%s' is empty or 0. It should have a non-null value.")
@@ -117,7 +117,7 @@ class banking_export_pain(orm.AbstractModel):
         try:
             root_to_validate = etree.fromstring(xml_string)
             official_pain_schema.assertValid(root_to_validate)
-        except Exception, e:
+        except Exception, e:                                # pragma: no cover
             logger.warning(
                 "The XML file is invalid against the XML Schema Definition")
             logger.warning(xml_string)
@@ -285,17 +285,19 @@ class banking_export_pain(orm.AbstractModel):
                 cr, uid,
                 gen_args['sepa_export'].payment_order_ids[0].company_id.id,
                 context=context)
-        initiating_party_issuer = gen_args['sepa_export'].\
-            payment_order_ids[0].company_id.initiating_party_issuer
-        if initiating_party_identifier and initiating_party_issuer:
+        initiating_party_issuer = self.pool['res.company'].\
+            _initiating_party_issuer_default(
+            cr, uid, context)
+        if initiating_party_identifier:
             iniparty_id = etree.SubElement(initiating_party_1_8, 'Id')
             iniparty_org_id = etree.SubElement(iniparty_id, 'OrgId')
             iniparty_org_other = etree.SubElement(iniparty_org_id, 'Othr')
             iniparty_org_other_id = etree.SubElement(iniparty_org_other, 'Id')
             iniparty_org_other_id.text = initiating_party_identifier
-            iniparty_org_other_issuer = etree.SubElement(
-                iniparty_org_other, 'Issr')
-            iniparty_org_other_issuer.text = initiating_party_issuer
+            if initiating_party_issuer:
+                iniparty_org_other_issuer = etree.SubElement(
+                    iniparty_org_other, 'Issr')
+                iniparty_org_other_issuer.text = initiating_party_issuer
         return True
 
     def generate_party_agent(
@@ -305,16 +307,42 @@ class banking_export_pain(orm.AbstractModel):
         This code is mutualized between TRF and DD'''
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
         try:
-            bic = self._prepare_field(
-                cr, uid, '%s BIC' % party_type_label, bic, eval_ctx,
-                gen_args=gen_args, context=context)
-            party_agent = etree.SubElement(parent_node, '%sAgt' % party_type)
-            party_agent_institution = etree.SubElement(
-                party_agent, 'FinInstnId')
-            party_agent_bic = etree.SubElement(
-                party_agent_institution, gen_args.get('bic_xml_tag'))
-            party_agent_bic.text = bic
-        except orm.except_orm:
+            if gen_args.get('variant_xsd') == 'CBI-IT':
+                if party_type == 'Dbtr':
+                    party_agent = etree.SubElement(
+                        parent_node, '%sAgt' % party_type)
+                    party_agent_institution = etree.SubElement(
+                        party_agent, 'FinInstnId')
+                    party_agent_other = etree.SubElement(
+                        party_agent_institution, 'ClrSysMmbId')
+                    party_agent_other_identification = etree.SubElement(
+                        party_agent_other, 'MmbId')
+                    # TODO: insert actual ABI
+                    party_agent_other_identification.text = iban[5:10]
+                # Foreign Credit Transfer (bonifico Sepa Estero)
+                if party_type == 'Cdtr' and iban[0:2].upper() != 'IT':
+                    bic = self._prepare_field(
+                        cr, uid, '%s BIC' % party_type_label, bic, eval_ctx,
+                        gen_args=gen_args, context=context)
+                    party_agent = etree.SubElement(parent_node,
+                                                   '%sAgt' % party_type)
+                    party_agent_institution = etree.SubElement(
+                        party_agent, 'FinInstnId')
+                    party_agent_bic = etree.SubElement(
+                        party_agent_institution, 'BIC')
+                    party_agent_bic.text = bic
+            else:
+                bic = self._prepare_field(
+                    cr, uid, '%s BIC' % party_type_label, bic, eval_ctx,
+                    gen_args=gen_args, context=context)
+                party_agent = etree.SubElement(parent_node,
+                                               '%sAgt' % party_type)
+                party_agent_institution = etree.SubElement(
+                    party_agent, 'FinInstnId')
+                party_agent_bic = etree.SubElement(
+                    party_agent_institution, gen_args.get('bic_xml_tag'))
+                party_agent_bic.text = bic
+        except orm.except_orm:                              # pragma: no cover
             if order == 'C':
                 if iban[0:2] != gen_args['initiating_party_country_code']:
                     raise orm.except_orm(
@@ -341,7 +369,7 @@ class banking_export_pain(orm.AbstractModel):
 
     def generate_party_block(
             self, cr, uid, parent_node, party_type, order, name, iban, bic,
-            eval_ctx, gen_args, context=None):
+            eval_ctx, gen_args, partner=None, context=None):
         '''Generate the piece of the XML file corresponding to Name+IBAN+BIC
         This code is mutualized between TRF and DD'''
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
@@ -370,6 +398,84 @@ class banking_export_pain(orm.AbstractModel):
         party = etree.SubElement(parent_node, party_type)
         party_nm = etree.SubElement(party, 'Nm')
         party_nm.text = party_name
+
+        if gen_args.get('variant_xsd') == 'CBI-IT':
+            company_obj = gen_args['sepa_export'].\
+                payment_order_ids[0].company_id
+            initiating_party_identifier = self.pool['res.company'].\
+                _get_initiating_party_identifier(
+                    cr, uid,
+                    company_obj.id,
+                    party_type=party_type,
+                    context=context)
+            if initiating_party_identifier:
+                if viban[0:2] != gen_args['initiating_party_country_code'] or\
+                        (partner and
+                         partner.vat and
+                         partner.vat[0:2].upper() != 'IT'):
+                    SCT = 'crossborder'
+                else:
+                    SCT = 'domestic'
+                if party_type != 'Cdtr':
+                    party_id = etree.SubElement(party, 'Id')
+                    party_org_id = etree.SubElement(party_id, 'OrgId')
+                    party_org_other = etree.SubElement(party_org_id, 'Othr')
+                    party_org_other_id = etree.SubElement(party_org_other,
+                                                          'Id')
+                    party_org_other_id.text = initiating_party_identifier
+                elif SCT == 'crossborder':
+                    if partner and partner.vat:
+                        party_id = etree.SubElement(party, 'Id')
+                        party_org_id = etree.SubElement(party_id, 'OrgId')
+                        party_org_other = etree.SubElement(party_org_id,
+                                                           'Othr')
+                        party_org_other_id = etree.SubElement(party_org_other,
+                                                              'Id')
+                        party_org_other_id.text = partner.vat
+                    else:
+                        party_pstladr = etree.SubElement(party, 'PstlAdr')
+                        street = self._cvt2bankcodeset(partner.street,
+                                                       gen_args,
+                                                       context)
+                        if street:
+                            party_strt = etree.SubElement(party_pstladr,
+                                                          'StrtNm')
+                            party_strt.text = street
+                        party_twn = etree.SubElement(party_pstladr, 'TwnNm')
+                        town = self._cvt2bankcodeset(partner.city,
+                                                     gen_args,
+                                                     context)
+                        party_twn.text = town
+                        if not town:
+                            raise orm.except_orm(
+                                _('Error:'),
+                                _("Partner %s w/o town" % partner.name))
+                else:
+                    if partner and partner.vat:
+                        party_id = etree.SubElement(party, 'Id')
+                        party_org_id = etree.SubElement(party_id, 'OrgId')
+                        party_org_other = etree.SubElement(party_org_id,
+                                                           'Othr')
+                        party_org_other_id = etree.SubElement(party_org_other,
+                                                              'Id')
+                        party_org_other_id.text = partner.vat
+                        party_org_other_issr = etree.SubElement(
+                            party_org_other, 'Issr')
+                        party_org_other_issr.text = 'ADE'
+                    elif hasattr(partner, 'fiscalcode') and\
+                            partner.fiscalcode:
+                        party_id = etree.SubElement(party, 'Id')
+                        party_org_id = etree.SubElement(party_id, 'OrgId')
+                        party_org_other = etree.SubElement(party_org_id,
+                                                           'Othr')
+                        party_org_other_id = etree.SubElement(party_org_other,
+                                                              'Id')
+                        party_org_other_id.text = partner.fiscalcode
+                        party_org_other_issr = etree.SubElement(
+                            party_org_other, 'Issr')
+                        party_org_other_issr.text = 'ADE'
+                    else:
+                        pass
         party_account = etree.SubElement(
             parent_node, '%sAcct' % party_type)
         party_account_id = etree.SubElement(party_account, 'Id')
@@ -398,7 +504,7 @@ class banking_export_pain(orm.AbstractModel):
                     gen_args=gen_args,
                     context=context)
         else:
-            if not line.struct_communication_type:
+            if not line.struct_communication_type:          # pragma: no cover
                 raise orm.except_orm(
                     _('Error:'),
                     _("Missing 'Structured Communication Type' on payment "
