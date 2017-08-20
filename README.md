@@ -9,10 +9,9 @@
 
 
 [![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
-================================================================================================
-================================================================================================
 
 Banking addons for Odoo
+=======================
 
 This project focuses on in- and export of banking communication. The indentation below indicates
 the dependency graph of the main modules.
