@@ -19,11 +19,12 @@ This project focuses on in- and export of banking communication.
 
 Available addons
 ----------------
-
 addon | version | summary
 --- | --- | ---
+[account_banking](account_banking/) | 7.0.0.0.5 | Account Banking
 [account_banking_mandate](account_banking_mandate/) | 0.1 | Banking mandates
 [account_banking_pain_base](account_banking_pain_base/) | 7.0.0.2.0 | Base module for PAIN file generation
+[account_banking_payment](account_banking_payment/) | 0.1.164 | Account Banking - Payments
 [account_banking_payment_export](account_banking_payment_export/) | 7.0.0.1.165 | Account Banking - Payments Export Infrastructure
 [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 0.2 | Create SEPA XML files for Credit Transfers
 [account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 0.2 | Create SEPA files for Direct Debit
@@ -43,11 +44,9 @@ addon | version | summary
 
 Unported addons
 ---------------
-
 addon | version | summary
 --- | --- | ---
 [account_bank_statement_tax](__unported__/account_bank_statement_tax/) | 0.1 (unported) | Apply a tax on bank statement lines
-[account_banking](__unported__/account_banking/) | 7.0.0.0.5 (unported) | Account Banking
 [account_banking_camt](__unported__/account_banking_camt/) | 0.2 (unported) | CAMT Format Bank Statements Import
 [account_banking_fi_patu](__unported__/account_banking_fi_patu/) | 0.62 (unported) | Account Banking PATU module
 [account_banking_fr_lcr](__unported__/account_banking_fr_lcr/) | 0.1 (unported) | Create French LCR CFONB files
@@ -63,7 +62,6 @@ addon | version | summary
 [account_banking_nl_rabo_mt940](__unported__/account_banking_nl_rabo_mt940/) | 1.1 (unported) | MT940 import for dutch Rabobank
 [account_banking_nl_triodos](__unported__/account_banking_nl_triodos/) | 0.92 (unported) | Triodos (NL) Bank Statements Import
 [account_banking_partner_journal_account](__unported__/account_banking_partner_journal_account/) | 0.1 (unported) | Banking Addons - Default partner journal accounts for bank transactions
-[account_banking_payment](__unported__/account_banking_payment/) | 0.1.164 (unported) | Account Banking - Payments
 [account_banking_uk_hsbc](__unported__/account_banking_uk_hsbc/) | 0.5 (unported) | HSBC Account Banking
 [account_banking_reconciliation](account_banking_reconciliation/) | 1.7 (unported) | Bank Account Reconciliation
 
