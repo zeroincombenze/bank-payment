@@ -13,24 +13,61 @@
 Banking addons for Odoo
 =======================
 
-This project focuses on in- and export of banking communication. The indentation below indicates
-the dependency graph of the main modules.
+This project focuses on in- and export of banking communication.
 
-- account_banking_payment_export - Basic export functionality of payment orders
+[//]: # (addons)
 
-    - account_banking_sepa_credit_transfer - Export of payment orders in SEPA format
+Available addons
+----------------
 
-    - account_direct_debit - Debit order infrastructure analogous to Odoo native payment orders
+addon | version | summary
+--- | --- | ---
+[account_banking_mandate](account_banking_mandate/) | 0.1 | Banking mandates
+[account_banking_pain_base](account_banking_pain_base/) | 7.0.0.2.0 | Base module for PAIN file generation
+[account_banking_partner_journal_account](account_banking_partner_journal_account/) | 0.1 | Banking Addons - Default partner journal accounts for bank transactions
+[account_banking_payment](account_banking_payment/) | 0.1.164 | Account Banking - Payments
+[account_banking_payment_export](account_banking_payment_export/) | 7.0.0.1.165 | Account Banking - Payments Export Infrastructure
+[account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 0.2 | Create SEPA XML files for Credit Transfers
+[account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 0.2 | Create SEPA files for Direct Debit
+[account_banking_tests](account_banking_tests/) | 0.1 | Banking Addons - Tests
+[account_banking_uk_hsbc](account_banking_uk_hsbc/) | 0.5 | HSBC Account Banking
+[account_direct_debit](account_direct_debit/) | 7.0.2.134 | Direct Debit
+[account_iban_preserve_domestic](account_iban_preserve_domestic/) | 0.1.163 | Domestic bank account number
+[account_payment_blocking](account_payment_blocking/) | 0.1 | account banking payment blocking
+[account_payment_multicurrency_extension](account_payment_multicurrency_extension/) | 1.1 | Add an improved view for payment order
+[account_payment_partner](account_payment_partner/) | 0.1 | Adds payment mode on partners and invoices
+[account_payment_purchase](account_payment_purchase/) | 1.0 | Adds Bank Account and Payment Mode on Purchase Orders
+[account_payment_sale](account_payment_sale/) | 1.0 | Adds Payment Mode on Sale Orders
+[account_payment_sale_stock](account_payment_sale_stock/) | 1.0 | Manage Payment Mode when invoicing from picking
+[account_payment_shortcut](account_payment_shortcut/) | 1.134 | Account Payment Invoice Selection Shortcut
+[bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 | Bank statement instant voucher
+[base_iban_bic_not_required](base_iban_bic_not_required/) | 0.1 | IBAN - Bic not required
 
-        - account_banking_sepa_direct_debit - Export of debit orders in SEPA format
 
-- account_banking - Infrastructure for importing bank statements in various formats and custom (manual)
-reconciliation functionality. While advanced, this functionality will be deprecated in Odoo 8.0 in favour
-of (an extension of) the new, native reconciliation functionality.
+Unported addons
+---------------
 
-    - account_banking_camt - Import of bank statements in the SEPA CAMT.053 format
+addon | version | summary
+--- | --- | ---
+[account_bank_statement_tax](__unported__/account_bank_statement_tax/) | 0.1 (unported) | Apply a tax on bank statement lines
+[account_banking](__unported__/account_banking/) | 7.0.0.0.5 (unported) | Account Banking
+[account_banking_camt](__unported__/account_banking_camt/) | 0.2 (unported) | CAMT Format Bank Statements Import
+[account_banking_fi_patu](__unported__/account_banking_fi_patu/) | 0.62 (unported) | Account Banking PATU module
+[account_banking_fr_lcr](__unported__/account_banking_fr_lcr/) | 0.1 (unported) | Create French LCR CFONB files
+[account_banking_iban_lookup](__unported__/account_banking_iban_lookup/) | 0.1 (unported) | Banking Addons - Iban lookup (legacy)
+[account_banking_make_deposit](__unported__/account_banking_make_deposit/) | 1.4 (unported) | Bank Deposit Ticket
+[account_banking_mt940](__unported__/account_banking_mt940/) | 1.0 (unported) | MT940
+[account_banking_nl_abnamro](__unported__/account_banking_nl_abnamro/) | 0.1 (unported) | abnamro (NL) Bank Statements Import
+[account_banking_nl_clieop](__unported__/account_banking_nl_clieop/) | 0.92 (unported) | Account Banking NL ClieOp
+[account_banking_nl_girotel](__unported__/account_banking_nl_girotel/) | 0.62 (unported) | Account Banking - Girotel
+[account_banking_nl_ing](__unported__/account_banking_nl_ing/) | 0.1.140 (unported) | ING (NL) Bank Statements Import
+[account_banking_nl_ing_mt940](__unported__/account_banking_nl_ing_mt940/) | 1.1 (unported) | MT940 import for Dutch ING
+[account_banking_nl_multibank](__unported__/account_banking_nl_multibank/) | 0.62 (unported) | Account Banking - NL Multibank import
+[account_banking_nl_rabo_mt940](__unported__/account_banking_nl_rabo_mt940/) | 1.1 (unported) | MT940 import for dutch Rabobank
+[account_banking_nl_triodos](__unported__/account_banking_nl_triodos/) | 0.92 (unported) | Triodos (NL) Bank Statements Import
+[account_banking_reconciliation](account_banking_reconciliation/) | 1.7 (unported) | Bank Account Reconciliation
 
-A number of other modules are available for legacy format bank statement files.
+[//]: # (end addons)
 
 
 [![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
@@ -38,18 +75,13 @@ A number of other modules are available for legacy format bank statement files.
 Moduli aggiuntivi per Banche
 ============================
 
+Progetto per la gestione dell'interfacciamento con le banche.
+
 Differenze rispetto localizzazione ufficiale Odoo/OCA:
 
 - Disabilitati test con repository OCA e Odoo e corretto [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
 - Maggiore copertura coverage tramite unit test aggiuntive
 - Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
-- [account_banking_pain_base](https://github.com/OCA/bank-payment/tree/7.0/account_banking_pain_base) sostituito
-dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_pain_base)
-- [account_banking_payment_export](https://github.com/OCA/bank-payment/tree/7.0/account_banking_payment_export) sostituito dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_payment_export)
-- [account_banking_sepa_credit_transfer](https://github.com/OCA/bank-payment/tree/7.0/account_banking_sepa_credit_transfer) sostituito dal modulo in [l10n-italy-supplemental](https://github.com/zeroincombenze/l10n-italy-supplemental/tree/7.0/account_banking_sepa_credit_transfer)
-
-Modificheremo al più presto posssibile questi moduli per integrarli con i moduli standard ma, al momento, se volete gestire i bonifici Sepa con Odoo in Italia, dovete sostituire i moduli sopra elencati.
-
 
 [//]: # (copyright)
 
