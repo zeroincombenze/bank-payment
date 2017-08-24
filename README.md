@@ -18,7 +18,6 @@ This project focuses on in- and export of banking communication.
 [//]: # (addons)
 
 Available addons
-----------------
 addon | version | summary
 --- | --- | ---
 [account_banking](account_banking/) | 7.0.0.0.5 | Account Banking
@@ -43,7 +42,6 @@ addon | version | summary
 
 
 Unported addons
----------------
 addon | version | summary
 --- | --- | ---
 [account_bank_statement_tax](__unported__/account_bank_statement_tax/) | 0.1 (unported) | Apply a tax on bank statement lines
