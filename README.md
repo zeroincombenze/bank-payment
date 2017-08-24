@@ -24,13 +24,10 @@ addon | version | summary
 --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 0.1 | Banking mandates
 [account_banking_pain_base](account_banking_pain_base/) | 7.0.0.2.0 | Base module for PAIN file generation
-[account_banking_partner_journal_account](account_banking_partner_journal_account/) | 0.1 | Banking Addons - Default partner journal accounts for bank transactions
-[account_banking_payment](account_banking_payment/) | 0.1.164 | Account Banking - Payments
 [account_banking_payment_export](account_banking_payment_export/) | 7.0.0.1.165 | Account Banking - Payments Export Infrastructure
 [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 0.2 | Create SEPA XML files for Credit Transfers
 [account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 0.2 | Create SEPA files for Direct Debit
 [account_banking_tests](account_banking_tests/) | 0.1 | Banking Addons - Tests
-[account_banking_uk_hsbc](account_banking_uk_hsbc/) | 0.5 | HSBC Account Banking
 [account_direct_debit](account_direct_debit/) | 7.0.2.134 | Direct Debit
 [account_iban_preserve_domestic](account_iban_preserve_domestic/) | 0.1.163 | Domestic bank account number
 [account_payment_blocking](account_payment_blocking/) | 0.1 | account banking payment blocking
@@ -65,6 +62,9 @@ addon | version | summary
 [account_banking_nl_multibank](__unported__/account_banking_nl_multibank/) | 0.62 (unported) | Account Banking - NL Multibank import
 [account_banking_nl_rabo_mt940](__unported__/account_banking_nl_rabo_mt940/) | 1.1 (unported) | MT940 import for dutch Rabobank
 [account_banking_nl_triodos](__unported__/account_banking_nl_triodos/) | 0.92 (unported) | Triodos (NL) Bank Statements Import
+[account_banking_partner_journal_account](__unported__/account_banking_partner_journal_account/) | 0.1 (unported) | Banking Addons - Default partner journal accounts for bank transactions
+[account_banking_payment](__unported__/account_banking_payment/) | 0.1.164 (unported) | Account Banking - Payments
+[account_banking_uk_hsbc](__unported__/account_banking_uk_hsbc/) | 0.5 (unported) | HSBC Account Banking
 [account_banking_reconciliation](account_banking_reconciliation/) | 1.7 (unported) | Bank Account Reconciliation
 
 [//]: # (end addons)
