@@ -48,20 +48,16 @@ Questo modulo differisce dalla versiona standard OCA:
 Installation
 ------------
 
-
 Install this module from Odoo Control Panel.
 
 
 Configuration
 -------------
 
-
 No configuration required.
 
 
 Usage
------
-
 -----
 
 For further information, please visit:
@@ -72,13 +68,11 @@ For further information, please visit:
 Known issues / Roadmap
 ----------------------
 
-
 -   no known issues
 
 
 Bug Tracker
 -----------
-
 
 Bugs are tracked on [GitHub Issues]. In case of trouble, please check there if your issue has already been reported. If you spotted it first, help us smashing it by providing a detailed and welcomed feedback [here].
 
