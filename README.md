@@ -81,11 +81,11 @@ http://odoo-community.org/
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-**zeroincombenze®** is a trademark of [SHS-AV s.r.l.](http://www.shs-av.com/)
-which distributes and promotes **Odoo** ready-to-use on its own cloud infrastructure.
-[Zeroincombenze® distribution](http://wiki.zeroincombenze.org/en/Odoo)
-is mainly designed for Italian law and markeplace.
-Everytime, every Odoo DB and customized code can be deployed on local server too.
+**Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
+is the nonprofit Italian Community Association whose mission
+is to support the collaborative development of Odoo designed for Italian law and markeplace.
+Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under legacy license.
+Odoo Italia Associazione distributes code only under A-GPL free license.
 
 [//]: # (end copyright)
 
