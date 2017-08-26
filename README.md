@@ -80,11 +80,13 @@ Moduli aggiuntivi per Banche
 Progetto per la gestione dell'interfacciamento con le banche.
 
 Differenze rispetto localizzazione ufficiale Odoo/OCA
+
 Descrizione | Odoo Italia | OCA
 --- | --- | ---
-Coverage | [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0) | [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=7.0) OCA
-Test con repository OCA e Odoo | [Errore import decimal precision](https://github.com/OCA/OCB/issues/629) | N/V
+Coverage | [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0) | [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=7.0)
+Test con repository OCA e Odoo | No [Errore import decimal precision](https://github.com/OCA/OCB/issues/629) | N/V
 Bonifici Italia | Si, standard CBI | No
+SDD Italia | In fase di rilascio | No
 
 [//]: # (copyright)
 
