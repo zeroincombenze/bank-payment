@@ -51,6 +51,7 @@ Installation
 
 
 
+
 Install this module from Odoo Control Panel.
 
 
@@ -60,10 +61,13 @@ Configuration
 
 
 
+
 No configuration required.
 
 
 Usage
+-----
+
 -----
 
 -----
@@ -83,11 +87,13 @@ Known issues / Roadmap
 
 
 
+
 -   no known issues
 
 
 Bug Tracker
 -----------
+
 
 
 
@@ -102,13 +108,16 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
 
 
+
 ### Contributors
+
 
 
 
@@ -129,6 +138,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
@@ -159,11 +170,11 @@ To contribute to this module, please visit <https://www.odoo-italia.org>.
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-**Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
-is the nonprofit Italian Community Association whose mission
-is to support the collaborative development of Odoo designed for Italian law and markeplace.
-Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under legacy license.
-Odoo Italia Associazione distributes code only under A-GPL free license.
+**zeroincombenze®** is a trademark of [SHS-AV s.r.l.](http://www.shs-av.com/)
+which distributes and promotes **Odoo** ready-to-use on its own cloud infrastructure.
+[Zeroincombenze® distribution](http://wiki.zeroincombenze.org/en/Odoo)
+is mainly designed for Italian law and markeplace.
+Everytime, every Odoo DB and customized code can be deployed on local server too.
 
 [//]: # (end copyright)
 
@@ -172,5 +183,9 @@ Odoo Italia Associazione distributes code only under A-GPL free license.
 [GitHub Issues]: https://github.com/OCA/bank-payment/issues
 [here]: https://github.com/OCA/bank-payment/issues/new?body=module:%20account_banking_pain_base%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**
 [Odoo Italia Associazione]: https://odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20250x112%20-%20Bianco%20dietro%20e%20nella%20scritta.png
+
+[//]: # (addons)
+
+[//]: # (end addons)
 
 [![chat with us](https://www.shs-av.com/wp-content/chat_with_us.gif)](https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b)

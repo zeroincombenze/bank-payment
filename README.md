@@ -32,7 +32,9 @@ Other features can now be found in these repositories:
 
 [//]: # (addons)
 
+
 Available addons
+----------------
 addon | version | summary
 --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 8.0.0.2.0 | Banking mandates
@@ -40,7 +42,7 @@ addon | version | summary
 [account_banking_payment_export](account_banking_payment_export/) | 8.0.0.3.0 | Account Banking - Payments Export Infrastructure
 [account_banking_payment_transfer](account_banking_payment_transfer/) | 8.0.0.3.1 | Account Banking - Payments Transfer Account
 [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 8.0.0.5.0 | Create SEPA XML files for Credit Transfers
-[account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 8.0.0.5.0 | Create SEPA files for Direct Debit
+[account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 8.0.0.5.1 | Create SEPA files for Direct Debit
 [account_banking_tests](account_banking_tests/) | 8.0.0.1.0 | Banking Addons - Tests
 [account_direct_debit](account_direct_debit/) | 8.0.2.1.0 | Direct Debit
 [account_import_line_multicurrency_extension](account_import_line_multicurrency_extension/) | 8.0.1.1.0 | Add an improved view for move line import in bank statement
@@ -57,6 +59,7 @@ addon | version | summary
 
 
 Unported addons
+---------------
 addon | version | summary
 --- | --- | ---
 [bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | Bank statement instant voucher
@@ -81,11 +84,11 @@ http://odoo-community.org/
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-**Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
-is the nonprofit Italian Community Association whose mission
-is to support the collaborative development of Odoo designed for Italian law and markeplace.
-Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under legacy license.
-Odoo Italia Associazione distributes code only under A-GPL free license.
+**zeroincombenze®** is a trademark of [SHS-AV s.r.l.](http://www.shs-av.com/)
+which distributes and promotes **Odoo** ready-to-use on its own cloud infrastructure.
+[Zeroincombenze® distribution](http://wiki.zeroincombenze.org/en/Odoo)
+is mainly designed for Italian law and markeplace.
+Everytime, every Odoo DB and customized code can be deployed on local server too.
 
 [//]: # (end copyright)
 
