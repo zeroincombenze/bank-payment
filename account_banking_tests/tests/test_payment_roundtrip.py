@@ -20,6 +20,7 @@
 from datetime import datetime
 from openerp.tests.common import SingleTransactionCase
 from openerp import netsvc
+# import pdb
 
 
 class TestPaymentRoundtrip(SingleTransactionCase):
@@ -380,6 +381,7 @@ class TestPaymentRoundtrip(SingleTransactionCase):
                 'Transfer move line on payment line is not reconciled'
 
     def test_payment_roundtrip(self):
+        # pdb.set_trace()
         reg, cr, uid, = self.registry, self.cr, self.uid
         # Tests fail if admin does not have the English language
         reg('res.users').write(cr, uid, uid, {'lang': 'en_US'})

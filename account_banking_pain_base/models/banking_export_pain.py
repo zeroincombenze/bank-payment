@@ -224,9 +224,8 @@ class banking_export_pain(orm.AbstractModel):
             gen_args=gen_args, context=context)
         payment_method_2_2 = etree.SubElement(payment_info_2_0, 'PmtMtd')
         payment_method_2_2.text = gen_args['payment_method']
-        # [antoniov: 2015-06-29] Follow 2 lines are for Italian CBI
-        nb_of_transactions_2_4 = None
-        control_sum_2_5 = None
+        nb_of_transactions_2_4 = False
+        control_sum_2_5 = False
         if gen_args.get('pain_flavor') != 'pain.001.001.02':
             batch_booking_2_3 = etree.SubElement(payment_info_2_0, 'BtchBookg')
             batch_booking_2_3.text = \
@@ -242,7 +241,7 @@ class banking_export_pain(orm.AbstractModel):
                 control_sum_2_5 = etree.SubElement(payment_info_2_0, 'CtrlSum')
         payment_type_info_2_6 = etree.SubElement(
             payment_info_2_0, 'PmtTpInf')
-        if priority:
+        if priority and gen_args['payment_method'] != 'DD':
             instruction_priority_2_7 = etree.SubElement(
                 payment_type_info_2_6, 'InstrPrty')
             instruction_priority_2_7.text = priority
@@ -270,8 +269,17 @@ class banking_export_pain(orm.AbstractModel):
         requested_date_2_17.text = requested_date
         return payment_info_2_0, nb_of_transactions_2_4, control_sum_2_5
 
+    def _must_have_initiating_party(self, gen_args):
+        '''This method is designed to be inherited in localization modules for
+        countries in which the initiating party is required'''
+        return False
+
     def generate_initiating_party_block(
             self, cr, uid, parent_node, gen_args, context=None):
+        context = {} if context is None else context
+        country_code = gen_args.get('country', '')
+        if country_code:
+            context['country'] = country_code
         my_company_name = self._prepare_field(
             cr, uid, 'Company Name',
             'sepa_export.payment_order_ids[0].mode.bank_id.partner_id.name',
@@ -288,16 +296,20 @@ class banking_export_pain(orm.AbstractModel):
         initiating_party_issuer = self.pool['res.company'].\
             _initiating_party_issuer_default(
             cr, uid, context)
-        if initiating_party_identifier:
+        if initiating_party_identifier and initiating_party_issuer:
             iniparty_id = etree.SubElement(initiating_party_1_8, 'Id')
             iniparty_org_id = etree.SubElement(iniparty_id, 'OrgId')
             iniparty_org_other = etree.SubElement(iniparty_org_id, 'Othr')
             iniparty_org_other_id = etree.SubElement(iniparty_org_other, 'Id')
             iniparty_org_other_id.text = initiating_party_identifier
-            if initiating_party_issuer:
-                iniparty_org_other_issuer = etree.SubElement(
-                    iniparty_org_other, 'Issr')
-                iniparty_org_other_issuer.text = initiating_party_issuer
+            iniparty_org_other_issuer = etree.SubElement(
+                iniparty_org_other, 'Issr')
+            iniparty_org_other_issuer.text = initiating_party_issuer
+        elif self._must_have_initiating_party(gen_args):
+            raise Warning(
+                _("Missing 'Initiating Party Issuer' and/or "
+                    "'Initiating Party Identifier' for the company "
+                    "Both fields must have a value."))
         return True
 
     def generate_party_agent(
@@ -476,6 +488,7 @@ class banking_export_pain(orm.AbstractModel):
                         party_org_other_issr.text = 'ADE'
                     else:
                         pass
+
         party_account = etree.SubElement(
             parent_node, '%sAcct' % party_type)
         party_account_id = etree.SubElement(party_account, 'Id')

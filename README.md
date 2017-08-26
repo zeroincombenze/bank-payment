@@ -15,6 +15,10 @@ Banking addons for Odoo
 
 This project focuses on in- and export of banking communication.
 
+Other features can now be found in these repositories:
+ * https://github.com/OCA/bank-statement-import
+ * https://github.com/OCA/bank-statement-reconcile
+
 [//]: # (addons)
 
 Available addons
@@ -76,7 +80,7 @@ Progetto per la gestione dell'interfacciamento con le banche.
 Differenze rispetto localizzazione ufficiale Odoo/OCA:
 
 - Disabilitati test con repository OCA e Odoo e corretto [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
-- Maggiore copertura coverage tramite unit test aggiuntive
+- Maggiore copertura [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0) tramite unit test aggiuntive; attuale [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=7.0) OCA
 - Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
 
 [//]: # (copyright)
