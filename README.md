@@ -9,24 +9,13 @@
 
 
 [![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
-================================================================================================
-================================================================================================
 
-OCA banking payment addons for Odoo
+Banking addons for Odoo
+=======================
 
-On version 8.0, this project focus on payment interface. The indentation below 
-indicates the dependency graph of the main modules.
+This project focuses on in- and export of banking communication.
 
-- account_banking_payment_export - Basic export functionality of payment orders
-
-    - account_banking_sepa_credit_transfer - Export of payment orders in SEPA format
-
-    - account_direct_debit - Debit order infrastructure analogous to Odoo native payment orders
-
-        - account_banking_sepa_direct_debit - Export of debit orders in SEPA format
-        
 Other features can now be found in these repositories:
-
  * https://github.com/OCA/bank-statement-import
  * https://github.com/OCA/bank-statement-reconcile
 
@@ -66,13 +55,19 @@ addon | version | summary
 
 [//]: # (end addons)
 
-----
 
-OCA, or the Odoo Community Association, is a nonprofit organization whose 
-mission is to support the collaborative development of Odoo features and 
-promote its widespread use.
+[![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 
-http://odoo-community.org/
+Moduli aggiuntivi per Banche
+============================
+
+Progetto per la gestione dell'interfacciamento con le banche.
+
+Differenze rispetto localizzazione ufficiale Odoo/OCA:
+
+- Disabilitati test con repository OCA e Odoo e corretto [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
+- Maggiore copertura coverage tramite unit test aggiuntive
+- Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
 
 [//]: # (copyright)
 
@@ -87,7 +82,7 @@ promote its widespread use.
 **Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
 is the nonprofit Italian Community Association whose mission
 is to support the collaborative development of Odoo designed for Italian law and markeplace.
-Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under legacy license.
+Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under Odoo Proprietary License.
 Odoo Italia Associazione distributes code only under A-GPL free license.
 
 [//]: # (end copyright)

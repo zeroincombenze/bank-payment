@@ -31,6 +31,8 @@ Installation
 
 
 
+
+
 This module depends on :
 * purchase
 * account_payment_partner
@@ -42,9 +44,15 @@ Configuration
 
 
 
+
+
 There is nothing to configure.
 
 Usage
+-----
+
+-----
+
 -----
 
 -----
@@ -66,10 +74,14 @@ Known issues / Roadmap
 
 
 
+
+
  * No known issues.
  
 Bug Tracker
 -----------
+
+
 
 
 
@@ -83,10 +95,16 @@ Credits
 
 
 
+
+
 [![Odoo Italia Associazione]]
 
 
+
+
 ### Contributors
+
+
 
 
 
@@ -99,6 +117,10 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
+
+
 
 
 
@@ -126,7 +148,7 @@ promote its widespread use.
 **Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
 is the nonprofit Italian Community Association whose mission
 is to support the collaborative development of Odoo designed for Italian law and markeplace.
-Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under legacy license.
+Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under Odoo Proprietary License.
 Odoo Italia Associazione distributes code only under A-GPL free license.
 
 [//]: # (end copyright)
