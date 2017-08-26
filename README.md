@@ -66,7 +66,6 @@ Progetto per la gestione dell'interfacciamento con le banche.
 Differenze rispetto localizzazione ufficiale Odoo/OCA:
 
 - Disabilitati test con repository OCA e Odoo e corretto [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
-- Maggiore copertura coverage tramite unit test aggiuntive
 - Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
 
 [//]: # (copyright)
