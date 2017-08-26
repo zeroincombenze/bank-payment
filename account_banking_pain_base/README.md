@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/zeroincombenze/bank-payment.svg?branch=7.0)](https://travis-ci.org/zeroincombenze/bank-payment)
+[![Build Status](https://travis-ci.org/Odoo-Italia-Associazione/bank-payment.svg?branch=7.0)](https://travis-ci.org/Odoo-Italia-Associazione/bank-payment)
 [![license agpl](https://img.shields.io/badge/licence-AGPL--3-blue.svg)](http://www.gnu.org/licenses/agpl-3.0.html)
-[![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0)
-[![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0/account_banking_pain_base)
+[![Coverage Status](https://coveralls.io/repos/github/Odoo-Italia-Associazione/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/Odoo-Italia-Associazione/bank-payment?branch=7.0)
+[![codecov](https://codecov.io/gh/Odoo-Italia-Associazione/bank-payment/branch/7.0/graph/badge.svg)](https://codecov.io/gh/Odoo-Italia-Associazione/bank-payment/branch/7.0)
 [![OCA_project](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-oca-7.svg)](https://github.com/OCA/bank-payment/tree/7.0)
 [![Tech Doc](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-docs-7.svg)](http://wiki.zeroincombenze.org/en/Odoo/7.0/dev)
 [![Help](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-help-7.svg)](http://wiki.zeroincombenze.org/en/Odoo/7.0/man/FI)
@@ -48,16 +48,20 @@ Questo modulo differisce dalla versiona standard OCA:
 Installation
 ------------
 
+
 Install this module from Odoo Control Panel.
 
 
 Configuration
 -------------
 
+
 No configuration required.
 
 
 Usage
+-----
+
 -----
 
 For further information, please visit:
@@ -68,11 +72,13 @@ For further information, please visit:
 Known issues / Roadmap
 ----------------------
 
+
 -   no known issues
 
 
 Bug Tracker
 -----------
+
 
 Bugs are tracked on [GitHub Issues]. In case of trouble, please check there if your issue has already been reported. If you spotted it first, help us smashing it by providing a detailed and welcomed feedback [here].
 
@@ -81,10 +87,13 @@ Credits
 -------
 
 
+
 [![Odoo Italia Associazione]]
 
 
+
 ### Contributors
+
 
 
 -   Alexis de Lattre
@@ -102,6 +111,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 This module has been financially supported by
@@ -126,12 +137,17 @@ To contribute to this module, please visit <https://www.odoo-italia.org>.
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-**zeroincombenze®** is a trademark of [SHS-AV s.r.l.](http://www.shs-av.com/)
-which distributes and promotes **Odoo** ready-to-use on its own cloud infrastructure.
-[Zeroincombenze® distribution](http://wiki.zeroincombenze.org/en/Odoo)
-is mainly designed for Italian law and markeplace.
-Everytime, every Odoo DB and customized code can be deployed on local server too.
+**Odoo Italia Associazione**, or the [Associazione Odoo Italia](https://www.odoo-italia.org/)
+is the nonprofit Italian Community Association whose mission
+is to support the collaborative development of Odoo designed for Italian law and markeplace.
+Since 2017, Odoo Italia Associazione replaces OCA members of Italy are developping code under Odoo Proprietary License.
+Odoo Italia Associazione distributes code only under AGPL free license.
 
+[Odoo Italia Associazione](https://www.odoo-italia.org/) è un'Associazione senza fine di lucro
+che dal 2017 sostituisce gli sviluppatori italiani di OCA che sviluppano
+con Odoo Proprietary License a pagamento.
+
+Odoo Italia Associazione distribuisce il codice esclusivamente con licenza [AGPL](http://www.gnu.org/licenses/agpl-3.0.html)
 [//]: # (end copyright)
 
 
@@ -140,4 +156,7 @@ Everytime, every Odoo DB and customized code can be deployed on local server too
 [here]: https://github.com/OCA/bank-payment/issues/new?body=module:%20account_banking_pain_base%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**
 [Odoo Italia Associazione]: https://odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20250x112%20-%20Bianco%20dietro%20e%20nella%20scritta.png
 
-[![chat with us](https://www.shs-av.com/wp-content/chat_with_us.gif)](https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b)
+[//]: # (addons)
+
+[//]: # (end addons)
+
