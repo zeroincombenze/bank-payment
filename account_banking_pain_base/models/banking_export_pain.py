@@ -67,7 +67,7 @@ class banking_export_pain(orm.AbstractModel):
         assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
         try:
             value = safe_eval(field_value, eval_ctx)
-            value = self._cvt2bankcodeset(value, gen_args, context)
+            value = self._cvt2bankcodeset(value, gen_args, context=context)
         except:                                             # pragma: no cover
             line = eval_ctx.get('line')
             if line:
@@ -167,7 +167,7 @@ class banking_export_pain(orm.AbstractModel):
             cr, uid, ids, {
                 'file_id': file_id,
                 'state': 'finish',
-            }, context=context)
+            })
 
         action = {
             'name': 'SEPA File',
@@ -295,7 +295,7 @@ class banking_export_pain(orm.AbstractModel):
                 context=context)
         initiating_party_issuer = self.pool['res.company'].\
             _initiating_party_issuer_default(
-            cr, uid, context)
+            cr, uid, context=context)
         if initiating_party_identifier and initiating_party_issuer:
             iniparty_id = etree.SubElement(initiating_party_1_8, 'Id')
             iniparty_org_id = etree.SubElement(iniparty_id, 'OrgId')
@@ -448,7 +448,7 @@ class banking_export_pain(orm.AbstractModel):
                         party_pstladr = etree.SubElement(party, 'PstlAdr')
                         street = self._cvt2bankcodeset(partner.street,
                                                        gen_args,
-                                                       context)
+                                                       context=context)
                         if street:
                             party_strt = etree.SubElement(party_pstladr,
                                                           'StrtNm')
@@ -456,7 +456,7 @@ class banking_export_pain(orm.AbstractModel):
                         party_twn = etree.SubElement(party_pstladr, 'TwnNm')
                         town = self._cvt2bankcodeset(partner.city,
                                                      gen_args,
-                                                     context)
+                                                     context=context)
                         party_twn.text = town
                         if not town:
                             raise orm.except_orm(

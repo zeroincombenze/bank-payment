@@ -22,6 +22,7 @@ Other features can now be found in these repositories:
 [//]: # (addons)
 
 Available addons
+----------------
 addon | version | summary
 --- | --- | ---
 [account_banking](account_banking/) | 7.0.0.0.5 | Account Banking
@@ -46,6 +47,7 @@ addon | version | summary
 
 
 Unported addons
+---------------
 addon | version | summary
 --- | --- | ---
 [account_bank_statement_tax](__unported__/account_bank_statement_tax/) | 0.1 (unported) | Apply a tax on bank statement lines
@@ -77,11 +79,12 @@ Moduli aggiuntivi per Banche
 
 Progetto per la gestione dell'interfacciamento con le banche.
 
-Differenze rispetto localizzazione ufficiale Odoo/OCA:
-
-- Disabilitati test con repository OCA e Odoo e corretto [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
-- Maggiore copertura [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0) tramite unit test aggiuntive; attuale [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=7.0) OCA
-- Moduli bonifici SEPA 7.0 modificati in quanto le banche italiane non usano lo standard Sepa ma una variante definita del consorzio CBI.
+Differenze rispetto localizzazione ufficiale Odoo/OCA
+Descrizione | Odoo Italia | OCA
+--- | --- | ---
+Coverage | [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=7.0) | [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=7.0) OCA
+Test con repository OCA e Odoo | [Errore import decimal precision](https://github.com/OCA/OCB/issues/629) | N/V
+Bonifici Italia | Si, standard CBI | No
 
 [//]: # (copyright)
 
