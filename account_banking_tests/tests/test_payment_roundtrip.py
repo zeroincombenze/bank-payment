@@ -24,6 +24,29 @@ from openerp import netsvc
 
 
 class TestPaymentRoundtrip(SingleTransactionCase):
+    def env789(self, model):
+        """Return model pool [7.0]"""
+        return self.registry(model)
+
+    def ref789(self, model):
+        """Return reference id [7.0]"""
+        return self.ref(model)
+
+    def write789(self, model, id, values):
+        """Write existent record [7.0]"""
+        model_pool = self.registry(model)
+        return model_pool.write(self.cr, self.uid, [id], values)
+
+    def write_ref(self, xid, values):
+        """Browse and write existent record"""
+        obj = self.browse_ref(xid)
+        return obj.write(values)
+
+    def create789(self, model, values):
+        """Create a new record for test [7.0]"""
+        return self.env789(model).create(self.cr,
+                                         self.uid,
+                                         values)
 
     def assert_payment_order_state(self, expected):
         """
@@ -55,8 +78,15 @@ class TestPaymentRoundtrip(SingleTransactionCase):
             cr, uid, 'base', 'nl')[1]
         self.currency_id = data_model.get_object_reference(
             cr, uid, 'base', 'EUR')[1]
-        self.bank_id = reg('res.bank').create(
-            cr, uid,
+        # self.bank_id = reg('res.bank').create(
+        #     cr, uid,
+        #     {
+        #         'name': 'ING Bank',
+        #         'bic': 'INGBNL2A',
+        #         'country': self.country_id,
+        #     })
+        self.bank_id = self.create789(
+            'res.bank',
             {
                 'name': 'ING Bank',
                 'bic': 'INGBNL2A',
