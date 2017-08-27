@@ -23,6 +23,29 @@ from openerp import workflow
 
 
 class TestPaymentRoundtrip(TransactionCase):
+    def env789(self, model):
+        """Return model pool [8.0]"""
+        return self.env[model]
+
+    def ref789(self, model):
+        """Return reference id [8.0]"""
+        return self.env.ref(model).id
+
+    def write789(self, model, id, values):
+        """Write existent record [8.0]"""
+        model_pool = self.env[model]
+        obj = model_pool.search([('id', '=', id)])
+        return obj.write(values)
+
+    def write_ref(self, xid, values):
+        """Browse and write existent record"""
+        obj = self.browse_ref(xid)
+        return obj.write(values)
+
+    def create789(self, model, values):
+        """Create a new record for test [8.0]"""
+        model_pool = self.env[model]
+        return model_pool.create(values).id
 
     def assert_payment_order_state(self, expected):
         """
@@ -54,12 +77,19 @@ class TestPaymentRoundtrip(TransactionCase):
             cr, uid, 'base', 'nl')[1]
         self.currency_id = data_model.get_object_reference(
             cr, uid, 'base', 'EUR')[1]
-        self.bank_id = reg('res.bank').create(
-            cr, uid, {
+        # self.bank_id = reg('res.bank').create(
+        #     cr, uid, {
+        #         'name': 'ING Bank',
+        #         'bic': 'INGBNL2A',
+        #         'country': self.country_id,
+        #         })
+        self.bank_id = self.create789(
+            'res.bank',
+            {
                 'name': 'ING Bank',
                 'bic': 'INGBNL2A',
                 'country': self.country_id,
-                })
+            })
         self.company_id = reg('res.company').create(
             cr, uid, {
                 'name': '_banking_addons_test_company',
