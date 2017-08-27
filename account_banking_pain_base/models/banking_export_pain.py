@@ -54,7 +54,7 @@ class banking_export_pain(orm.AbstractModel):
                     '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
                 for unallowed_ascii_char in unallowed_ascii_chars:
                     value = value.replace(unallowed_ascii_char, '-')
-            else:
+            else:                                           # pragma: no cover
                 value = ''
         return value
 
@@ -62,7 +62,7 @@ class banking_export_pain(orm.AbstractModel):
             self, cr, uid, field_name, field_value, eval_ctx, max_size=0,
             gen_args=None, context=None):
         '''This function is designed to be inherited !'''
-        if gen_args is None:
+        if gen_args is None:                                # pragma: no cover
             gen_args = {}
         assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
         try:
@@ -91,7 +91,7 @@ class banking_export_pain(orm.AbstractModel):
                 _('Error:'),
                 _("The '%s' is empty or 0. It should have a non-null value.")
                 % field_name)
-        if max_size and len(value) > max_size:
+        if max_size and len(value) > max_size:              # pragma: no cover
             value = value[0:max_size]
         return value
 

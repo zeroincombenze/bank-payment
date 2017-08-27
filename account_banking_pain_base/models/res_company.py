@@ -88,12 +88,13 @@ class res_company(orm.Model):
             country_id, country_code = self._get_country(cr, uid,
                                                          company,
                                                          context=context)
-        company_vat = company.vat
         party_identifier = False
-        if country_code == 'BE':
-            party_identifier = company_vat[2:].replace(' ', '')
-        elif country_code == 'IT':
-            party_identifier = company_vat[2:].replace(' ', '')
+        if company.vat:
+            company_vat = company.vat
+            if country_code == 'BE':
+                party_identifier = company_vat[2:].replace(' ', '')
+            elif country_code == 'IT':
+                party_identifier = company_vat[2:].replace(' ', '')
         return party_identifier
 
     def _initiating_party_issuer_default(self, cr, uid, context=None):

@@ -22,6 +22,12 @@ from openerp.tests.common import SingleTransactionCase
 from openerp import netsvc
 # import pdb
 
+BNK_NL_NAME = 'ING Bank'
+BNK_NL_IBAN = 'NL08INGB0000000555'
+BNK_NL_BIC = 'INGBNL2A'
+BNK_NL_IBAN1 = 'NL42INGB0000454000'
+BNK_NL_IBAN2 = 'NL86INGB0002445588'
+
 
 class TestPaymentRoundtrip(SingleTransactionCase):
     def env789(self, model):
@@ -78,22 +84,15 @@ class TestPaymentRoundtrip(SingleTransactionCase):
             cr, uid, 'base', 'nl')[1]
         self.currency_id = data_model.get_object_reference(
             cr, uid, 'base', 'EUR')[1]
-        # self.bank_id = reg('res.bank').create(
-        #     cr, uid,
-        #     {
-        #         'name': 'ING Bank',
-        #         'bic': 'INGBNL2A',
-        #         'country': self.country_id,
-        #     })
-        self.bank_id = self.create789(
+        self.bank_nl_id = self.create789(
             'res.bank',
             {
-                'name': 'ING Bank',
-                'bic': 'INGBNL2A',
+                'name': BNK_NL_NAME,
+                'bic': BNK_NL_BIC,
                 'country': self.country_id,
             })
-        self.company_id = reg('res.company').create(
-            cr, uid,
+        self.company_id = self.create789(
+            'res.company',
             {
                 'name': '_banking_addons_test_company',
                 'currency_id': self.currency_id,
@@ -101,13 +100,13 @@ class TestPaymentRoundtrip(SingleTransactionCase):
             })
         self.partner_id = reg('res.company').read(
             cr, uid, self.company_id, ['partner_id'])['partner_id'][0]
-        self.partner_bank_id = reg('res.partner.bank').create(
-            cr, uid,
+        self.partner_bank_id = self.create789(
+            'res.partner.bank',
             {
                 'state': 'iban',
-                'acc_number': 'NL08INGB0000000555',
-                'bank': self.bank_id,
-                'bank_bic': 'INGBNL2A',
+                'acc_number': BNK_NL_IBAN,
+                'bank': self.bank_nl_id,
+                'bank_bic': BNK_NL_BIC,
                 'partner_id': self.partner_id,
                 'company_id': self.company_id,
             })
@@ -165,9 +164,9 @@ class TestPaymentRoundtrip(SingleTransactionCase):
                 'bank_ids': [
                     (0, False, {
                         'state': 'iban',
-                        'acc_number': 'NL42INGB0000454000',
-                        'bank': self.bank_id,
-                        'bank_bic': 'INGBNL2A',
+                        'acc_number': BNK_NL_IBAN1,
+                        'bank': self.bank_nl_id,
+                        'bank_bic': BNK_NL_BIC,
                     })
                 ],
             }, context=context)
@@ -179,9 +178,9 @@ class TestPaymentRoundtrip(SingleTransactionCase):
                 'bank_ids': [
                     (0, False, {
                         'state': 'iban',
-                        'acc_number': 'NL86INGB0002445588',
-                        'bank': self.bank_id,
-                        'bank_bic': 'INGBNL2A',
+                        'acc_number': BNK_NL_IBAN2,
+                        'bank': self.bank_nl_id,
+                        'bank_bic': BNK_NL_BIC,
                     })
                 ],
             }, context=context)
