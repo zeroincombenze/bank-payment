@@ -63,7 +63,7 @@ class BankingExportPain(models.AbstractModel):
         assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
         try:
             value = safe_eval(field_value, eval_ctx)
-            value = self._cvt2bankcodeset(value, gen_args, context)
+            value = self._cvt2bankcodeset(value, gen_args, context=context)
         except:
             line = eval_ctx.get('line')
             if line:
@@ -88,7 +88,7 @@ class BankingExportPain(models.AbstractModel):
         return value
 
     @api.model
-    def _validate_xml(self, xml_string, gen_args):
+    def _validate_xml(self, xml_string, gen_args, context=None):
         xsd_etree_obj = etree.parse(
             tools.file_open(gen_args['pain_xsd_file']))
         official_pain_schema = etree.XMLSchema(xsd_etree_obj)
@@ -111,16 +111,31 @@ class BankingExportPain(models.AbstractModel):
         return True
 
     @api.multi
-    def finalize_sepa_file_creation(
-            self, xml_root, total_amount, transactions_count, gen_args):
+    def _declare_sepa_file_header(
+            self, xml_root, gen_args, context=None):
         xml_string = etree.tostring(
             xml_root, pretty_print=True, encoding='UTF-8',
             xml_declaration=True)
+        # [antoniov: 2016-06-29] Customizing for Italian CBI
+        if gen_args.get('variant_xsd') == 'CBI-IT':
+            xattr = 'xsi:schemaLocation='
+            xattr += '"urn:CBI:xsd:CBIPaymentRequest.00.04.00'
+            xattr += ' CBIPaymentRequest.00.04.00.xsd"'
+            i = xml_string.find('xmlns:')
+            xml_string = xml_string[:i] + xattr + ' ' + xml_string[i:]
         logger.debug(
             "Generated SEPA XML file in format %s below"
             % gen_args['pain_flavor'])
         logger.debug(xml_string)
-        self._validate_xml(xml_string, gen_args)
+        return xml_string
+
+    @api.multi
+    def finalize_sepa_file_creation(
+            self, xml_root, total_amount, transactions_count, gen_args,
+            context=None):
+        xml_string = self._declare_sepa_file_header(
+            xml_root, gen_args, context=context)
+        self._validate_xml(xml_string, gen_args, context=context)
 
         order_ref = []
         for order in self.payment_order_ids:
@@ -148,14 +163,15 @@ class BankingExportPain(models.AbstractModel):
         return action
 
     @api.model
-    def generate_group_header_block(self, parent_node, gen_args):
+    def generate_group_header_block(self, parent_node, gen_args, context=None):
         group_header_1_0 = etree.SubElement(parent_node, 'GrpHdr')
         message_identification_1_1 = etree.SubElement(
             group_header_1_0, 'MsgId')
         message_identification_1_1.text = self._prepare_field(
             'Message Identification',
             'self.payment_order_ids[0].reference',
-            {'self': self}, 35, gen_args=gen_args)
+            {'self': self}, 35,
+            gen_args=gen_args, context=context)
         creation_date_time_1_2 = etree.SubElement(group_header_1_0, 'CreDtTm')
         creation_date_time_1_2.text = datetime.strftime(
             datetime.today(), '%Y-%m-%dT%H:%M:%S')
@@ -171,20 +187,22 @@ class BankingExportPain(models.AbstractModel):
         if gen_args.get('pain_flavor') == 'pain.001.001.02':
             grouping = etree.SubElement(group_header_1_0, 'Grpg')
             grouping.text = 'GRPD'
-        self.generate_initiating_party_block(group_header_1_0, gen_args)
+        self.generate_initiating_party_block(group_header_1_0, gen_args,
+                                             context=context)
         return group_header_1_0, nb_of_transactions_1_6, control_sum_1_7
 
     @api.model
     def generate_start_payment_info_block(
             self, parent_node, payment_info_ident,
             priority, local_instrument, sequence_type, requested_date,
-            eval_ctx, gen_args):
+            eval_ctx, gen_args, context=None):
         payment_info_2_0 = etree.SubElement(parent_node, 'PmtInf')
         payment_info_identification_2_1 = etree.SubElement(
             payment_info_2_0, 'PmtInfId')
         payment_info_identification_2_1.text = self._prepare_field(
             'Payment Information Identification',
-            payment_info_ident, eval_ctx, 35, gen_args=gen_args)
+            payment_info_ident, eval_ctx, 35,
+            gen_args=gen_args, context=context)
         payment_method_2_2 = etree.SubElement(payment_info_2_0, 'PmtMtd')
         payment_method_2_2.text = gen_args['payment_method']
         nb_of_transactions_2_4 = False
@@ -196,9 +214,11 @@ class BankingExportPain(models.AbstractModel):
         # Implementation guidelines" for SCT and SDD says that control sum
         # and nb_of_transactions should be present
         # at both "group header" level and "payment info" level
-            nb_of_transactions_2_4 = etree.SubElement(
-                payment_info_2_0, 'NbOfTxs')
-            control_sum_2_5 = etree.SubElement(payment_info_2_0, 'CtrlSum')
+        # But not for Italy!?
+            if gen_args.get('variant_xsd') != 'CBI-IT':
+                nb_of_transactions_2_4 = etree.SubElement(
+                    payment_info_2_0, 'NbOfTxs')
+                control_sum_2_5 = etree.SubElement(payment_info_2_0, 'CtrlSum')
         payment_type_info_2_6 = etree.SubElement(
             payment_info_2_0, 'PmtTpInf')
         if priority and gen_args['payment_method'] != 'DD':
@@ -236,11 +256,17 @@ class BankingExportPain(models.AbstractModel):
         return False
 
     @api.model
-    def generate_initiating_party_block(self, parent_node, gen_args):
+    def generate_initiating_party_block(self, parent_node, gen_args,
+                                        context=None):
+        context = {} if context is None else context
+        country_code = gen_args.get('country', '')
+        if country_code:
+            context['country'] = country_code
         my_company_name = self._prepare_field(
             'Company Name',
             'self.payment_order_ids[0].mode.bank_id.partner_id.name',
-            {'self': self}, gen_args.get('name_maxsize'), gen_args=gen_args)
+            {'self': self}, gen_args.get('name_maxsize'), gen_args=gen_args,
+            context=context)
         initiating_party_1_8 = etree.SubElement(parent_node, 'InitgPty')
         initiating_party_name = etree.SubElement(initiating_party_1_8, 'Nm')
         initiating_party_name.text = my_company_name
@@ -271,19 +297,46 @@ class BankingExportPain(models.AbstractModel):
     @api.model
     def generate_party_agent(
             self, parent_node, party_type, party_type_label,
-            order, party_name, iban, bic, eval_ctx, gen_args):
+            order, party_name, iban, bic, eval_ctx, gen_args, context=None):
         """Generate the piece of the XML file corresponding to BIC
         This code is mutualized between TRF and DD"""
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
         try:
-            bic = self._prepare_field(
-                '%s BIC' % party_type_label, bic, eval_ctx, gen_args=gen_args)
-            party_agent = etree.SubElement(parent_node, '%sAgt' % party_type)
-            party_agent_institution = etree.SubElement(
-                party_agent, 'FinInstnId')
-            party_agent_bic = etree.SubElement(
-                party_agent_institution, gen_args.get('bic_xml_tag'))
-            party_agent_bic.text = bic
+            if gen_args.get('variant_xsd') == 'CBI-IT':
+                if party_type == 'Dbtr':
+                    party_agent = etree.SubElement(
+                        parent_node, '%sAgt' % party_type)
+                    party_agent_institution = etree.SubElement(
+                        party_agent, 'FinInstnId')
+                    party_agent_other = etree.SubElement(
+                        party_agent_institution, 'ClrSysMmbId')
+                    party_agent_other_identification = etree.SubElement(
+                        party_agent_other, 'MmbId')
+                    # TODO: insert actual ABI
+                    party_agent_other_identification.text = iban[5:10]
+                # Foreign Credit Transfer (bonifico Sepa Estero)
+                if party_type == 'Cdtr' and iban[0:2].upper() != 'IT':
+                    bic = self._prepare_field(
+                        '%s BIC' % party_type_label, bic, eval_ctx,
+                        gen_args=gen_args, context=context)
+                    party_agent = etree.SubElement(parent_node,
+                                                   '%sAgt' % party_type)
+                    party_agent_institution = etree.SubElement(
+                        party_agent, 'FinInstnId')
+                    party_agent_bic = etree.SubElement(
+                        party_agent_institution, 'BIC')
+                    party_agent_bic.text = bic
+            else:
+                bic = self._prepare_field(
+                    '%s BIC' % party_type_label, bic, eval_ctx,
+                    gen_args=gen_args, context=context)
+                party_agent = etree.SubElement(parent_node,
+                                               '%sAgt' % party_type)
+                party_agent_institution = etree.SubElement(
+                    party_agent, 'FinInstnId')
+                party_agent_bic = etree.SubElement(
+                    party_agent_institution, gen_args.get('bic_xml_tag'))
+                party_agent_bic.text = bic
         except Warning:
             if order == 'C':
                 if iban[0:2] != gen_args['initiating_party_country_code']:
@@ -312,7 +365,7 @@ class BankingExportPain(models.AbstractModel):
     @api.model
     def generate_party_block(
             self, parent_node, party_type, order, name, iban, bic,
-            eval_ctx, gen_args):
+            eval_ctx, gen_args, partner=None, context=None):
         """Generate the piece of the XML file corresponding to Name+IBAN+BIC
         This code is mutualized between TRF and DD"""
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
@@ -322,7 +375,8 @@ class BankingExportPain(models.AbstractModel):
             party_type_label = 'Debtor'
         party_name = self._prepare_field(
             '%s Name' % party_type_label, name, eval_ctx,
-            gen_args.get('name_maxsize'), gen_args=gen_args)
+            gen_args.get('name_maxsize'), gen_args=gen_args,
+            context=context)
         piban = self._prepare_field(
             '%s IBAN' % party_type_label, iban, eval_ctx, gen_args=gen_args)
         viban = self._validate_iban(piban)
@@ -333,10 +387,89 @@ class BankingExportPain(models.AbstractModel):
         elif order == 'C':
             self.generate_party_agent(
                 parent_node, party_type, party_type_label,
-                order, party_name, viban, bic, eval_ctx, gen_args)
+                order, party_name, viban, bic, eval_ctx, gen_args,
+                context=context)
         party = etree.SubElement(parent_node, party_type)
         party_nm = etree.SubElement(party, 'Nm')
         party_nm.text = party_name
+
+        if gen_args.get('variant_xsd') == 'CBI-IT':
+            company_obj = gen_args['sepa_export'].\
+                payment_order_ids[0].company_id
+            initiating_party_identifier = self.env['res.company'].\
+                _get_initiating_party_identifier(
+                    company_obj.id,
+                    party_type=party_type,
+                    context=context)
+            if initiating_party_identifier:
+                if viban[0:2] != gen_args['initiating_party_country_code'] or\
+                        (partner and
+                         partner.vat and
+                         partner.vat[0:2].upper() != 'IT'):
+                    SCT = 'crossborder'
+                else:
+                    SCT = 'domestic'
+                if party_type != 'Cdtr':
+                    party_id = etree.SubElement(party, 'Id')
+                    party_org_id = etree.SubElement(party_id, 'OrgId')
+                    party_org_other = etree.SubElement(party_org_id, 'Othr')
+                    party_org_other_id = etree.SubElement(party_org_other,
+                                                          'Id')
+                    party_org_other_id.text = initiating_party_identifier
+                elif SCT == 'crossborder':
+                    if partner and partner.vat:
+                        party_id = etree.SubElement(party, 'Id')
+                        party_org_id = etree.SubElement(party_id, 'OrgId')
+                        party_org_other = etree.SubElement(party_org_id,
+                                                           'Othr')
+                        party_org_other_id = etree.SubElement(party_org_other,
+                                                              'Id')
+                        party_org_other_id.text = partner.vat
+                    else:
+                        party_pstladr = etree.SubElement(party, 'PstlAdr')
+                        street = self._cvt2bankcodeset(partner.street,
+                                                       gen_args,
+                                                       context=context)
+                        if street:
+                            party_strt = etree.SubElement(party_pstladr,
+                                                          'StrtNm')
+                            party_strt.text = street
+                        party_twn = etree.SubElement(party_pstladr, 'TwnNm')
+                        town = self._cvt2bankcodeset(partner.city,
+                                                     gen_args,
+                                                     context=context)
+                        party_twn.text = town
+                        if not town:
+                            raise Warning(
+                                _('Error:'),
+                                _("Partner %s w/o town" % partner.name))
+                else:
+                    if partner and partner.vat:
+                        party_id = etree.SubElement(party, 'Id')
+                        party_org_id = etree.SubElement(party_id, 'OrgId')
+                        party_org_other = etree.SubElement(party_org_id,
+                                                           'Othr')
+                        party_org_other_id = etree.SubElement(party_org_other,
+                                                              'Id')
+                        party_org_other_id.text = partner.vat
+                        party_org_other_issr = etree.SubElement(
+                            party_org_other, 'Issr')
+                        party_org_other_issr.text = 'ADE'
+                    elif hasattr(partner, 'fiscalcode') and\
+                            partner.fiscalcode:
+                        party_id = etree.SubElement(party, 'Id')
+                        party_org_id = etree.SubElement(party_id, 'OrgId')
+                        party_org_other = etree.SubElement(party_org_id,
+                                                           'Othr')
+                        party_org_other_id = etree.SubElement(party_org_other,
+                                                              'Id')
+                        party_org_other_id.text = partner.fiscalcode
+                        party_org_other_issr = etree.SubElement(
+                            party_org_other, 'Issr')
+                        party_org_other_issr.text = 'ADE'
+                    else:
+                        pass
+
         party_account = etree.SubElement(
             parent_node, '%sAcct' % party_type)
         party_account_id = etree.SubElement(party_account, 'Id')
@@ -346,11 +479,13 @@ class BankingExportPain(models.AbstractModel):
         if order == 'B':
             self.generate_party_agent(
                 parent_node, party_type, party_type_label,
-                order, party_name, viban, bic, eval_ctx, gen_args)
+                order, party_name, viban, bic, eval_ctx, gen_args,
+                context=context)
         return True
 
     @api.model
-    def generate_remittance_info_block(self, parent_node, line, gen_args):
+    def generate_remittance_info_block(self, parent_node, line, gen_args,
+                                       context=None):
         remittance_info_2_91 = etree.SubElement(
             parent_node, 'RmtInf')
         if line.state == 'normal':
@@ -360,7 +495,7 @@ class BankingExportPain(models.AbstractModel):
                 self._prepare_field(
                     'Remittance Unstructured Information',
                     'line.communication', {'line': line}, 140,
-                    gen_args=gen_args)
+                    gen_args=gen_args, context=context)
         else:
             if not line.struct_communication_type:
                 raise Warning(
@@ -399,19 +534,20 @@ class BankingExportPain(models.AbstractModel):
                 self._prepare_field(
                     'Creditor Structured Reference',
                     'line.communication', {'line': line}, 35,
-                    gen_args=gen_args)
+                    gen_args=gen_args, context=context)
         return True
 
     @api.model
     def generate_creditor_scheme_identification(
             self, parent_node, identification, identification_label,
-            eval_ctx, scheme_name_proprietary, gen_args):
+            eval_ctx, scheme_name_proprietary, gen_args, context=None):
         csi_id = etree.SubElement(parent_node, 'Id')
         csi_privateid = etree.SubElement(csi_id, 'PrvtId')
         csi_other = etree.SubElement(csi_privateid, 'Othr')
         csi_other_id = etree.SubElement(csi_other, 'Id')
         csi_other_id.text = self._prepare_field(
-            identification_label, identification, eval_ctx, gen_args=gen_args)
+            identification_label, identification, eval_ctx,
+            gen_args=gen_args, context=context)
         csi_scheme_name = etree.SubElement(csi_other, 'SchmeNm')
         csi_scheme_name_proprietary = etree.SubElement(
             csi_scheme_name, 'Prtry')
