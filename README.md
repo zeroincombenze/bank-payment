@@ -10,6 +10,7 @@
 
 [![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 ================================================================================================
+================================================================================================
 
 OCA banking payment addons for Odoo
 
@@ -31,7 +32,9 @@ Other features can now be found in these repositories:
 
 [//]: # (addons)
 
+
 Available addons
+----------------
 addon | version | summary
 --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 10.0.1.1.0 | Banking mandates
@@ -46,6 +49,7 @@ addon | version | summary
 
 
 Unported addons
+---------------
 addon | version | summary
 --- | --- | ---
 [account_banking_tests](account_banking_tests/) | 8.0.0.1.0 (unported) | Banking Addons - Tests
