@@ -32,7 +32,9 @@ Other features can now be found in these repositories:
 
 [//]: # (addons)
 
+
 Available addons
+----------------
 addon | version | summary
 --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 9.0.1.1.0 | Banking mandates
@@ -49,6 +51,7 @@ addon | version | summary
 
 
 Unported addons
+---------------
 addon | version | summary
 --- | --- | ---
 [account_banking_tests](account_banking_tests/) | 8.0.0.1.0 (unported) | Banking Addons - Tests
