@@ -57,6 +57,7 @@ Installation
 
 
 
+
 Install this module from Odoo Control Panel.
 
 
@@ -72,10 +73,13 @@ Configuration
 
 
 
+
 No configuration required.
 
 
 Usage
+-----
+
 -----
 
 -----
@@ -113,11 +117,13 @@ Known issues / Roadmap
 
 
 
+
 -   no known issues
 
 
 Bug Tracker
 -----------
+
 
 
 
@@ -144,6 +150,7 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
@@ -156,7 +163,9 @@ Credits
 
 
 
+
 ### Contributors
+
 
 
 
@@ -183,6 +192,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

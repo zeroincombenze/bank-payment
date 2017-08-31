@@ -293,9 +293,12 @@ class banking_export_pain(orm.AbstractModel):
                 cr, uid,
                 gen_args['sepa_export'].payment_order_ids[0].company_id.id,
                 context=context)
-        initiating_party_issuer = self.pool['res.company'].\
-            _initiating_party_issuer_default(
-            cr, uid, context=context)
+        initiating_party_issuer = gen_args['sepa_export'].\
+            payment_order_ids[0].company_id.initiating_party_issuer
+        if not initiating_party_issuer:
+            initiating_party_issuer = self.pool['res.company'].\
+                _initiating_party_issuer_default(
+                cr, uid, context=context)
         if initiating_party_identifier and initiating_party_issuer:
             iniparty_id = etree.SubElement(initiating_party_1_8, 'Id')
             iniparty_org_id = etree.SubElement(iniparty_id, 'OrgId')

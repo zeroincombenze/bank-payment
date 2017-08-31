@@ -93,6 +93,11 @@ class banking_export_sepa_wizard(orm.TransientModel):
         xsd_file, variant = self._get_name_n_params(pain_name)
         module_path = 'account_banking_sepa_credit_transfer'
         if variant:
+            if variant.find('used') >= 0:
+                x = variant.split(' ')
+                variant = x[-1]
+            if variant == 'Italy':
+                variant = 'CBI-IT'
             xsd_file = '%s-%s.xsd' % (pain_flavor, variant)
         else:
             xsd_file = '%s.xsd' % pain_flavor

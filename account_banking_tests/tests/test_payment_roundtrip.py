@@ -156,7 +156,7 @@ class TestPaymentRoundtrip(SingleTransactionCase):
         can be validated properly.
         """
         partner_model = reg('res.partner')
-        supplier1 = partner_model.create(
+        self.supplier1 = partner_model.create(
             cr, uid, {
                 'name': 'Supplier 1',
                 'supplier': True,
@@ -170,7 +170,7 @@ class TestPaymentRoundtrip(SingleTransactionCase):
                     })
                 ],
             }, context=context)
-        supplier2 = partner_model.create(
+        self.supplier2 = partner_model.create(
             cr, uid, {
                 'name': 'Supplier 2',
                 'supplier': True,
@@ -195,7 +195,7 @@ class TestPaymentRoundtrip(SingleTransactionCase):
         invoice_model = reg('account.invoice')
         values = {
             'type': 'in_invoice',
-            'partner_id': supplier1,
+            'partner_id': self.supplier1,
             'account_id': self.payable_id,
             'invoice_line': [
                 (
@@ -220,7 +220,7 @@ class TestPaymentRoundtrip(SingleTransactionCase):
                 })
         ]
         values.update({
-            'partner_id': supplier2,
+            'partner_id': self.supplier2,
             'name': 'Purchase 2',
             'reference_type': 'structured',
             'supplier_invoice_number': 'INV2',
