@@ -233,7 +233,7 @@ class banking_export_sepa_wizard(orm.TransientModel):
         # Get country id for any customization
         country_id, country_code = self.pool['res.company'].\
             _get_country(cr, uid,
-                         sepa_export.payment_order_ids[0].company_id, context)
+                         sepa_export.payment_order_ids[0].company_id.id)
         pain_flavor = sepa_export.payment_order_ids[0].mode.type.code
         pain_name = sepa_export.payment_order_ids[0].mode.type.name
         convert_to_ascii = \

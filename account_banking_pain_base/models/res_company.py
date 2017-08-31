@@ -55,18 +55,16 @@ class res_company(orm.Model):
                     'Updated initiating_party_identifier on company %s',
                     company.name)
 
-    def _get_country(self, cr, uid, company_obj, context=None):
+    def _get_country(self, cr, uid, company_id):
         """Some fields are country dependent"""
-        context = {} if context is None else context
-        country_id = None
-        country_code = None
-        if company_obj.country_id:
-            country_id = company_obj.country_id.id
-            c_obj = pooler.get_pool(cr.dbname).\
-                get('res.country').browse(cr, uid, country_id)
-            country_code = c_obj.code
-        elif company_obj.vat:
-            country_code = company_obj.vat[0:2].upper()
+        country_id = False
+        country_code = False
+        assert isinstance(company_id, int), 'Only one company ID'
+        company = self.browse(cr, uid, company_id)
+        if company.country_id:
+            country_code = company.country_id.code
+        elif company.vat:
+            country_code = company.vat[0:2].upper()
             ids = pooler.get_pool(cr.dbname).\
                 get('res.country').search(cr, uid,
                                           [('code', '=', country_code)])
@@ -83,11 +81,10 @@ class res_company(orm.Model):
         context = {} if context is None else context
         assert isinstance(company_id, int), 'Only one company ID'
         country_code = context.get('country_code')
-        company = self.browse(cr, uid, company_id, context=context)
         if not country_code:
             country_id, country_code = self._get_country(cr, uid,
-                                                         company,
-                                                         context=context)
+                                                         company_id)
+        company = self.browse(cr, uid, company_id, context=context)
         party_identifier = False
         if company.vat:
             company_vat = company.vat
@@ -97,13 +94,15 @@ class res_company(orm.Model):
                 party_identifier = company_vat[2:].replace(' ', '')
         return party_identifier
 
-    def _initiating_party_issuer_default(self, cr, uid, context=None):
-        '''If you need to add support for an additionnal country, you can
+    def _initiating_party_issuer_default(self, cr, uid,
+                                         company_id=None, context=None):
+        '''This method is called from post_install.py, which itself is also
+        called from migrations/7.0.0.2/post-migration.py
+        If you need to add support for an additionnal country, you can
         add an entry in the dict "party_issuer_per_country" here
         or inherit this function in the localization modules for
         your country'''
         context = {} if context is None else context
-
         initiating_party_issuer = ''
         # If your country require the 'Initiating Party Issuer', you should
         # contribute the entry for your country in the dict below
@@ -111,19 +110,24 @@ class res_company(orm.Model):
             'BE': 'KBO-BCE',  # KBO-BCE = the registry of companies in Belgium
             'IT': 'CBI',      # CBI = Corporate Banking Italy
         }
-        company_id = self._company_default_get(
-            cr, uid, 'res.company', context=context)
+        if not company_id:
+            company_id = self._company_default_get(
+                cr, uid, 'res.company', context=context)
         if company_id:
-            company = self.browse(cr, uid, company_id, context=context)
-            country_code = company.country_id.code
+            country_id, country_code = self._get_country(cr, uid,
+                                                         company_id)
             initiating_party_issuer = party_issuer_per_country.get(
                 country_code, '')
         return initiating_party_issuer
 
-    def _initiating_party_issuer_def(self, cr, uid, context=None):
+    def _default_initiating_issue(self, cr, uid, company=None, context=None):
         return self._initiating_party_issuer_default(
-            cr, uid, context=context)
+            cr, uid, company=company, context=context)
 
-    _defaults = {
-        'initiating_party_issuer': _initiating_party_issuer_def,
-    }
+    # def _initiating_party_issuer_def(self, cr, uid, context=None):
+    #     return self._initiating_party_issuer_default(
+    #         cr, uid, company=None, context=context)
+
+    # _defaults = {
+    #     'initiating_party_issuer': _initiating_party_issuer_def,
+    # }

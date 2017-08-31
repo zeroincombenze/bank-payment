@@ -21,8 +21,7 @@
         'Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>'
     ],
     'category': 'Hidden',
-    'depends': ['account_banking_payment_export',
-                'account_payment'],
+    'depends': ['account_banking_payment_export'],
     'external_dependencies': {
         'python': ['unidecode', 'lxml'],
     },

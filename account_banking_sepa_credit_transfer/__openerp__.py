@@ -10,7 +10,7 @@
 {
     'name': 'Account Banking SEPA Credit Transfer',
     'summary': 'Create SEPA XML files for Credit Transfers',
-    'version': '0.2',
+    'version': '7.0.0.2.1',
     'license': 'AGPL-3',
     'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com',
@@ -48,6 +48,5 @@ Please contact Alexis de Lattre from Akretion <alexis.delattre@akretion.com>
 for any help or question about this module.
     ''',
     'test': ['test/pay_invoice.yml', ],
-    'active': False,
     'installable': True,
 }

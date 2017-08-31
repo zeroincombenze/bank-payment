@@ -6,9 +6,9 @@
 # [2017: SHS-AV] Italian localization
 
 from openerp.tests.common import SingleTransactionCase
-from openerp.addons.account_banking_pain_base.post_install\
-    import set_default_initiating_party
-from openerp import pooler
+# from openerp.addons.account_banking_pain_base.post_install\
+#     import set_default_initiating_party
+# from openerp import pooler
 import logging
 
 __version__ = "0.1.1"
@@ -141,6 +141,17 @@ RES_PARTY_IDENTIFIER = {
     'nl': False,
 }
 
+RES_PARTY_ISSUER = {
+    '': False,
+    'be': 'KBO-BCE',
+    'ch': False,
+    'de': False,
+    'es': False,
+    'fr': False,
+    'it': 'CBI',
+    'nl': False,
+}
+
 
 class Test_company(SingleTransactionCase):
     def env789(self, model):
@@ -234,6 +245,13 @@ class Test_company(SingleTransactionCase):
             assert res == RES_PARTY_IDENTIFIER[country_code], \
                 'Invalid default party identifier "%s": expected "%s"' % (
                     res, RES_PARTY_IDENTIFIER[country_code])
+            # res = company_model.\
+            #     _initiating_party_issuer_default(cr,
+            #                                      uid,
+            #                                      company=self.company)
+            # assert res == RES_PARTY_ISSUER[country_code], \
+            #     'Invalid default party issuer "%s": expected "%s"' % (
+            #         res, RES_PARTY_ISSUER[country_code])
         # Migration test
-        pool = pooler.get_pool(cr.dbname)
-        set_default_initiating_party(cr, pool)
+        # pool = pooler.get_pool(cr.dbname)
+        # set_default_initiating_party(cr, pool)

@@ -1,28 +1,16 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
+# -*- coding: utf-8 -*-
+#    Copyright (C) 2010-2017 Akretion (http://www.akretion.com)
+#    Copyright (C) 2016-2017 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
-#    SEPA Direct Debit module for OpenERP
-#    Copyright (C) 2013 Akretion (http://www.akretion.com)
-#    @author: Alexis de Lattre <alexis.delattre@akretion.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# [2013: Akretion] First version
+# [2017: SHS-AV] Italian localization
+
 {
     'name': 'Account Banking SEPA Direct Debit',
     'summary': 'Create SEPA files for Direct Debit',
-    'version': '0.2',
+    'version': '7.0.0.2.1',
     'license': 'AGPL-3',
     'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com',
@@ -37,9 +25,9 @@
     },
     'data': [
         'security/original_mandate_required_security.xml',
-        'account_banking_sdd_view.xml',
-        'sdd_mandate_view.xml',
-        'company_view.xml',
+        'views/account_banking_sdd_view.xml',
+        'views/sdd_mandate_view.xml',
+        'views/company_view.xml',
         'mandate_expire_cron.xml',
         'wizard/export_sdd_view.xml',
         'data/payment_type_sdd.xml',
@@ -68,6 +56,5 @@ cf https://www.github.com/OCA/banking-addons
 Please contact Alexis de Lattre from Akretion <alexis.delattre@akretion.com>
 for any help or question about this module.
     ''',
-    'active': False,
     'installable': True,
 }

@@ -13,6 +13,8 @@ from openerp import pooler
 
 
 def migrate(cr, version):
+    """Post-install script.
+    If version is not set, we are called at installation time."""
     if not version:
         return
 

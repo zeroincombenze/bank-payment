@@ -16,4 +16,6 @@ def set_default_initiating_party(cr, pool):
     for company in companies:
         pool['res.company']._default_initiating_party(
             cr, SUPERUSER_ID, company)
+        pool['res.company']._initiating_party_issuer_default(
+            cr, SUPERUSER_ID, company)
     return
