@@ -84,7 +84,7 @@ class res_company(orm.Model):
         if not country_code:
             country_id, country_code = self._get_country(cr, uid,
                                                          company_id)
-        company = self.browse(cr, uid, company_id, context=context)
+        company = self.browse(cr, uid, company_id)
         party_identifier = False
         if company.vat:
             company_vat = company.vat
