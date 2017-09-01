@@ -258,10 +258,6 @@ class BankingExportSddWizard(models.TransientModel):
             'variant_xsd': variant,
             'country': country_code
         }
-        # pain_ns = {
-        #     'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-        #     None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
-        # }
         pain_ns, root_name = self._get_nsmap(pain_xsd_file, pain_flavor)
         xml_root = etree.Element(root_name, nsmap=pain_ns)
         if root_xml_tag:
@@ -381,56 +377,8 @@ class BankingExportSddWizard(models.TransientModel):
             amount_control_sum_2_5 = 0.0
             for line in lines:
                 transactions_count_2_4 += 1
-                # C. Direct Debit Transaction Info
-                # dd_transaction_info_2_28 = etree.SubElement(
-                #     payment_info_2_0, 'DrctDbtTxInf')
-                # payment_identification_2_29 = etree.SubElement(
-                #     dd_transaction_info_2_28, 'PmtId')
-                # end2end_identification_2_31 = etree.SubElement(
-                #     payment_identification_2_29, 'EndToEndId')
-                # end2end_identification_2_31.text = self._prepare_field(
-                #     'End to End Identification', 'line.name',
-                #     {'line': line}, 35, gen_args=gen_args)
-                # currency_name = self._prepare_field(
-                #     'Currency Code', 'line.currency.name',
-                #     {'line': line}, 3, gen_args=gen_args)
-                # instructed_amount_2_44 = etree.SubElement(
-                #     dd_transaction_info_2_28, 'InstdAmt', Ccy=currency_name)
-                # instructed_amount_2_44.text = '%.2f' % line.amount_currency
                 amount_control_sum_1_7 += line.amount_currency
                 amount_control_sum_2_5 += line.amount_currency
-                # dd_transaction_2_46 = etree.SubElement(
-                #     dd_transaction_info_2_28, 'DrctDbtTx')
-                # mandate_related_info_2_47 = etree.SubElement(
-                #     dd_transaction_2_46, 'MndtRltdInf')
-                # mandate_identification_2_48 = etree.SubElement(
-                #     mandate_related_info_2_47, 'MndtId')
-                # mandate_identification_2_48.text = self._prepare_field(
-                #     'Unique Mandate Reference',
-                #     'line.mandate_id.unique_mandate_reference',
-                #     {'line': line}, 35, gen_args=gen_args)
-                # mandate_signature_date_2_49 = etree.SubElement(
-                #     mandate_related_info_2_47, 'DtOfSgntr')
-                # mandate_signature_date_2_49.text = self._prepare_field(
-                #     'Mandate Signature Date',
-                #     'line.mandate_id.signature_date',
-                #     {'line': line}, 10, gen_args=gen_args)
-                # if sequence_type == 'FRST' and \
-                #     line.mandate_id.last_debit_date:
-                #     amendment_indicator_2_50 = etree.SubElement(
-                #         mandate_related_info_2_47, 'AmdmntInd')
-                #     amendment_indicator_2_50.text = 'true'
-                #     amendment_info_details_2_51 = etree.SubElement(
-                #         mandate_related_info_2_47, 'AmdmntInfDtls')
-                #     ori_debtor_account_2_57 = etree.SubElement(
-                #         amendment_info_details_2_51, 'OrgnlDbtrAcct')
-                #     ori_debtor_account_id = etree.SubElement(
-                #         ori_debtor_account_2_57, 'Id')
-                #     ori_debtor_agent_other = etree.SubElement(
-                #         ori_debtor_account_id, 'Othr')
-                #     ori_debtor_agent_other_id = etree.SubElement(
-                #         ori_debtor_agent_other, 'Id')
-                #     ori_debtor_agent_other_id.text = 'SMNDA'
                 dd_transaction_info_2_28 = self._get_trx_info(
                     line, payment_info_2_0, sequence_type, gen_args,
                     variant=variant, context=context)
