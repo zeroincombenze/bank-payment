@@ -38,6 +38,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_banking_payment_export
 
@@ -58,12 +59,15 @@ Configuration
 
 
 
+
 To configure this module, you need to:
 
  * create a transfer account who allow reconciliation : option "Allow Reconciliation" activated.
  * configure transfer account on payment mode. Go to the menu Accounting > Configuration > Miscellaneous > Payment Mode and complete the section "Transfer move settings".
 
 Usage
+-----
+
 -----
 
 -----
@@ -112,10 +116,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
  
 Bug Tracker
 -----------
+
 
 
 
@@ -149,7 +155,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -176,6 +184,7 @@ Credits
 
 
 
+
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Alexis de Lattre
@@ -187,6 +196,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

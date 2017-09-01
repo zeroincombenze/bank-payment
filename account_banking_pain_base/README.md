@@ -63,6 +63,7 @@ Installation
 
 
 
+
 Install this module from Odoo Control Panel.
 
 
@@ -84,10 +85,13 @@ Configuration
 
 
 
+
 No configuration required.
 
 
 Usage
+-----
+
 -----
 
 -----
@@ -143,11 +147,13 @@ Known issues / Roadmap
 
 
 
+
 -   no known issues
 
 
 Bug Tracker
 -----------
+
 
 
 
@@ -186,7 +192,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -222,6 +230,7 @@ Credits
 
 
 
+
 -   Alexis de Lattre
 -   Pedro M. Baeza
 -   Stéphane Bidoul <stephane.bidoul@acsone.eu>
@@ -237,6 +246,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

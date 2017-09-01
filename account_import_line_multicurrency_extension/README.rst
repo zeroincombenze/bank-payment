@@ -42,8 +42,10 @@ Installation
 
 
 
+
 Configuration
 -------------
+
 
 
 
@@ -85,6 +87,8 @@ Usage
 
 -----
 
+-----
+
 Known issues / Roadmap
 ----------------------
 
@@ -99,8 +103,10 @@ Known issues / Roadmap
 
 
 
+
 Bug Tracker
 -----------
+
 
 
 
@@ -135,7 +141,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -162,11 +170,14 @@ Credits
 
 
 
+
 * Vincent Renaville <vincent.renaville@camptocamp.com>
 
 ### Funders
 
 ### Maintainer
+
+
 
 
 
