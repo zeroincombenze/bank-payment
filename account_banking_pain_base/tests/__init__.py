@@ -6,7 +6,3 @@
 # [2017: SHS-AV] Italian localization
 
 from . import test_company
-
-checks = [
-    test_company,
-]

@@ -141,6 +141,17 @@ RES_PARTY_IDENTIFIER = {
     'nl': False,
 }
 
+RES_PARTY_ISSUER = {
+    '': False,
+    'be': 'KBO-BCE',
+    'ch': False,
+    'de': False,
+    'es': False,
+    'fr': False,
+    'it': 'CBI',
+    'nl': False,
+}
+
 
 class Test_company(SingleTransactionCase):
     def env789(self, model):
@@ -176,13 +187,16 @@ class Test_company(SingleTransactionCase):
             self.country_code = country_code
             xcountry = 'base.' + self.country_code
             self.country_id = self.ref789(xcountry)
+            vals = {'initiating_party_issuer': INIT_PARTY_ISSUE,
+                    'initiating_party_identifier': BNK[country_code]['cci'],
+                    'vat': BNK[country_code]['vat']}
         else:
             self.country_code = ''
             country_code = ''
             self.country_id = False
-        vals = {'initiating_party_issuer': INIT_PARTY_ISSUE,
-                'initiating_party_identifier': BNK[country_code]['cci'],
-                'vat': BNK[country_code]['vat']}
+            vals = {'initiating_party_issuer': False,
+                    'initiating_party_identifier': BNK[country_code]['cci'],
+                    'vat': BNK[country_code]['vat']}
         if country_code == 'be' or country_code == 'nl':
             vals['country_id'] = self.country_id
         else:

@@ -2,6 +2,9 @@
 # © 2010-2015 Akretion (www.akretion.com)
 # © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+#
+# [2010: Akretion] First version
+# [2017: SHS-AV] Italian localization
 
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning
@@ -72,6 +75,11 @@ class BankingExportSepaWizard(models.TransientModel):
         xsd_file, variant = self._get_name_n_params(pain_name)
         module_path = 'account_banking_sepa_credit_transfer'
         if variant:
+            if variant.find('used') >= 0:
+                x = variant.split(' ')
+                variant = x[-1]
+            if variant == 'Italy':
+                variant = 'CBI-IT'
             xsd_file = '%s-%s.xsd' % (pain_flavor, variant)
         else:
             xsd_file = '%s.xsd' % pain_flavor
@@ -84,7 +92,7 @@ class BankingExportSepaWizard(models.TransientModel):
             pain_xsd_file = '%s/%s/%s.xsd' % (module_path, 'data', pain_flavor)
         return pain_xsd_file, variant
 
-    def _get_pain_tags(self, pain_flavor):
+    def _get_pain_tags(self, pain_flavor, variant=None):
         if pain_flavor == 'pain.001.001.02':
             bic_xml_tag = 'BIC'
             name_maxsize = 70
@@ -124,10 +132,13 @@ class BankingExportSepaWizard(models.TransientModel):
                     "'pain.001.001.04', 'pain.001.001.05' "
                     "and 'pain.001.003.03'.")
                 % pain_flavor)
+        if variant == 'CBI-IT':
+            root_xml_tag = False
         return bic_xml_tag, name_maxsize, root_xml_tag
 
     def _get_nsmap(self, pain_xsd_file, pain_flavor):
         """Read nsmap from xsd file TODO: best code"""
+        root_name = 'Document'
         pain_ns = {
             'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
             None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
@@ -144,12 +155,54 @@ class BankingExportSepaWizard(models.TransientModel):
             j = schema.find('"', i) + 1
             k = schema.find('"', j)
             pain_ns[None] = schema[j:k]
+            i = schema.find('<xs:element name=')
+            j = schema.find('"', i) + 1
+            k = schema.find('"', j)
+            root_name = schema[j:k]
         except:
             pass
-        return pain_ns
+        return pain_ns, root_name
+
+    def _get_trx_info(self, line, payment_info_2_0, gen_args,
+                      variant=None, context=None):
+        # C. Credit Transfer Transaction Info
+        credit_transfer_transaction_info_2_27 = etree.SubElement(
+            payment_info_2_0, 'CdtTrfTxInf')
+        payment_identification_2_28 = etree.SubElement(
+            credit_transfer_transaction_info_2_27, 'PmtId')
+        if variant == 'CBI-IT':
+            IT_instrid_2_30 = etree.SubElement(
+                payment_identification_2_28, 'InstrId')
+            IT_instrid_2_30.text = self._prepare_field(
+                'Instructions', 'line.name',
+                {'line': line}, 35, gen_args=gen_args,
+                context=context)
+        end2end_identification_2_30 = etree.SubElement(
+            payment_identification_2_28, 'EndToEndId')
+        end2end_identification_2_30.text = self._prepare_field(
+            'End to End Identification', 'line.name',
+            {'line': line}, 35, gen_args=gen_args, context=context)
+        currency_name = self._prepare_field(
+            'Currency Code', 'line.currency.name',
+            {'line': line}, 3, gen_args=gen_args, context=context)
+        if variant == 'CBI-IT':
+            IT_credit_transfer_transaction_info = etree.SubElement(
+                credit_transfer_transaction_info_2_27, 'PmtTpInf')
+            IT_catpurp_2_27 = etree.SubElement(
+                IT_credit_transfer_transaction_info, 'CtgyPurp')
+            IT_catpurpid_2_27 = etree.SubElement(
+                IT_catpurp_2_27, 'Cd')
+            # TODO: Category for other SCT type
+            IT_catpurpid_2_27.text = 'SUPP'
+        amount_2_42 = etree.SubElement(
+            credit_transfer_transaction_info_2_27, 'Amt')
+        instructed_amount_2_43 = etree.SubElement(
+            amount_2_42, 'InstdAmt', Ccy=currency_name)
+        instructed_amount_2_43.text = '%.2f' % line.amount_currency
+        return credit_transfer_transaction_info_2_27
 
     @api.model
-    def create(self, vals):
+    def create(self, vals, context=None):
         payment_order_ids = self._context.get('active_ids', [])
         vals.update({
             'payment_order_ids': [[6, 0, payment_order_ids]],
@@ -157,21 +210,21 @@ class BankingExportSepaWizard(models.TransientModel):
         return super(BankingExportSepaWizard, self).create(vals)
 
     @api.multi
-    def create_sepa(self):
+    def create_sepa(self, context=None):
         """Creates the SEPA Credit Transfer file. That's the important code!"""
-        sepa_export = self[0]
+        context = {} if context is None else context
         # Get country id for any customization
         country_id, country_code = self.env['res.company'].\
-            _get_country(sepa_export.payment_order_ids[0].company_id)
+            _get_country(self[0].payment_order_ids[0].company_id.id)
         pain_flavor = self.payment_order_ids[0].mode.type.code
         pain_name = self.payment_order_ids[0].mode.type.name
         convert_to_ascii = \
             self.payment_order_ids[0].mode.convert_to_ascii
-        bic_xml_tag, name_maxsize, root_xml_tag = self._get_pain_tags(
-            pain_flavor)
         # code to manage variant schema (i.e. Italian banks in CBI)
         pain_xsd_file, variant = self._get_pain_file_name(
             pain_name, pain_flavor)
+        bic_xml_tag, name_maxsize, root_xml_tag = self._get_pain_tags(
+            pain_flavor, variant=variant)
         gen_args = {
             'bic_xml_tag': bic_xml_tag,
             'name_maxsize': name_maxsize,
@@ -187,9 +240,12 @@ class BankingExportSepaWizard(models.TransientModel):
         #     'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
         #     None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
         # }
-        pain_ns = self._get_nsmap(pain_xsd_file, pain_flavor)
-        xml_root = etree.Element('Document', nsmap=pain_ns)
-        pain_root = etree.SubElement(xml_root, root_xml_tag)
+        pain_ns, root_name = self._get_nsmap(pain_xsd_file, pain_flavor)
+        xml_root = etree.Element(root_name, nsmap=pain_ns)
+        if root_xml_tag:
+            pain_root = etree.SubElement(xml_root, root_xml_tag)
+        else:
+            pain_root = xml_root
         pain_03_to_05 = [
             'pain.001.001.03',
             'pain.001.001.04',
@@ -198,7 +254,8 @@ class BankingExportSepaWizard(models.TransientModel):
         ]
         # A. Group header
         group_header_1_0, nb_of_transactions_1_6, control_sum_1_7 = \
-            self.generate_group_header_block(pain_root, gen_args)
+            self.generate_group_header_block(pain_root, gen_args,
+                                             context=context)
         transactions_count_1_6 = 0
         total_amount = 0.0
         amount_control_sum_1_7 = 0.0
@@ -229,16 +286,15 @@ class BankingExportSepaWizard(models.TransientModel):
                         'self': self,
                         'priority': priority,
                         'requested_date': requested_date,
-                    }, gen_args)
+                    }, gen_args, context=context)
             self.generate_party_block(
                 payment_info_2_0, 'Dbtr', 'B',
-                'self.payment_order_ids[0].mode.bank_id.partner_id.'
-                'name',
+                'self.payment_order_ids[0].mode.bank_id.partner_id.name',
                 'self.payment_order_ids[0].mode.bank_id.acc_number',
                 'self.payment_order_ids[0].mode.bank_id.bank.bic or '
                 'self.payment_order_ids[0].mode.bank_id.bank_bic',
                 {'self': self},
-                gen_args)
+                gen_args, context=context)
             charge_bearer_2_24 = etree.SubElement(payment_info_2_0, 'ChrgBr')
             charge_bearer_2_24.text = self.charge_bearer
             transactions_count_2_4 = 0
@@ -247,25 +303,45 @@ class BankingExportSepaWizard(models.TransientModel):
                 transactions_count_1_6 += 1
                 transactions_count_2_4 += 1
                 # C. Credit Transfer Transaction Info
-                credit_transfer_transaction_info_2_27 = etree.SubElement(
-                    payment_info_2_0, 'CdtTrfTxInf')
-                payment_identification_2_28 = etree.SubElement(
-                    credit_transfer_transaction_info_2_27, 'PmtId')
-                end2end_identification_2_30 = etree.SubElement(
-                    payment_identification_2_28, 'EndToEndId')
-                end2end_identification_2_30.text = self._prepare_field(
-                    'End to End Identification', 'line.name',
-                    {'line': line}, 35, gen_args=gen_args)
-                currency_name = self._prepare_field(
-                    'Currency Code', 'line.currency.name',
-                    {'line': line}, 3, gen_args=gen_args)
-                amount_2_42 = etree.SubElement(
-                    credit_transfer_transaction_info_2_27, 'Amt')
-                instructed_amount_2_43 = etree.SubElement(
-                    amount_2_42, 'InstdAmt', Ccy=currency_name)
-                instructed_amount_2_43.text = '%.2f' % line.amount_currency
+                # credit_transfer_transaction_info_2_27 = etree.SubElement(
+                #     payment_info_2_0, 'CdtTrfTxInf')
+                # payment_identification_2_28 = etree.SubElement(
+                #     credit_transfer_transaction_info_2_27, 'PmtId')
+                # if variant == 'CBI-IT':
+                #     IT_instrid_2_30 = etree.SubElement(
+                #         payment_identification_2_28, 'InstrId')
+                #     IT_instrid_2_30.text = self._prepare_field(
+                #         'Instructions', 'line.name',
+                #         {'line': line}, 35, gen_args=gen_args,
+                #         context=context)
+                # end2end_identification_2_30 = etree.SubElement(
+                #     payment_identification_2_28, 'EndToEndId')
+                # end2end_identification_2_30.text = self._prepare_field(
+                #     'End to End Identification', 'line.name',
+                #     {'line': line}, 35, gen_args=gen_args, context=context)
+                # currency_name = self._prepare_field(
+                #     'Currency Code', 'line.currency.name',
+                #     {'line': line}, 3, gen_args=gen_args, context=context)
+                # if variant == 'CBI-IT':
+                #     IT_credit_transfer_transaction_info = etree.SubElement(
+                #         credit_transfer_transaction_info_2_27, 'PmtTpInf')
+                #     IT_catpurp_2_27 = etree.SubElement(
+                #         IT_credit_transfer_transaction_info, 'CtgyPurp')
+                #     IT_catpurpid_2_27 = etree.SubElement(
+                #         IT_catpurp_2_27, 'Cd')
+                #     # TODO: Category for other SCT type
+                #     IT_catpurpid_2_27.text = 'SUPP'
+                # amount_2_42 = etree.SubElement(
+                #     credit_transfer_transaction_info_2_27, 'Amt')
+                # instructed_amount_2_43 = etree.SubElement(
+                #     amount_2_42, 'InstdAmt', Ccy=currency_name)
+                # instructed_amount_2_43.text = '%.2f' % line.amount_currency
+                credit_transfer_transaction_info_2_27 = self._get_trx_info(
+                    line, payment_info_2_0, gen_args,
+                    variant=variant, context=context)
                 amount_control_sum_1_7 += line.amount_currency
                 amount_control_sum_2_5 += line.amount_currency
+
                 if not line.bank_id:
                     raise Warning(
                         _("Bank account is missing on the bank payment line "
@@ -275,10 +351,12 @@ class BankingExportSepaWizard(models.TransientModel):
                     credit_transfer_transaction_info_2_27, 'Cdtr',
                     'C', 'line.partner_id.name', 'line.bank_id.acc_number',
                     'line.bank_id.bank.bic or '
-                    'line.bank_id.bank_bic', {'line': line}, gen_args)
+                    'line.bank_id.bank_bic', {'line': line}, gen_args,
+                    context=context)
                 self.generate_remittance_info_block(
-                    credit_transfer_transaction_info_2_27, line, gen_args)
-            if pain_flavor in pain_03_to_05:
+                    credit_transfer_transaction_info_2_27, line, gen_args,
+                    context=context)
+            if pain_flavor in pain_03_to_05 and variant != 'CBI-IT':
                 nb_of_transactions_2_4.text = unicode(transactions_count_2_4)
                 control_sum_2_5.text = '%.2f' % amount_control_sum_2_5
         if pain_flavor in pain_03_to_05:

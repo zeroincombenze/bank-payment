@@ -124,7 +124,12 @@ class AccountBankingMandate(models.Model):
             if mandate.state != 'draft':
                 raise exceptions.Warning(
                     _('Mandate should be in draft state'))
-        self.write({'state': 'valid'})
+        vals = {}
+        if vals.get('unique_mandate_reference', '/') == '/':
+            vals['unique_mandate_reference'] = \
+                self.env['ir.sequence'].next_by_code('account.banking.mandate')
+        vals['state'] = 'valid'
+        self.write(vals)
         return True
 
     @api.multi

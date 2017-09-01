@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
-# © 2016 Antiun Ingenieria S.L. - Antonio Espinosa
+# Copyright (C) 2016-2017 Antiun Ingenieria S.L. - Antonio Espinosa
+# Copyright (C) 2016-2017 SHS-AV s.r.l. <https://www.zeroincombenze.it>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+#
+# [2013: Akretion] First version
+# [2017: SHS-AV] Italian localization
 
 from openerp import models, fields, api, exceptions, _
 from .common import is_sepa_creditor_identifier_valid

@@ -50,7 +50,9 @@ class BankingExportPain(models.AbstractModel):
                     '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
                 for unallowed_ascii_char in unallowed_ascii_chars:
                     value = value.replace(unallowed_ascii_char, '-')
-            else:
+            elif isinstance(value, (int, long)):            # pragma: no cover
+                value = str(value)
+            else:                                           # pragma: no cover
                 value = ''
         return value
 
@@ -58,7 +60,7 @@ class BankingExportPain(models.AbstractModel):
     def _prepare_field(self, field_name, field_value, eval_ctx,
                        max_size=0, gen_args=None, context=None):
         """This function is designed to be inherited !"""
-        if gen_args is None:
+        if gen_args is None:                                # pragma: no cover
             gen_args = {}
         assert isinstance(eval_ctx, dict), 'eval_ctx must contain a dict'
         try:
@@ -83,7 +85,7 @@ class BankingExportPain(models.AbstractModel):
             raise Warning(
                 _("The '%s' is empty or 0. It should have a non-null value.")
                 % field_name)
-        if max_size and len(value) > max_size:
+        if max_size and len(value) > max_size:              # pragma: no cover
             value = value[0:max_size]
         return value
 
@@ -277,6 +279,10 @@ class BankingExportPain(models.AbstractModel):
         initiating_party_issuer = (
             payment.mode.initiating_party_issuer or
             payment.company_id.initiating_party_issuer)
+        if not initiating_party_issuer:
+            initiating_party_issuer = self.env['res.company'].\
+                _initiating_party_issuer_default(
+                context=context)
         if initiating_party_identifier and initiating_party_issuer:
             iniparty_id = etree.SubElement(initiating_party_1_8, 'Id')
             iniparty_org_id = etree.SubElement(iniparty_id, 'OrgId')
@@ -303,7 +309,10 @@ class BankingExportPain(models.AbstractModel):
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
         try:
             if gen_args.get('variant_xsd') == 'CBI-IT':
-                if party_type == 'Dbtr':
+                if (party_type == 'Dbtr' and
+                        gen_args.get('payment_method') != 'DD') or \
+                        (party_type == 'Cdtr' and
+                         gen_args.get('payment_method') == 'DD'):
                     party_agent = etree.SubElement(
                         parent_node, '%sAgt' % party_type)
                     party_agent_institution = etree.SubElement(
@@ -365,7 +374,7 @@ class BankingExportPain(models.AbstractModel):
     @api.model
     def generate_party_block(
             self, parent_node, party_type, order, name, iban, bic,
-            eval_ctx, gen_args, partner=None, context=None):
+            eval_ctx, gen_args, sepa_credid=None, partner=None, context=None):
         """Generate the piece of the XML file corresponding to Name+IBAN+BIC
         This code is mutualized between TRF and DD"""
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
@@ -394,8 +403,7 @@ class BankingExportPain(models.AbstractModel):
         party_nm.text = party_name
 
         if gen_args.get('variant_xsd') == 'CBI-IT':
-            company_obj = gen_args['sepa_export'].\
-                payment_order_ids[0].company_id
+            company_obj = self.payment_order_ids[0].company_id
             initiating_party_identifier = self.env['res.company'].\
                 _get_initiating_party_identifier(
                     company_obj.id,
@@ -409,7 +417,14 @@ class BankingExportPain(models.AbstractModel):
                     SCT = 'crossborder'
                 else:
                     SCT = 'domestic'
-                if party_type != 'Cdtr':
+                if sepa_credid:
+                    self.generate_creditor_scheme_identification(
+                        party,
+                        sepa_credid,
+                        'SEPA Creditor Identifier', {'self': self},
+                        'SEPA', gen_args)
+                elif party_type != 'Cdtr' and \
+                        gen_args.get('payment_method') != 'DD':
                     party_id = etree.SubElement(party, 'Id')
                     party_org_id = etree.SubElement(party_id, 'OrgId')
                     party_org_other = etree.SubElement(party_org_id, 'Othr')
@@ -548,8 +563,9 @@ class BankingExportPain(models.AbstractModel):
         csi_other_id.text = self._prepare_field(
             identification_label, identification, eval_ctx,
             gen_args=gen_args, context=context)
-        csi_scheme_name = etree.SubElement(csi_other, 'SchmeNm')
-        csi_scheme_name_proprietary = etree.SubElement(
-            csi_scheme_name, 'Prtry')
-        csi_scheme_name_proprietary.text = scheme_name_proprietary
+        if gen_args.get('variant_xsd') != 'CBI-IT':
+            csi_scheme_name = etree.SubElement(csi_other, 'SchmeNm')
+            csi_scheme_name_proprietary = etree.SubElement(
+                csi_scheme_name, 'Prtry')
+            csi_scheme_name_proprietary.text = scheme_name_proprietary
         return True

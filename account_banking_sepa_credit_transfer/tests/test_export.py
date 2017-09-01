@@ -65,6 +65,15 @@ RES_NSMAP = {
     },
 }
 
+RES_ROOTNAME = {
+    'pain.001.001.02': 'Document',
+    'pain.001.001.03': 'Document',
+    'pain.001.001.04': 'Document',
+    'pain.001.001.05': 'Document',
+    'pain.001.001.04-CBI-IT': 'CBIPaymentRequest',
+    'pain.001.003.03': 'Document',
+}
+
 
 class Test_company(SingleTransactionCase):
     def env789(self, model):
@@ -126,7 +135,11 @@ class Test_company(SingleTransactionCase):
                 'Invalid MAX SIZE "%s": expected "%s"' % (
                     root_xml_tag, RES_ROOT_TAG[pain_id])
 
-            pain_ns = export_model._get_nsmap(pain_xsd_file, pain_flavor)
+            pain_ns, root_name = export_model._get_nsmap(pain_xsd_file,
+                                                         pain_flavor)
             assert pain_ns == RES_NSMAP[pain_id], \
                 'Invalid nsmap "%s": expected "%s"' % (
                     pain_ns, RES_NSMAP[pain_id])
+            assert root_name == RES_ROOTNAME[pain_id], \
+                'Invalid root name "%s": expected "%s"' % (
+                    root_name, RES_ROOTNAME[pain_id])

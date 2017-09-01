@@ -49,6 +49,6 @@ November 21st 2013 in Epiais les Louvres (France).
 
 It was updated by Antonio Maria Vigliotti in order to work in Italy.
     ''',
-    'post_init_hook': 'set_default_initiating_party',
+    # 'post_init_hook': 'set_default_initiating_party',
     'installable': True,
 }
