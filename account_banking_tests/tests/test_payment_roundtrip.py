@@ -22,37 +22,7 @@ from openerp.tests.common import TransactionCase
 from openerp import workflow
 
 
-BNK_NL_NAME = 'ING Bank'
-BNK_NL_IBAN = 'NL08INGB0000000555'
-BNK_NL_BIC = 'INGBNL2A'
-BNK_NL_IBAN1 = 'NL42INGB0000454000'
-BNK_NL_IBAN2 = 'NL86INGB0002445588'
-
-
 class TestPaymentRoundtrip(TransactionCase):
-    def env789(self, model):
-        """Return model pool [8.0]"""
-        return self.env[model]
-
-    def ref789(self, model):
-        """Return reference id [8.0]"""
-        return self.env.ref(model).id
-
-    def write789(self, model, id, values):
-        """Write existent record [8.0]"""
-        model_pool = self.env[model]
-        obj = model_pool.search([('id', '=', id)])
-        return obj.write(values)
-
-    def write_ref(self, xid, values):
-        """Browse and write existent record"""
-        obj = self.browse_ref(xid)
-        return obj.write(values)
-
-    def create789(self, model, values):
-        """Create a new record for test [8.0]"""
-        model_pool = self.env[model]
-        return model_pool.create(values).id
 
     def assert_payment_order_state(self, expected):
         """
@@ -84,38 +54,35 @@ class TestPaymentRoundtrip(TransactionCase):
             cr, uid, 'base', 'nl')[1]
         self.currency_id = data_model.get_object_reference(
             cr, uid, 'base', 'EUR')[1]
-        self.bank_nl_id = self.create789(
-            'res.bank',
-            {
-                'name': BNK_NL_NAME,
-                'bic': BNK_NL_BIC,
+        self.bank_id = reg('res.bank').create(
+            cr, uid, {
+                'name': 'ING Bank',
+                'bic': 'INGBNL2A',
                 'country': self.country_id,
-            })
-        self.company_id = self.create789(
-            'res.company',
-            {
+                })
+        self.company_id = reg('res.company').create(
+            cr, uid, {
                 'name': '_banking_addons_test_company',
                 'currency_id': self.currency_id,
                 'country_id': self.country_id,
-            })
+                })
         self.partner_id = reg('res.company').read(
             cr, uid, self.company_id, ['partner_id'])['partner_id'][0]
-        self.partner_bank_id = self.create789(
-            'res.partner.bank',
-            {
+        self.partner_bank_id = reg('res.partner.bank').create(
+            cr, uid, {
                 'state': 'iban',
-                'acc_number': BNK_NL_IBAN,
-                'bank': self.bank_nl_id,
-                'bank_bic': BNK_NL_BIC,
+                'acc_number': 'NL08INGB0000000555',
+                'bank': self.bank_id,
+                'bank_bic': 'INGBNL2A',
                 'partner_id': self.partner_id,
                 'company_id': self.company_id,
-            })
+                })
         reg('res.users').write(
-            cr, uid, [uid],
-            {'company_ids': [(4, self.company_id)]})
+            cr, uid, [uid], {
+                'company_ids': [(4, self.company_id)]})
         reg('res.users').write(
-            cr, uid, [uid],
-            {'company_id': self.company_id})
+            cr, uid, [uid], {
+                'company_id': self.company_id})
 
     def setup_chart(self, reg, cr, uid):
         """
@@ -128,8 +95,7 @@ class TestPaymentRoundtrip(TransactionCase):
         chart_values = {
             'company_id': self.company_id,
             'currency_id': self.currency_id,
-            'chart_template_id': chart_template_id
-        }
+            'chart_template_id': chart_template_id}
         chart_values.update(
             chart_setup_model.onchange_chart_template_id(
                 cr, uid, [], 1)['value'])
@@ -139,14 +105,13 @@ class TestPaymentRoundtrip(TransactionCase):
             cr, uid, [chart_setup_id])
         year = datetime.now().strftime('%Y')
         fiscalyear_id = reg('account.fiscalyear').create(
-            cr, uid,
-            {
+            cr, uid, {
                 'name': year,
                 'code': year,
                 'company_id': self.company_id,
                 'date_start': '%s-01-01' % year,
                 'date_stop': '%s-12-31' % year,
-            })
+                })
         reg('account.fiscalyear').create_period(
             cr, uid, [fiscalyear_id])
 
@@ -164,9 +129,9 @@ class TestPaymentRoundtrip(TransactionCase):
                 'bank_ids': [
                     (0, False, {
                         'state': 'iban',
-                        'acc_number': BNK_NL_IBAN1,
-                        'bank': self.bank_nl_id,
-                        'bank_bic': BNK_NL_BIC,
+                        'acc_number': 'NL42INGB0000454000',
+                        'bank': self.bank_id,
+                        'bank_bic': 'INGBNL2A',
                     })
                 ],
             }, context=context)
@@ -178,9 +143,9 @@ class TestPaymentRoundtrip(TransactionCase):
                 'bank_ids': [
                     (0, False, {
                         'state': 'iban',
-                        'acc_number': BNK_NL_IBAN2,
-                        'bank': self.bank_nl_id,
-                        'bank_bic': BNK_NL_BIC,
+                        'acc_number': 'NL86INGB0002445588',
+                        'bank': self.bank_id,
+                        'bank_bic': 'INGBNL2A',
                     })
                 ],
             }, context=context)
@@ -198,27 +163,21 @@ class TestPaymentRoundtrip(TransactionCase):
             'partner_id': self.supplier1,
             'account_id': self.payable_id,
             'invoice_line': [
-                (
-                    0,
-                    False,
-                    {
-                        'name': 'Purchase 1',
-                        'price_unit': 100.0,
-                        'quantity': 1,
-                        'account_id': expense_id,
-                    }
-                )
+                (0, False, {
+                    'name': 'Purchase 1',
+                    'price_unit': 100.0,
+                    'quantity': 1,
+                    'account_id': expense_id,
+                })
             ],
             'reference_type': 'none',
             'supplier_invoice_number': 'INV1',
         }
         self.invoice_ids = [
             invoice_model.create(
-                cr, uid, values,
-                context={
+                cr, uid, values, context={
                     'type': 'in_invoice',
-                })
-        ]
+                    })]
         values.update({
             'partner_id': self.supplier2,
             'name': 'Purchase 2',
@@ -248,8 +207,7 @@ class TestPaymentRoundtrip(TransactionCase):
         user_type = reg('ir.model.data').get_object_reference(
             cr, uid, 'account', 'data_account_type_liability')[1]
         transfer_account_id = reg('account.account').create(
-            cr, uid,
-            {
+            cr, uid, {
                 'company_id': self.company_id,
                 'parent_id': account_parent_id,
                 'code': 'TRANS',
@@ -257,23 +215,20 @@ class TestPaymentRoundtrip(TransactionCase):
                 'type': 'other',
                 'user_type': user_type,
                 'reconcile': True,
-            })
+                })
         transfer_journal_id = reg('account.journal').search(
             cr, uid, [
                 ('company_id', '=', self.company_id),
-                ('code', '=', 'MISC')
-            ])[0]
+                ('code', '=', 'MISC')])[0]
         self.bank_journal_id = reg('account.journal').search(
             cr, uid, [
                 ('company_id', '=', self.company_id),
-                ('type', '=', 'bank')
-            ])[0]
+                ('type', '=', 'bank')])[0]
         payment_mode_type_id = reg('ir.model.data').get_object_reference(
             cr, uid, 'account_banking_sepa_credit_transfer',
             'export_sepa_sct_001_001_03')[1]
         self.payment_mode_id = reg('payment.mode').create(
-            cr, uid,
-            {
+            cr, uid, {
                 'name': 'SEPA Mode',
                 'bank_id': self.partner_bank_id,
                 'journal': self.bank_journal_id,
@@ -282,7 +237,7 @@ class TestPaymentRoundtrip(TransactionCase):
                 'transfer_journal_id': transfer_journal_id,
                 'transfer_move_option': transfer_move_option,
                 'type': payment_mode_type_id,
-            })
+                })
 
     def setup_payment(self, reg, cr, uid):
         """
@@ -293,8 +248,7 @@ class TestPaymentRoundtrip(TransactionCase):
         when transfer_move_option = 'date'.
         """
         self.payment_order_id = reg('payment.order').create(
-            cr, uid,
-            {
+            cr, uid, {
                 'reference': 'PAY001',
                 'mode': self.payment_mode_id,
                 'date_prefered': 'now',
@@ -347,12 +301,11 @@ class TestPaymentRoundtrip(TransactionCase):
         """
         export_model = reg('banking.export.sepa.wizard')
         export_id = export_model.create(
-            cr, uid, {},
-            context={'active_ids': [self.payment_order_id]})
+            cr, uid, {}, context={'active_ids': [self.payment_order_id]})
         export_model.create_sepa(
-            cr, uid,
-            [export_id])
-        export_model.save_sepa()
+            cr, uid, [export_id])
+        export_model.save_sepa(
+            cr, uid, [export_id])
         self.assert_payment_order_state('sent')
         self.assert_invoices_state('paid')
 

@@ -44,6 +44,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_direct_debit
 * account_banking_pain_base',
@@ -65,11 +66,14 @@ Configuration
 
 
 
+
 To configure this module, you need to:
 
  * Create a payment mode and select an export type related to debit order ( eg. "SEPA direct debit ...")
 
 Usage
+-----
+
 -----
 
 -----
@@ -114,10 +118,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -149,6 +155,7 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
@@ -161,7 +168,9 @@ Credits
 
 
 
+
 ### Contributors
+
 
 
 
@@ -187,6 +196,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

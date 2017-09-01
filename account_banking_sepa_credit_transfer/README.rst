@@ -46,6 +46,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_banking_pain_base
 
@@ -65,9 +66,12 @@ Configuration
 
 
 
+
 No specific configuration.
 
 Usage
+-----
+
 -----
 
 -----
@@ -112,10 +116,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -147,6 +153,7 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
@@ -159,7 +166,9 @@ Credits
 
 
 
+
 ### Contributors
+
 
 
 
@@ -186,6 +195,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
