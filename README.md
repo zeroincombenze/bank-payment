@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg)](http://erp10.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 ================================================================================================
 ================================================================================================
 
@@ -35,30 +35,30 @@ Other features can now be found in these repositories:
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[account_banking_mandate](account_banking_mandate/) | 10.0.1.1.0 | Banking mandates
-[account_banking_mandate_sale](account_banking_mandate_sale/) | 10.0.1.0.0 | Adds mandates on sale orders
-[account_banking_pain_base](account_banking_pain_base/) | 10.0.1.0.0 | Base module for PAIN file generation
-[account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 10.0.1.0.0 | Create SEPA XML files for Credit Transfers
-[account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 10.0.1.0.0 | Create SEPA files for Direct Debit
-[account_payment_mode](account_payment_mode/) | 10.0.1.0.0 | Account Payment Mode
-[account_payment_order](account_payment_order/) | 10.0.1.3.0 | Account Payment Order
-[account_payment_partner](account_payment_partner/) | 10.0.1.1.0 | Adds payment mode on partners and invoices
-[account_payment_sale](account_payment_sale/) | 10.0.1.0.0 | Adds payment mode on sale orders
+addon | version | OCA version | summary
+--- | --- | --- | ---
+[account_banking_mandate](account_banking_mandate/) | 10.0.1.1.0 | 10.0.1.1.1 | Banking mandates
+[account_banking_mandate_sale](account_banking_mandate_sale/) | 10.0.1.0.0 | :repeat: | Adds mandates on sale orders
+[account_banking_pain_base](account_banking_pain_base/) | 10.0.1.0.0 | 10.0.1.1.0 | Base module for PAIN file generation
+[account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 10.0.1.0.0 | :repeat: | Create SEPA XML files for Credit Transfers
+[account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 10.0.1.0.0 | 10.0.1.1.0 | Create SEPA files for Direct Debit
+[account_payment_mode](account_payment_mode/) | 10.0.1.0.0 | 10.0.1.0.1 | Account Payment Mode
+[account_payment_order](account_payment_order/) | 10.0.1.3.0 | 10.0.1.3.1 | Account Payment Order
+[account_payment_partner](account_payment_partner/) | 10.0.1.1.0 | :repeat: | Adds payment mode on partners and invoices
+[account_payment_sale](account_payment_sale/) | 10.0.1.0.0 | :repeat: | Adds payment mode on sale orders
 
 
 Unported addons
 ---------------
-addon | version | summary
---- | --- | ---
-[account_banking_tests](account_banking_tests/) | 8.0.0.1.0 (unported) | Banking Addons - Tests
-[account_import_line_multicurrency_extension](account_import_line_multicurrency_extension/) | 8.0.1.1.0 (unported) | Add an improved view for move line import in bank statement
-[account_payment_blocking](account_payment_blocking/) | 8.0.1.0.0 (unported) | Prevent invoices under litigation to be proposed in payment orders.
-[account_payment_mode_term](account_payment_mode_term/) | 8.0.0.1.2 (unported) | Account Banking - Payments Term Filter
-[account_voucher_killer](account_voucher_killer/) | 8.0.1.0.0 (unported) | Accounting voucher killer
-[bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | Bank statement instant voucher
-[portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 (unported) | Adds payment mode ACL's for portal users
+addon | version | OCA version | summary
+--- | --- | --- | ---
+[account_banking_tests](account_banking_tests/) | 8.0.0.1.0 (unported) | :repeat: | Banking Addons - Tests
+[account_import_line_multicurrency_extension](account_import_line_multicurrency_extension/) | 8.0.1.1.0 (unported) | :repeat: | Add an improved view for move line import in bank statement
+[account_payment_blocking](account_payment_blocking/) | 8.0.1.0.0 (unported) | :repeat: | Prevent invoices under litigation to be proposed in payment orders.
+[account_payment_mode_term](account_payment_mode_term/) | 8.0.0.1.2 (unported) | :repeat: | Account Banking - Payments Term Filter
+[account_voucher_killer](account_voucher_killer/) | 8.0.1.0.0 (unported) | :repeat: | Accounting voucher killer
+[bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | :repeat: | Bank statement instant voucher
+[portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 (unported) | :repeat: | Adds payment mode ACL's for portal users
 
 [//]: # (end addons)
 

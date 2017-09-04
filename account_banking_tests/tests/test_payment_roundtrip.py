@@ -303,9 +303,9 @@ class TestPaymentRoundtrip(TransactionCase):
         export_id = export_model.create(
             cr, uid, {}, context={'active_ids': [self.payment_order_id]})
         export_model.create_sepa(
-            cr, uid, [export_id])
-        export_model.save_sepa(
-            cr, uid, [export_id])
+            cr, uid,
+            [export_id])
+        export_model.save_sepa()
         self.assert_payment_order_state('sent')
         self.assert_invoices_state('paid')
 

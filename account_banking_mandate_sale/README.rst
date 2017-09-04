@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg)](http://erp10.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
     :alt: License: AGPL-3
 =========================
@@ -20,13 +20,17 @@ This modules adds the field *Direct Debit Mandate* on sale orders.
 Installation
 ------------
 
+
 Configuration
 -------------
+
 
 
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 =====
@@ -44,10 +48,12 @@ Known issues / Roadmap
 ----------------------
 
 
+
  * No known issues.
 
 Bug Tracker
 -----------
+
 
 
 Bugs are tracked on `GitHub Issues
@@ -59,13 +65,16 @@ Credits
 -------
 
 
+
 Images
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
 [![Odoo Italia Associazione]]
 
+
 ### Contributors
+
 
 
 * Alexis de Lattre <alexis.delattre@akretion.com>
@@ -73,6 +82,8 @@ Images
 ### Funders
 
 ### Maintainer
+
+
 
 
 .. image:: http://odoo-community.org/logo.png

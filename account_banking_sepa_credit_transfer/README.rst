@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-10.svg)](http://erp10.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
     :alt: License: AGPL-3
 =========================
@@ -36,6 +36,7 @@ Installation
 ------------
 
 
+
 This module depends on :
 * account_banking_pain_base
 
@@ -43,6 +44,7 @@ This module is part of the OCA/bank-payment suite.
 
 Configuration
 -------------
+
 
 
 * Create a Payment Mode dedicated to SEPA Credit Transfer.
@@ -53,6 +55,8 @@ Configuration
 * Check that this payment method uses the proper version of PAIN.
 
 Usage
+-----
+
 -----
 
 =====
@@ -69,10 +73,12 @@ Known issues / Roadmap
 ----------------------
 
 
+
  * No known issues
 
 Bug Tracker
 -----------
+
 
 
 Bugs are tracked on `GitHub Issues
@@ -84,9 +90,12 @@ Credits
 -------
 
 
+
 [![Odoo Italia Associazione]]
 
+
 ### Contributors
+
 
 
 * Alexis de Lattre <alexis.delattre@akretion.com>
@@ -103,6 +112,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 .. image:: http://odoo-community.org/logo.png
