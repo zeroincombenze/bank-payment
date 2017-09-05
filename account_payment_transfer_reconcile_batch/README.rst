@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-9.svg)](http://erp9.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
 ================================================================
@@ -40,6 +40,7 @@ Installation
 ------------
 
 
+
 This module requires the *connector* module, hosted on
 `OCA/connector <https://github.com/OCA/connector>`_
 
@@ -47,9 +48,12 @@ Configuration
 -------------
 
 
+
 This will only work for payment modes that have a transfer account set.
 
 Usage
+-----
+
 -----
 
 =====
@@ -65,8 +69,10 @@ conciliation of this line.
 Known issues / Roadmap
 ----------------------
 
+
 Bug Tracker
 -----------
+
 
 
 Bugs are tracked on `GitHub Issues
@@ -78,9 +84,12 @@ Credits
 -------
 
 
+
 [![Odoo Italia Associazione]]
 
+
 ### Contributors
+
 
 
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
@@ -89,6 +98,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 .. image:: https://odoo-community.org/logo.png
