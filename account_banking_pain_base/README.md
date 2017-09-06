@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg)](http://erp8.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
 Account Banking PAIN Base Module
 ================================
@@ -28,7 +28,7 @@ This module differs from standard OCA module:
 - Wider coverage with more unit tests
 
 
-[![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![it](https://github.com/zeroincombenze/grymb/blob/master/flags/it_IT.png)](https://www.facebook.com/groups/openerp.italia/)
 
 Modulo Account Banking PAIN Base
 ================================
@@ -47,6 +47,7 @@ Questo modulo differisce dalla versiona standard OCA:
 
 Installation
 ------------
+
 
 
 
@@ -86,10 +87,13 @@ Configuration
 
 
 
+
 No configuration required.
 
 
 Usage
+-----
+
 -----
 
 -----
@@ -148,11 +152,13 @@ Known issues / Roadmap
 
 
 
+
 -   no known issues
 
 
 Bug Tracker
 -----------
+
 
 
 
@@ -193,7 +199,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -231,6 +239,7 @@ Credits
 
 
 
+
 -   Alexis de Lattre
 -   Pedro M. Baeza
 -   Stéphane Bidoul <stephane.bidoul@acsone.eu>
@@ -246,6 +255,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

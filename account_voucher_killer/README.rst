@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg)](http://erp8.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
     :alt: License: AGPL-3
 =========================
@@ -27,6 +27,7 @@ and only users in that group see these buttons and menus.
 
 Installation
 ------------
+
 
 
 
@@ -62,9 +63,12 @@ Configuration
 
 
 
+
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -116,10 +120,12 @@ Known issues / Roadmap
 
 
 
+
  * ...
  
 Bug Tracker
 -----------
+
 
 
 
@@ -155,7 +161,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -184,6 +192,7 @@ Credits
 
 
 
+
 * Nicolas Bessi (camptocamp)
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Anthony Muschang <anthony.muschang@acsone.eu>
@@ -192,6 +201,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

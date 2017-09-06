@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg)](http://erp8.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
     :alt: License: AGPL-3
 =========================
@@ -25,6 +25,7 @@ status).
     
 Installation
 ------------
+
 
 
 
@@ -60,12 +61,15 @@ Configuration
 
 
 
+
 To configure this module, you need to:
 
  * create a transfer account who allow reconciliation : option "Allow Reconciliation" activated.
  * configure transfer account on payment mode. Go to the menu Accounting > Configuration > Miscellaneous > Payment Mode and complete the section "Transfer move settings".
 
 Usage
+-----
+
 -----
 
 -----
@@ -117,10 +121,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
  
 Bug Tracker
 -----------
+
 
 
 
@@ -156,7 +162,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -185,6 +193,7 @@ Credits
 
 
 
+
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Alexis de Lattre
@@ -196,6 +205,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

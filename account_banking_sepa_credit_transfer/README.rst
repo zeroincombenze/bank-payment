@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg)](http://erp8.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
     :alt: License: AGPL-3
 =========================
@@ -48,6 +48,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_banking_pain_base
 
@@ -69,9 +70,12 @@ Configuration
 
 
 
+
 No specific configuration.
 
 Usage
+-----
+
 -----
 
 -----
@@ -122,10 +126,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -161,7 +167,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -190,6 +198,7 @@ Credits
 
 
 
+
 * Alexis de Lattre
 * Pedro M. Baeza
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
@@ -204,6 +213,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

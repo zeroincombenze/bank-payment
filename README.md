@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-8.svg)](http://erp8.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
 Banking addons for Odoo
 =======================
@@ -28,35 +28,35 @@ addon | version | OCA version | summary
 --- | --- | --- | ---
 [account_banking_mandate](account_banking_mandate/) | 8.0.0.2.1 | 8.0.0.2.0 | Banking mandates
 [account_banking_pain_base](account_banking_pain_base/) | 8.0.0.4.1 | 8.0.0.4.0 | Base module for PAIN file generation
-[account_banking_payment_export](account_banking_payment_export/) | 8.0.0.3.0 | Same | Account Banking - Payments Export Infrastructure
-[account_banking_payment_transfer](account_banking_payment_transfer/) | 8.0.0.3.1 | Same | Account Banking - Payments Transfer Account
+[account_banking_payment_export](account_banking_payment_export/) | 8.0.0.3.0 | :repeat: | Account Banking - Payments Export Infrastructure
+[account_banking_payment_transfer](account_banking_payment_transfer/) | 8.0.0.3.1 | :repeat: | Account Banking - Payments Transfer Account
 [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 8.0.0.5.1 | 8.0.0.5.0 | Create SEPA XML files for Credit Transfers
 [account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 8.0.0.5.1 | 8.0.0.5.0 | Create SEPA files for Direct Debit
-[account_banking_tests](account_banking_tests/) | 8.0.0.1.0 | Same | Banking Addons - Tests
-[account_direct_debit](account_direct_debit/) | 8.0.2.1.0 | Same | Direct Debit
-[account_import_line_multicurrency_extension](account_import_line_multicurrency_extension/) | 8.0.1.1.0 | Same | Add an improved view for move line import in bank statement
-[account_payment_blocking](account_payment_blocking/) | 8.0.1.0.0 | Same | Prevent invoices under litigation to be proposed in payment orders.
-[account_payment_include_draft_move](account_payment_include_draft_move/) | 8.0.1.0.0 | Same | Account Payment Draft Move
-[account_payment_mode_term](account_payment_mode_term/) | 8.0.0.1.2 | Same | Account Banking - Payments Term Filter
-[account_payment_partner](account_payment_partner/) | 8.0.0.2.0 | Same | Adds payment mode on partners and invoices
-[account_payment_purchase](account_payment_purchase/) | 8.0.1.0.0 | Same | Adds Bank Account and Payment Mode on Purchase Orders
-[account_payment_sale](account_payment_sale/) | 8.0.1.0.0 | Same | Adds payment mode on sale orders
-[account_payment_sale_stock](account_payment_sale_stock/) | 8.0.1.0.0 | Same | Manage payment mode when invoicing a sale from picking
-[account_payment_transfer_reconcile_batch](account_payment_transfer_reconcile_batch/) | 8.0.1.0.0 | Same | Batch Reconciliation for transfer moves
-[account_voucher_killer](account_voucher_killer/) | 8.0.1.0.0 | Same | Accounting voucher killer
-[portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 | Same | Adds payment mode ACL's for portal users
+[account_banking_tests](account_banking_tests/) | 8.0.0.1.0 | :repeat: | Banking Addons - Tests
+[account_direct_debit](account_direct_debit/) | 8.0.2.1.0 | :repeat: | Direct Debit
+[account_import_line_multicurrency_extension](account_import_line_multicurrency_extension/) | 8.0.1.1.0 | :repeat: | Add an improved view for move line import in bank statement
+[account_payment_blocking](account_payment_blocking/) | 8.0.1.0.0 | :repeat: | Prevent invoices under litigation to be proposed in payment orders.
+[account_payment_include_draft_move](account_payment_include_draft_move/) | 8.0.1.0.0 | :repeat: | Account Payment Draft Move
+[account_payment_mode_term](account_payment_mode_term/) | 8.0.0.1.2 | :repeat: | Account Banking - Payments Term Filter
+[account_payment_partner](account_payment_partner/) | 8.0.0.2.0 | :repeat: | Adds payment mode on partners and invoices
+[account_payment_purchase](account_payment_purchase/) | 8.0.1.0.0 | :repeat: | Adds Bank Account and Payment Mode on Purchase Orders
+[account_payment_sale](account_payment_sale/) | 8.0.1.0.0 | :repeat: | Adds payment mode on sale orders
+[account_payment_sale_stock](account_payment_sale_stock/) | 8.0.1.0.0 | :repeat: | Manage payment mode when invoicing a sale from picking
+[account_payment_transfer_reconcile_batch](account_payment_transfer_reconcile_batch/) | 8.0.1.0.0 | :repeat: | Batch Reconciliation for transfer moves
+[account_voucher_killer](account_voucher_killer/) | 8.0.1.0.0 | :repeat: | Accounting voucher killer
+[portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 | :repeat: | Adds payment mode ACL's for portal users
 
 
 Unported addons
 ---------------
 addon | version | OCA version | summary
 --- | --- | --- | ---
-[bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | Same | Bank statement instant voucher
+[bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | :repeat: | Bank statement instant voucher
 
 [//]: # (end addons)
 
 
-[![it](http://www.shs-av.com/wp-content/it_IT.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![it](https://github.com/zeroincombenze/grymb/blob/master/flags/it_IT.png)](https://www.facebook.com/groups/openerp.italia/)
 
 Moduli aggiuntivi per Banche
 ============================
@@ -67,8 +67,8 @@ Differenze rispetto localizzazione ufficiale Odoo/OCA
 
 Descrizione | Odoo Italia | OCA
 --- | --- | ---
-Coverage | [![Coverage Status](https://coveralls.io/repos/github/zeroincombenze/bank-payment/badge.svg?branch=8.0)](https://coveralls.io/github/zeroincombenze/bank-payment?branch=8.0) | [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.png?branch=8.0)](https://coveralls.io/r/OCA/bank-payment?branch=8.0)
-est con repository OCA e Odoo | No | [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
+Coverage |  [![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/8.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/8.0) | [![codecov](https://codecov.io/gh/OCA/bank-payment/branch/8.0/graph/badge.svg)](https://codecov.io/gh/OCA/bank-payment/branch/8.0)
+Test compatibilità OCA e Odoo | :white_check_mark: | :white_check_mark:
 Bonifici Italia | Si, standard CBI | No
 SDD Italia | Si, standard CBI | No
 account_banking_pain_base | Modifiche per CBI (Italia) | Solo EU
