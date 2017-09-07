@@ -8,7 +8,7 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-7.svg)](http://erp7.zeroincombenze.it)
 
 
-[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
+[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
 
     :alt: License: AGPL-3
 =========================
@@ -38,6 +38,7 @@ Installation
 
 
 
+
 This module depends on :
 - account_banking_payment_export
 
@@ -56,9 +57,12 @@ Configuration
 
 
 
+
 No configuration required.
 
 Usage
+-----
+
 -----
 
 -----
@@ -101,10 +105,12 @@ Known issues / Roadmap
 
 
 
+
  * no known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -134,6 +140,7 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
@@ -145,7 +152,9 @@ Credits
 
 
 
+
 ### Contributors
+
 
 
 
@@ -171,6 +180,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
