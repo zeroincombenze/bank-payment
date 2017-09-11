@@ -35,6 +35,7 @@ Installation
 
 
 
+
 This module depends on :
 
 * account_banking_pain_base
@@ -47,12 +48,15 @@ Configuration
 
 
 
+
 Create a Payment Mode dedicated to SEPA Direct Debit and select the
 Payment Method *SEPA Direct Debit for customers* (which is automatically
 created upon module installation) and check that this payment method
 uses the proper version of PAIN.
 
 Usage
+-----
+
 -----
 
 -----
@@ -72,10 +76,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -89,10 +95,13 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
+
 ### Contributors
+
 
 
 
@@ -109,6 +118,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

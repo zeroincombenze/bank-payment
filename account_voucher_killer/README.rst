@@ -30,6 +30,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_voucher
 
@@ -40,9 +41,12 @@ Configuration
 
 
 
+
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -61,10 +65,12 @@ Known issues / Roadmap
 
 
 
+
  * ...
  
 Bug Tracker
 -----------
+
 
 
 
@@ -78,10 +84,13 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
+
 ### Contributors
+
 
 
 
@@ -93,6 +102,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
