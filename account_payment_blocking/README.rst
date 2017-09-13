@@ -41,6 +41,7 @@ Installation
 
 
 
+
 This module depends on 
 * account_banking_payment_export
 
@@ -63,9 +64,12 @@ Configuration
 
 
 
+
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -123,11 +127,13 @@ Known issues / Roadmap
 
 
 
+
  * No known issues.
 
 
 Bug Tracker
 -----------
+
 
 
 
@@ -166,7 +172,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -197,12 +205,15 @@ Credits
 
 
 
+
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 
 ### Funders
 
 ### Maintainer
+
+
 
 
 
