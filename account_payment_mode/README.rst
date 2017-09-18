@@ -23,8 +23,10 @@ Installation
 
 
 
+
 Configuration
 -------------
+
 
 
 
@@ -32,6 +34,8 @@ Configuration
 To configure this module, you need to go to the menu *Account > Configuration > Management > Payment Mode*.
 
 Usage
+-----
+
 -----
 
 -----
@@ -51,8 +55,10 @@ Known issues / Roadmap
 
 
 
+
 Bug Tracker
 -----------
+
 
 
 
@@ -68,11 +74,14 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
+
 ### Contributors
+
 
 
 
@@ -82,6 +91,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
