@@ -23,6 +23,7 @@ Installation
 
 
 
+
 This module depends on:
 
 * account_payment_partner
@@ -37,9 +38,12 @@ Configuration
 
 
 
+
 This module adds several options on Payment Modes, cf Accounting > Configuration > Management > Payment Modes.
 
 Usage
+-----
+
 -----
 
 -----
@@ -64,10 +68,12 @@ Known issues / Roadmap
 
 
 
+
  * no known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -83,11 +89,14 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
+
 ### Contributors
+
 
 
 
@@ -109,6 +118,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

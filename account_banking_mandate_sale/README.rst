@@ -22,8 +22,10 @@ Installation
 
 
 
+
 Configuration
 -------------
+
 
 
 
@@ -31,6 +33,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -54,10 +58,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues.
 
 Bug Tracker
 -----------
+
 
 
 
@@ -73,6 +79,7 @@ Credits
 
 
 
+
 Images
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
@@ -81,7 +88,9 @@ Images
 
 
 
+
 ### Contributors
+
 
 
 
@@ -91,6 +100,8 @@ Images
 ### Funders
 
 ### Maintainer
+
+
 
 
 

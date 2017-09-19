@@ -60,7 +60,7 @@ addon | version | OCA version | summary
 [account_payment_mode_term](account_payment_mode_term/) | 8.0.0.1.2 (unported) | :repeat: | Account Banking - Payments Term Filter
 [account_voucher_killer](account_voucher_killer/) | 8.0.1.0.0 (unported) | :repeat: | Accounting voucher killer
 [bank_statement_instant_voucher](bank_statement_instant_voucher/) | 1.0r028 (unported) | :repeat: | Bank statement instant voucher
-[portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 (unported) | :repeat: | Adds payment mode ACL's for portal users
+[portal_payment_mode](portal_payment_mode/) | 8.0.1.0.0 (unported) | 9.0.1.0.0 | Adds payment mode ACL's for portal users
 
 [//]: # (end addons)
 
