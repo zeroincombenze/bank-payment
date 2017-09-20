@@ -42,6 +42,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_payment
 
@@ -65,9 +66,12 @@ Configuration
 
 
 
+
 TODO
 
 Usage
+-----
+
 -----
 
 -----
@@ -124,10 +128,12 @@ Known issues / Roadmap
 
 
 
+
  * no known issues
  
 Bug Tracker
 -----------
+
 
 
 
@@ -167,7 +173,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -200,6 +208,7 @@ Credits
 
 
 
+
 * Alexis de Lattre
 * Pedro M. Baeza
 * Alexandre Fayolle
@@ -209,6 +218,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

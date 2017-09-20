@@ -40,6 +40,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_banking_payment_export
 
@@ -63,9 +64,12 @@ Configuration
 
 
 
+
 Please refer to module *Account Banking SEPA Direct Debit*
 
 Usage
+-----
+
 -----
 
 -----
@@ -123,10 +127,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
  
 Bug Tracker
 -----------
+
 
 
 
@@ -166,7 +172,9 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
+
 
 
 
@@ -199,6 +207,7 @@ Credits
 
 
 
+
 * Stefan Rijnhart
 * Pedro M. Baeza
 * Alexis de Lattre <alexis.delattre@akretion.com>
@@ -212,6 +221,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
