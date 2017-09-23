@@ -8,4 +8,3 @@
 # [2017: SHS-AV] Italian localization
 
 from . import wizard
-from . import account_banking_sepa

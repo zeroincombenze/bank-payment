@@ -20,7 +20,7 @@
         'python': ['unidecode', 'lxml'],
     },
     'data': [
-        'account_banking_sepa_view.xml',
+        'views/account_banking_sepa_view.xml',
         'wizard/export_sepa_view.xml',
         'data/payment_type_sepa_sct.xml',
         'security/ir.model.access.csv',

@@ -1,40 +1,23 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    Mandate module for openERP
-#    Copyright (C) 2014 Compassion CH (http://www.compassion.ch)
-#    @author: Cyril Sester <csester@compassion.ch>,
-#             Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# -*- coding: utf-8 -*-
+# © 2014 Compassion CH - Cyril Sester <csester@compassion.ch>
+# © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
+# © 2015 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     'name': 'Account Banking Mandate',
     'summary': 'Banking mandates',
-    'version': '0.1',
+    'version': '7.0.0.1.1',
     'license': 'AGPL-3',
-    'author': "Compassion CH,Odoo Community Association (OCA)",
-    'website': 'http://www.compassion.ch',
+    'author': "Compassion CH, Odoo Community Association (OCA)",
+    'website': 'https://github.com/OCA/bank-payment',
     'category': 'Banking addons',
     'depends': ['account_payment'],
     'external_dependencies': {},
     'data': [
-        'view/account_banking_mandate_view.xml',
-        'view/account_invoice_view.xml',
-        'view/account_payment_view.xml',
-        'view/res_partner_bank_view.xml',
+        'views/account_banking_mandate_view.xml',
+        'views/account_invoice_view.xml',
+        'views/account_payment_view.xml',
+        'views/res_partner_bank_view.xml',
         'data/mandate_reference_sequence.xml',
         'security/ir.model.access.csv',
     ],
@@ -51,6 +34,5 @@
     You can setup mandates from the accounting menu or directly from a bank
     account.
 ''',
-    'active': False,
     'installable': True,
 }
