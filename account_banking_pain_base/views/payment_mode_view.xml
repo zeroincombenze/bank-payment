@@ -15,6 +15,15 @@
         <field name="type" position="after">
             <field name="convert_to_ascii"/>
         </field>
+        <xpath expr="//form/group" position="after">
+            <group name="sepa_identifiers" string="SEPA identifiers"
+                   attrs="{'invisible': [('sepa_type', '=', False)]}">
+                <group>
+                    <field name="initiating_party_identifier" />
+                    <field name="initiating_party_issuer"/>
+                </group>
+            </group>
+        </xpath>
     </field>
 </record>
 

@@ -48,68 +48,16 @@ Questo modulo differisce dalla versiona standard OCA:
 Installation
 ------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 Install this module from Odoo Control Panel.
 
 
 Configuration
 -------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 No configuration required.
 
 
 Usage
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
 -----
 
 For further information, please visit:
@@ -120,89 +68,13 @@ For further information, please visit:
 Known issues / Roadmap
 ----------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 -   no known issues
-
-
-Bug Tracker
------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bugs are tracked on [GitHub Issues]. In case of trouble, please check there if your issue has already been reported. If you spotted it first, help us smashing it by providing a detailed and welcomed feedback [here].
 
 
 Credits
 -------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[![Odoo Italia Associazione]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Contributors
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -   Alexis de Lattre
 -   Pedro M. Baeza
@@ -218,43 +90,14 @@ Credits
 
 ### Funders
 
-### Maintainer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 This module has been financially supported by
 
-- shs-av s.r.l. <www.shs-av.com>
+* shs-av s.r.l. <www.shs-av.com>
 
 
+### Maintainer
 
 This module is maintained by the Odoo Italia Associazione
-
 
 To contribute to this module, please visit <https://www.odoo-italia.org>.
 
