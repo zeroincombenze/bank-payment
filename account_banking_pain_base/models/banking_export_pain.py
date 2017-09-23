@@ -54,6 +54,8 @@ class banking_export_pain(orm.AbstractModel):
                     '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
                 for unallowed_ascii_char in unallowed_ascii_chars:
                     value = value.replace(unallowed_ascii_char, '-')
+            elif isinstance(value, (int, long)):            # pragma: no cover
+                value = str(value)
             else:                                           # pragma: no cover
                 value = ''
         return value
@@ -170,7 +172,7 @@ class banking_export_pain(orm.AbstractModel):
             })
 
         action = {
-            'name': 'SEPA File',
+            'name': _('SEPA File'),
             'type': 'ir.actions.act_window',
             'view_type': 'form',
             'view_mode': 'form,tree',
@@ -323,7 +325,10 @@ class banking_export_pain(orm.AbstractModel):
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
         try:
             if gen_args.get('variant_xsd') == 'CBI-IT':
-                if party_type == 'Dbtr':
+                if (party_type == 'Dbtr' and
+                        gen_args.get('payment_method') != 'DD') or \
+                        (party_type == 'Cdtr' and
+                         gen_args.get('payment_method') == 'DD'):
                     party_agent = etree.SubElement(
                         parent_node, '%sAgt' % party_type)
                     party_agent_institution = etree.SubElement(
@@ -384,9 +389,9 @@ class banking_export_pain(orm.AbstractModel):
 
     def generate_party_block(
             self, cr, uid, parent_node, party_type, order, name, iban, bic,
-            eval_ctx, gen_args, partner=None, context=None):
-        '''Generate the piece of the XML file corresponding to Name+IBAN+BIC
-        This code is mutualized between TRF and DD'''
+            eval_ctx, gen_args, sepa_credid=None, partner=None, context=None):
+        """Generate the piece of the XML file corresponding to Name+IBAN+BIC
+        This code is mutualized between TRF and DD"""
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
         if party_type == 'Cdtr':
             party_type_label = 'Creditor'
@@ -431,7 +436,14 @@ class banking_export_pain(orm.AbstractModel):
                     SCT = 'crossborder'
                 else:
                     SCT = 'domestic'
-                if party_type != 'Cdtr':
+                if sepa_credid:
+                    self.generate_creditor_scheme_identification(
+                        cr, uid, party,
+                        sepa_credid,
+                        'SEPA Creditor Identifier', {'self': self},
+                        'SEPA', gen_args)
+                elif party_type != 'Cdtr' and \
+                        gen_args.get('payment_method') != 'DD':
                     party_id = etree.SubElement(party, 'Id')
                     party_org_id = etree.SubElement(party_id, 'OrgId')
                     party_org_other = etree.SubElement(party_org_id, 'Othr')
