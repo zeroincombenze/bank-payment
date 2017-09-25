@@ -39,6 +39,7 @@ Installation
 
 
 
+
 This module depends on :
 * account_banking_pain_base
 
@@ -46,6 +47,7 @@ This module is part of the OCA/bank-payment suite.
 
 Configuration
 -------------
+
 
 
 
@@ -59,6 +61,8 @@ Configuration
 * Check that this payment method uses the proper version of PAIN.
 
 Usage
+-----
+
 -----
 
 -----
@@ -84,10 +88,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -105,12 +111,15 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
 
+
 ### Contributors
+
 
 
 
@@ -130,6 +139,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

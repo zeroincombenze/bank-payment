@@ -30,6 +30,7 @@ Installation
 
 
 
+
 This module depends on :
 
 - account_payment_order
@@ -43,9 +44,12 @@ Configuration
 
 
 
+
 No configuration required.
 
 Usage
+-----
+
 -----
 
 -----
@@ -69,10 +73,12 @@ Known issues / Roadmap
 
 
 
+
  * no known issues
 
 Bug Tracker
 -----------
+
 
 
 
@@ -90,12 +96,15 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
 
+
 ### Contributors
+
 
 
 
@@ -114,6 +123,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
