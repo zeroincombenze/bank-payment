@@ -43,6 +43,7 @@ Installation
 
 
 
+
 This module requires the *connector* module, hosted on
 `OCA/connector <https://github.com/OCA/connector>`_
 
@@ -53,9 +54,12 @@ Configuration
 
 
 
+
 This will only work for payment modes that have a transfer account set.
 
 Usage
+-----
+
 -----
 
 -----
@@ -80,8 +84,10 @@ Known issues / Roadmap
 
 
 
+
 Bug Tracker
 -----------
+
 
 
 
@@ -99,12 +105,15 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
 
+
 ### Contributors
+
 
 
 
@@ -116,6 +125,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 

@@ -32,6 +32,7 @@ Installation
 
 
 
+
 This module depends on :
 - purchase
 - account_payment_partner
@@ -45,9 +46,12 @@ Configuration
 
 
 
+
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -80,10 +84,12 @@ Known issues / Roadmap
 
 
 
+
  * No known issues.
 
 Bug Tracker
 -----------
+
 
 
 
@@ -101,12 +107,15 @@ Credits
 
 
 
+
 [![Odoo Italia Associazione]]
 
 
 
 
+
 ### Contributors
+
 
 
 
@@ -122,6 +131,8 @@ Credits
 ### Funders
 
 ### Maintainer
+
+
 
 
 
