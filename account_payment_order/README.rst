@@ -14,6 +14,7 @@
 =========================
 
 Account Payment Order
+=====================
 
 This module adds support for payment orders and debit orders.
 
@@ -44,6 +45,8 @@ Configuration
 This module adds several options on Payment Modes, cf Accounting > Configuration > Management > Payment Modes.
 
 Usage
+-----
+
 -----
 
 -----
@@ -97,7 +100,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

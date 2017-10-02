@@ -14,6 +14,7 @@
 =========================
 
 Account Banking Mandate Sale
+============================
 
 This modules adds the field *Direct Debit Mandate* on sale orders.
 
@@ -35,6 +36,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -91,7 +94,6 @@ Images
 
 * Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
 
-[![Odoo Italia Associazione]]
 
 
 

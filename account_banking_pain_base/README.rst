@@ -14,6 +14,7 @@
 =========================
 
 Account Banking PAIN Base Module
+================================
 
 This module contains fields and functions that are used by the module for SEPA
 Credit Transfer (account_banking_sepa_credit_transfer) and SEPA Direct Debit
@@ -48,6 +49,8 @@ Configuration
 No configuration required.
 
 Usage
+-----
+
 -----
 
 -----
@@ -97,7 +100,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

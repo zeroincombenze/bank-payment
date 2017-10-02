@@ -14,6 +14,7 @@
 =========================
 
 Block payment of invoices
+=========================
 
 This module was written to extend the functionality of payment orders
 to prevent invoices under litigation to be presented for inclusion in payment orders.
@@ -48,6 +49,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -103,7 +106,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

@@ -14,6 +14,7 @@
 =========================
     
 Prevent the usage of voucher from invoices
+==========================================
 
 This add-on disables the "Register Payment" button on
 customer invoices and the "Pay" button on supplier invoices.
@@ -49,6 +50,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -99,7 +102,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

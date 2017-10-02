@@ -14,6 +14,7 @@
 =========================
 
 Account Banking - Payments Term Filter
+======================================
 
 Payment term filter on payment mode.
 
@@ -44,6 +45,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -96,7 +99,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 
