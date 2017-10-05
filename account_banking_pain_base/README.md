@@ -60,6 +60,10 @@ No configuration required.
 Usage
 -----
 
+-----
+
+-----
+
 For further information, please visit:
 
 - http://wiki.zeroincombenze.org/en/Odoo/7.0/man/FI
@@ -70,6 +74,9 @@ Known issues / Roadmap
 
 -   no known issues
 
+
+Bug Tracker
+-----------
 
 Credits
 -------
