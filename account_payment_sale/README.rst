@@ -63,6 +63,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 You are able to add a payment mode directly on a partner.

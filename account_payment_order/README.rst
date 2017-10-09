@@ -57,6 +57,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 You can create a Payment Order via the menu Accounting > Payments > Payment Orders and then select the move lines to pay.

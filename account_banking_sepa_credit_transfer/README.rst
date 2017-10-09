@@ -74,6 +74,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 In the menu *Accounting > Payments > Payment Order*, create a new

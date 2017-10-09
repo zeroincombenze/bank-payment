@@ -48,6 +48,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 When you select a payment mode that requires mandate on a sale order, Odoo will

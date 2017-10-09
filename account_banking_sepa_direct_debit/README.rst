@@ -72,6 +72,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 In the menu *Accounting > Payments > Debit Order*, create a new debit
