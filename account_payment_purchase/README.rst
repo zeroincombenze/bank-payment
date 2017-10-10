@@ -15,6 +15,7 @@
    :alt: License: AGPL-3
 
 Account Payment Purchase
+========================
 
 This module adds 2 fields on purchase orders: *Bank Account* and *Payment
 Mode*. These fields are copied from partner to purchase order and then from
@@ -50,6 +51,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -108,7 +111,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

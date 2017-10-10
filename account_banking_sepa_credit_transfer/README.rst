@@ -14,6 +14,7 @@
 =========================
 
 Account Banking SEPA Credit Transfer
+====================================
 
 Module to export payment orders in SEPA XML file format.
 
@@ -71,6 +72,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 In the menu *Accounting > Payments > Payment Order*, create a new
@@ -112,7 +115,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

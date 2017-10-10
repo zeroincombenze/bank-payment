@@ -14,6 +14,7 @@
 =========================
 
 Account Payment Partner
+=======================
 
 This module adds severals fields :
 
@@ -49,6 +50,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -101,7 +104,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

@@ -14,6 +14,7 @@
 =========================
 
 Account Payment Sale
+====================
 
 This modules adds one field on sale orders: *Payment Mode*.
 This field is copied from customer to sale order and then from sale order to
@@ -50,6 +51,8 @@ Configuration
 There is nothing to configure.
 
 Usage
+-----
+
 -----
 
 -----
@@ -101,7 +104,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

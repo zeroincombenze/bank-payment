@@ -15,6 +15,7 @@
    :alt: License AGPL-3
 
 Batch reconciliation for transfer lines created in payment orders
+=================================================================
 
 This module allows to process with the connector technology the heavy task of
 reconciliation of the receivable/payable journal entries of a payment order
@@ -68,6 +69,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 When exporting the payment order, click on *Validate* to generate the transfer
@@ -106,7 +109,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 

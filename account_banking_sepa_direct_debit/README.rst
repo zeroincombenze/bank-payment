@@ -14,6 +14,7 @@
 =========================
 
 Account Banking SEPA Direct Debit
+=================================
 
 Create SEPA files for Direct Debit
 
@@ -69,6 +70,8 @@ Usage
 
 -----
 
+-----
+
 =====
 
 In the menu *Accounting > Payments > Debit Order*, create a new debit
@@ -110,7 +113,6 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
 
 
 
