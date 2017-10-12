@@ -51,6 +51,8 @@ Install this module from Odoo Control Panel.
 
 These instruction are just an example to remember what you have to do:
 
+    pip install unidecode
+    pip install lxml
     git clone https://github.com/zeroincombenze/bank-payment
     for module in account_banking_mandate account_banking_pain_base account_banking_sepa_credit_transfer account_banking_sepa_direct_debit; do
         mv ODOO_DIR/bank-payment/$module BACKUP_DIR/
@@ -78,6 +80,8 @@ Configuration
 
 
 Usage
+-----
+
 -----
 
 For furthermore information, please visit http://wiki.zeroincombenze.org/it/Odoo/7.0/man/FI
