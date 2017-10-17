@@ -61,15 +61,10 @@ This will only work for payment modes that have a transfer account set.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
 =====
 

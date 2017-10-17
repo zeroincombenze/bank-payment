@@ -47,15 +47,10 @@ This module adds several options on Payment Modes, cf Accounting > Configuration
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
 =====
 

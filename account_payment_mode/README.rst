@@ -39,15 +39,10 @@ To configure this module, you need to go to the menu *Account > Configuration > 
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
 =====
 
