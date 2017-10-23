@@ -28,7 +28,7 @@
         'views/account_banking_sdd_view.xml',
         'views/sdd_mandate_view.xml',
         'views/company_view.xml',
-        'mandate_expire_cron.xml',
+        'data/mandate_expire_cron.xml',
         'wizard/export_sdd_view.xml',
         'data/payment_type_sdd.xml',
         'data/mandate_reference_sequence.xml',

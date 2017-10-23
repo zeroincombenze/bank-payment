@@ -10,6 +10,7 @@
 from openerp.osv import orm, fields
 from openerp.tools.translate import _
 from openerp import netsvc
+from openerp.modules.module import get_module_resource
 from datetime import datetime
 from lxml import etree
 
@@ -66,6 +67,120 @@ class banking_export_sdd_wizard(orm.TransientModel):
         'state': 'create',
     }
 
+    def _get_trx_info(self, cr, uid, line, payment_info_2_0, sequence_type,
+                      gen_args, sepa_export, bic_xml_tag,
+                      variant=None, context=None):
+        # C. Direct Debit Transaction Info
+        dd_transaction_info_2_28 = etree.SubElement(
+            payment_info_2_0, 'DrctDbtTxInf')
+        payment_identification_2_29 = etree.SubElement(
+            dd_transaction_info_2_28, 'PmtId')
+        if variant == 'CBI-IT':
+            instrid_identification_2_31 = etree.SubElement(
+                payment_identification_2_29, 'InstrId')
+            instrid_identification_2_31.text = self._prepare_field(
+                cr, uid,
+                'Instring Identification', 'line.id',
+                {'line': line}, 6, gen_args=gen_args)
+        end2end_identification_2_31 = etree.SubElement(
+            payment_identification_2_29, 'EndToEndId')
+        end2end_identification_2_31.text = self._prepare_field(
+            cr, uid, 'End to End Identification', 'line.name',
+            {'line': line}, 35,
+            gen_args=gen_args)
+        currency_name = self._prepare_field(
+            cr, uid, 'Currency Code', 'line.currency.name',
+            {'line': line}, 3, gen_args=gen_args,
+            context=context)
+        instructed_amount_2_44 = etree.SubElement(
+            dd_transaction_info_2_28, 'InstdAmt', Ccy=currency_name)
+        instructed_amount_2_44.text = '%.2f' % line.amount_currency
+        dd_transaction_2_46 = etree.SubElement(
+            dd_transaction_info_2_28, 'DrctDbtTx')
+        mandate_related_info_2_47 = etree.SubElement(
+            dd_transaction_2_46, 'MndtRltdInf')
+        mandate_identification_2_48 = etree.SubElement(
+            mandate_related_info_2_47, 'MndtId')
+        mandate_identification_2_48.text = self._prepare_field(
+            cr, uid, 'Unique Mandate Reference',
+            'line.mandate_id.unique_mandate_reference',
+            {'line': line}, 35,
+            gen_args=gen_args)
+        mandate_signature_date_2_49 = etree.SubElement(
+            mandate_related_info_2_47, 'DtOfSgntr')
+        mandate_signature_date_2_49.text = self._prepare_field(
+            cr, uid, 'Mandate Signature Date',
+            'line.mandate_id.signature_date',
+            {'line': line}, 10,
+            gen_args=gen_args)
+        if sequence_type == 'FRST' and (
+                line.mandate_id.last_debit_date or
+                not line.mandate_id.sepa_migrated):
+            previous_bank = self._get_previous_bank(
+                cr, uid, line, context=context)
+            if previous_bank or not line.mandate_id.sepa_migrated:
+                amendment_indicator_2_50 = etree.SubElement(
+                    mandate_related_info_2_47, 'AmdmntInd')
+                amendment_indicator_2_50.text = 'true'
+                amendment_info_details_2_51 = etree.SubElement(
+                    mandate_related_info_2_47, 'AmdmntInfDtls')
+            if previous_bank:
+                if previous_bank.bank.bic == line.bank_id.bank.bic:
+                    ori_debtor_account_2_57 = etree.SubElement(
+                        amendment_info_details_2_51, 'OrgnlDbtrAcct')
+                    ori_debtor_account_id = etree.SubElement(
+                        ori_debtor_account_2_57, 'Id')
+                    ori_debtor_account_iban = etree.SubElement(
+                        ori_debtor_account_id, 'IBAN')
+                    ori_debtor_account_iban.text = self._validate_iban(
+                        cr, uid, self._prepare_field(
+                            cr, uid, 'Original Debtor Account',
+                            'previous_bank.acc_number',
+                            {'previous_bank': previous_bank},
+                            gen_args=gen_args,
+                            context=context),
+                        context=context)
+                else:
+                    ori_debtor_agent_2_58 = etree.SubElement(
+                        amendment_info_details_2_51, 'OrgnlDbtrAgt')
+                    ori_debtor_agent_institution = etree.SubElement(
+                        ori_debtor_agent_2_58, 'FinInstnId')
+                    ori_debtor_agent_bic = etree.SubElement(
+                        ori_debtor_agent_institution, bic_xml_tag)
+                    ori_debtor_agent_bic.text = self._prepare_field(
+                        cr, uid, 'Original Debtor Agent',
+                        'previous_bank.bank.bic',
+                        {'previous_bank': previous_bank},
+                        gen_args=gen_args,
+                        context=context)
+                    ori_debtor_agent_other = etree.SubElement(
+                        ori_debtor_agent_institution, 'Othr')
+                    ori_debtor_agent_other_id = etree.SubElement(
+                        ori_debtor_agent_other, 'Id')
+                    ori_debtor_agent_other_id.text = 'SMNDA'
+                    # SMNDA = Same Mandate New Debtor Agent
+            elif not line.mandate_id.sepa_migrated:
+                ori_mandate_identification_2_52 = etree.SubElement(
+                    amendment_info_details_2_51, 'OrgnlMndtId')
+                ori_mandate_identification_2_52.text = \
+                    self._prepare_field(
+                        cr, uid, 'Original Mandate Identification',
+                        'line.mandate_id.'
+                        'original_mandate_identification',
+                        {'line': line},
+                        gen_args=gen_args,
+                        context=context)
+                ori_creditor_scheme_id_2_53 = etree.SubElement(
+                    amendment_info_details_2_51, 'OrgnlCdtrSchmeId')
+                self.generate_creditor_scheme_identification(
+                    cr, uid, ori_creditor_scheme_id_2_53,
+                    'sepa_export.payment_order_ids[0].company_id.'
+                    'original_creditor_identifier',
+                    'Original Creditor Identifier',
+                    {'sepa_export': sepa_export},
+                    'SEPA', gen_args, context=context)
+        return dd_transaction_info_2_28
+
     def create(self, cr, uid, vals, context=None):
         payment_order_ids = context.get('active_ids', [])
         vals.update({
@@ -100,15 +215,47 @@ class banking_export_sdd_wizard(orm.TransientModel):
                 previous_bank = previous_payline.bank_id
         return previous_bank
 
-    def create_sepa(self, cr, uid, ids, context=None):
-        '''
-        Creates the SEPA Direct Debit file. That's the important code !
-        '''
-        sepa_export = self.browse(cr, uid, ids[0], context=context)
+    def _get_name_n_params(self, name, deflt=None):
+        """Extract name and params from string like 'name(params)'"""
+        deflt = '' if deflt is None else deflt
+        i = name.find('(')
+        j = name.rfind(')')
+        if i >= 0 and j >= i:
+            n = name[:i]
+            p = name[i + 1:j]
+        else:
+            n = name
+            p = deflt
+        return n, p
 
-        pain_flavor = sepa_export.payment_order_ids[0].mode.type.code
-        convert_to_ascii = \
-            sepa_export.payment_order_ids[0].mode.convert_to_ascii
+    def _get_pain_file_name(self, pain_name, pain_flavor):
+        """Manage variant schema (i.e. Italian banks in CBI)
+        based on pain xsd file name.
+        Pain_name MUST BE in form 'pain' or 'pain(variant)'
+        Standard pain name is 'pain.001.001.VV.xsd' where VV is pain version,
+        variant name is 'pain.001.001.VV-LLL.xsd' where LLL is variant name.
+        If variant file does not exist, standard file is used"""
+        xsd_file, variant = self._get_name_n_params(pain_name)
+        module_path = 'account_banking_sepa_direct_debit'
+        if variant:
+            if variant.find('used') >= 0:
+                x = variant.split(' ')
+                variant = x[-1]
+            if variant == 'Italy':
+                variant = 'CBI-IT'
+            xsd_file = '%s-%s.xsd' % (pain_flavor, variant)
+        else:
+            xsd_file = '%s.xsd' % pain_flavor
+        xsd_file = get_module_resource(module_path,
+                                       'data',
+                                       xsd_file)
+        if xsd_file:
+            pain_xsd_file = xsd_file
+        else:
+            pain_xsd_file = '%s/%s/%s.xsd' % (module_path, 'data', pain_flavor)
+        return pain_xsd_file, variant
+
+    def _get_pain_tags(self, pain_flavor, variant=None):
         if pain_flavor == 'pain.008.001.02':
             bic_xml_tag = 'BIC'
             name_maxsize = 70
@@ -128,7 +275,54 @@ class banking_export_sdd_wizard(orm.TransientModel):
                     "Payment Type Code supported for SEPA Direct Debit "
                     "are 'pain.008.001.02', 'pain.008.001.03' and "
                     "'pain.008.001.04'.") % pain_flavor)
+        if variant == 'CBI-IT':
+            root_xml_tag = False
+        return bic_xml_tag, name_maxsize, root_xml_tag
 
+    def _get_nsmap(self, pain_xsd_file, pain_flavor):
+        """Read nsmap from xsd file TODO: best code"""
+        root_name = 'Document'
+        pain_ns = {
+            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+            None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
+        }
+        try:
+            fd = open(pain_xsd_file, 'r')
+            schema = fd.read()
+            fd.close()
+            i = schema.find('xmlns:xs=')
+            j = schema.find('"', i) + 1
+            k = schema.find('"', j)
+            pain_ns['xsi'] = '%s-instance' % schema[j:k]
+            i = schema.find('targetNamespace=')
+            j = schema.find('"', i) + 1
+            k = schema.find('"', j)
+            pain_ns[None] = schema[j:k]
+            i = schema.find('<xs:element name=')
+            j = schema.find('"', i) + 1
+            k = schema.find('"', j)
+            root_name = schema[j:k]
+        except:
+            pass
+        return pain_ns, root_name
+
+    def create_sepa(self, cr, uid, ids, context=None):
+        """Creates the SEPA Direct Debit file. That's the important code !"""
+        context = {} if context is None else context
+        sepa_export = self.browse(cr, uid, ids[0], context=context)
+        # Get country id for any customization
+        country_id, country_code = self.pool.get('res.company').\
+            _get_country(cr, uid,
+                         sepa_export.payment_order_ids[0].company_id.id)
+        pain_flavor = sepa_export.payment_order_ids[0].mode.type.code
+        pain_name = sepa_export.payment_order_ids[0].mode.type.name
+        convert_to_ascii = \
+            sepa_export.payment_order_ids[0].mode.convert_to_ascii
+        # code to manage variant schema (i.e. Italian banks in CBI)
+        pain_xsd_file, variant = self._get_pain_file_name(
+            pain_name, pain_flavor)
+        bic_xml_tag, name_maxsize, root_xml_tag = self._get_pain_tags(
+            pain_flavor, variant=variant)
         gen_args = {
             'bic_xml_tag': bic_xml_tag,
             'name_maxsize': name_maxsize,
@@ -137,23 +331,20 @@ class banking_export_sdd_wizard(orm.TransientModel):
             'pain_flavor': pain_flavor,
             'sepa_export': sepa_export,
             'file_obj': self.pool['banking.export.sdd'],
-            'pain_xsd_file':
-            'account_banking_sepa_direct_debit/data/%s.xsd' % pain_flavor,
+            'pain_xsd_file': pain_xsd_file,
+            'variant_xsd': variant,
+            'country': country_code
         }
-
-        pain_ns = {
-            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-            None: 'urn:iso:std:iso:20022:tech:xsd:%s' % pain_flavor,
-        }
-
-        xml_root = etree.Element('Document', nsmap=pain_ns)
-        pain_root = etree.SubElement(xml_root, root_xml_tag)
-
+        pain_ns, root_name = self._get_nsmap(pain_xsd_file, pain_flavor)
+        xml_root = etree.Element(root_name, nsmap=pain_ns)
+        if root_xml_tag:
+            pain_root = etree.SubElement(xml_root, root_xml_tag)
+        else:
+            pain_root = xml_root
         # A. Group header
         group_header_1_0, nb_of_transactions_1_6, control_sum_1_7 = \
             self.generate_group_header_block(
-                cr, uid, pain_root, gen_args, context=context)
-
+                cr, uid, pain_root, gen_args)
         transactions_count_1_6 = 0
         total_amount = 0.0
         amount_control_sum_1_7 = 0.0
@@ -240,18 +431,31 @@ class banking_export_sdd_wizard(orm.TransientModel):
                         'requested_date': requested_date,
                     }, gen_args, context=context)
 
-            self.generate_party_block(
-                cr, uid, payment_info_2_0, 'Cdtr', 'B',
-                'sepa_export.payment_order_ids[0].mode.bank_id.partner_id.'
-                'name',
-                'sepa_export.payment_order_ids[0].mode.bank_id.acc_number',
-                'sepa_export.payment_order_ids[0].mode.bank_id.bank.bic',
-                {'sepa_export': sepa_export},
-                gen_args, context=context)
-
-            charge_bearer_2_24 = etree.SubElement(payment_info_2_0, 'ChrgBr')
-            charge_bearer_2_24.text = sepa_export.charge_bearer
-
+            if variant == 'CBI-IT':
+                self.generate_party_block(
+                    cr, uid, payment_info_2_0, 'Cdtr', 'B',
+                    'sepa_export.payment_order_ids[0].mode.bank_id.partner_id.'
+                    'name',
+                    'sepa_export.payment_order_ids[0].mode.bank_id.acc_number',
+                    'sepa_export.payment_order_ids[0].mode.bank_id.bank.bic',
+                    {'sepa_export': sepa_export},
+                    gen_args,
+                    sepa_credid='sepa_export.payment_order_ids[0].company_id.'
+                                'sepa_creditor_identifier',
+                    context=context)
+            else:
+                charge_bearer_2_24 = etree.SubElement(payment_info_2_0,
+                                                      'ChrgBr')
+                charge_bearer_2_24.text = sepa_export.charge_bearer
+                self.generate_party_block(
+                    cr, uid, payment_info_2_0, 'Cdtr', 'B',
+                    'sepa_export.payment_order_ids[0].mode.bank_id.partner_id.'
+                    'name',
+                    'sepa_export.payment_order_ids[0].mode.bank_id.acc_number',
+                    'sepa_export.payment_order_ids[0].mode.bank_id.bank.bic',
+                    {'sepa_export': sepa_export},
+                    gen_args,
+                    context=context)
             creditor_scheme_identification_2_27 = etree.SubElement(
                 payment_info_2_0, 'CdtrSchmeId')
             self.generate_creditor_scheme_identification(
@@ -259,131 +463,33 @@ class banking_export_sdd_wizard(orm.TransientModel):
                 'sepa_export.payment_order_ids[0].company_id.'
                 'sepa_creditor_identifier',
                 'SEPA Creditor Identifier', {'sepa_export': sepa_export},
-                'SEPA', gen_args, context=context)
-
+                'SEPA', gen_args)
             transactions_count_2_4 = 0
             amount_control_sum_2_5 = 0.0
             for line in lines:
                 transactions_count_2_4 += 1
-                # C. Direct Debit Transaction Info
-                dd_transaction_info_2_28 = etree.SubElement(
-                    payment_info_2_0, 'DrctDbtTxInf')
-                payment_identification_2_29 = etree.SubElement(
-                    dd_transaction_info_2_28, 'PmtId')
-                end2end_identification_2_31 = etree.SubElement(
-                    payment_identification_2_29, 'EndToEndId')
-                end2end_identification_2_31.text = self._prepare_field(
-                    cr, uid, 'End to End Identification', 'line.name',
-                    {'line': line}, 35,
-                    gen_args=gen_args, context=context)
-                currency_name = self._prepare_field(
-                    cr, uid, 'Currency Code', 'line.currency.name',
-                    {'line': line}, 3, gen_args=gen_args,
-                    context=context)
-                instructed_amount_2_44 = etree.SubElement(
-                    dd_transaction_info_2_28, 'InstdAmt', Ccy=currency_name)
-                instructed_amount_2_44.text = '%.2f' % line.amount_currency
                 amount_control_sum_1_7 += line.amount_currency
                 amount_control_sum_2_5 += line.amount_currency
-                dd_transaction_2_46 = etree.SubElement(
-                    dd_transaction_info_2_28, 'DrctDbtTx')
-                mandate_related_info_2_47 = etree.SubElement(
-                    dd_transaction_2_46, 'MndtRltdInf')
-                mandate_identification_2_48 = etree.SubElement(
-                    mandate_related_info_2_47, 'MndtId')
-                mandate_identification_2_48.text = self._prepare_field(
-                    cr, uid, 'Unique Mandate Reference',
-                    'line.mandate_id.unique_mandate_reference',
-                    {'line': line}, 35,
-                    gen_args=gen_args, context=context)
-                mandate_signature_date_2_49 = etree.SubElement(
-                    mandate_related_info_2_47, 'DtOfSgntr')
-                mandate_signature_date_2_49.text = self._prepare_field(
-                    cr, uid, 'Mandate Signature Date',
-                    'line.mandate_id.signature_date',
-                    {'line': line}, 10,
-                    gen_args=gen_args, context=context)
-                if sequence_type == 'FRST' and (
-                        line.mandate_id.last_debit_date or
-                        not line.mandate_id.sepa_migrated):
-                    previous_bank = self._get_previous_bank(
-                        cr, uid, line, context=context)
-                    if previous_bank or not line.mandate_id.sepa_migrated:
-                        amendment_indicator_2_50 = etree.SubElement(
-                            mandate_related_info_2_47, 'AmdmntInd')
-                        amendment_indicator_2_50.text = 'true'
-                        amendment_info_details_2_51 = etree.SubElement(
-                            mandate_related_info_2_47, 'AmdmntInfDtls')
-                    if previous_bank:
-                        if previous_bank.bank.bic == line.bank_id.bank.bic:
-                            ori_debtor_account_2_57 = etree.SubElement(
-                                amendment_info_details_2_51, 'OrgnlDbtrAcct')
-                            ori_debtor_account_id = etree.SubElement(
-                                ori_debtor_account_2_57, 'Id')
-                            ori_debtor_account_iban = etree.SubElement(
-                                ori_debtor_account_id, 'IBAN')
-                            ori_debtor_account_iban.text = self._validate_iban(
-                                cr, uid, self._prepare_field(
-                                    cr, uid, 'Original Debtor Account',
-                                    'previous_bank.acc_number',
-                                    {'previous_bank': previous_bank},
-                                    gen_args=gen_args,
-                                    context=context),
-                                context=context)
-                        else:
-                            ori_debtor_agent_2_58 = etree.SubElement(
-                                amendment_info_details_2_51, 'OrgnlDbtrAgt')
-                            ori_debtor_agent_institution = etree.SubElement(
-                                ori_debtor_agent_2_58, 'FinInstnId')
-                            ori_debtor_agent_bic = etree.SubElement(
-                                ori_debtor_agent_institution, bic_xml_tag)
-                            ori_debtor_agent_bic.text = self._prepare_field(
-                                cr, uid, 'Original Debtor Agent',
-                                'previous_bank.bank.bic',
-                                {'previous_bank': previous_bank},
-                                gen_args=gen_args,
-                                context=context)
-                            ori_debtor_agent_other = etree.SubElement(
-                                ori_debtor_agent_institution, 'Othr')
-                            ori_debtor_agent_other_id = etree.SubElement(
-                                ori_debtor_agent_other, 'Id')
-                            ori_debtor_agent_other_id.text = 'SMNDA'
-                            # SMNDA = Same Mandate New Debtor Agent
-                    elif not line.mandate_id.sepa_migrated:
-                        ori_mandate_identification_2_52 = etree.SubElement(
-                            amendment_info_details_2_51, 'OrgnlMndtId')
-                        ori_mandate_identification_2_52.text = \
-                            self._prepare_field(
-                                cr, uid, 'Original Mandate Identification',
-                                'line.mandate_id.'
-                                'original_mandate_identification',
-                                {'line': line},
-                                gen_args=gen_args,
-                                context=context)
-                        ori_creditor_scheme_id_2_53 = etree.SubElement(
-                            amendment_info_details_2_51, 'OrgnlCdtrSchmeId')
-                        self.generate_creditor_scheme_identification(
-                            cr, uid, ori_creditor_scheme_id_2_53,
-                            'sepa_export.payment_order_ids[0].company_id.'
-                            'original_creditor_identifier',
-                            'Original Creditor Identifier',
-                            {'sepa_export': sepa_export},
-                            'SEPA', gen_args, context=context)
-
+                dd_transaction_info_2_28 = self._get_trx_info(
+                    cr, uid,
+                    line, payment_info_2_0, sequence_type, gen_args,
+                    sepa_export, bic_xml_tag,
+                    variant=variant, context=context)
                 self.generate_party_block(
                     cr, uid, dd_transaction_info_2_28, 'Dbtr', 'C',
                     'line.partner_id.name',
                     'line.bank_id.acc_number',
                     'line.bank_id.bank.bic',
-                    {'line': line}, gen_args, context=context)
+                    {'line': line}, gen_args)
 
                 self.generate_remittance_info_block(
                     cr, uid, dd_transaction_info_2_28,
-                    line, gen_args, context=context)
-
-            nb_of_transactions_2_4.text = str(transactions_count_2_4)
-            control_sum_2_5.text = '%.2f' % amount_control_sum_2_5
-        nb_of_transactions_1_6.text = str(transactions_count_1_6)
+                    line, gen_args)
+            if nb_of_transactions_2_4:
+                nb_of_transactions_2_4.text = unicode(transactions_count_2_4)
+            if control_sum_2_5:
+                control_sum_2_5.text = '%.2f' % amount_control_sum_2_5
+        nb_of_transactions_1_6.text = unicode(transactions_count_1_6)
         control_sum_1_7.text = '%.2f' % amount_control_sum_1_7
 
         return self.finalize_sepa_file_creation(
@@ -400,11 +506,10 @@ class banking_export_sdd_wizard(orm.TransientModel):
         return {'type': 'ir.actions.act_window_close'}
 
     def save_sepa(self, cr, uid, ids, context=None):
-        '''
-        Save the SEPA Direct Debit file: mark all payments in the file
+        """Save the SEPA Direct Debit file: mark all payments in the file
         as 'sent'. Write 'last debit date' on mandate and set oneoff
-        mandate to expired
-        '''
+        mandate to expired.
+        """
         sepa_export = self.browse(cr, uid, ids[0], context=context)
         self.pool.get('banking.export.sdd').write(
             cr, uid, sepa_export.file_id.id, {'state': 'sent'},

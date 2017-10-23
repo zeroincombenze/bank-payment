@@ -139,14 +139,18 @@ class mandate(orm.Model):
         return res
 
     def validate(self, cr, uid, ids, context=None):
-        to_validate_ids = []
         for mandate in self.browse(cr, uid, ids, context=context):
             if mandate.state != 'draft':
                 raise orm.except_orm('StateError',
                                      _('Mandate should be in draft state'))
-            to_validate_ids.append(mandate.id)
-        self.write(
-            cr, uid, to_validate_ids, {'state': 'valid'}, context=context)
+            vals = {}
+            if not mandate.unique_mandate_reference or \
+                    mandate.unique_mandate_reference == '/':
+                vals['unique_mandate_reference'] = \
+                    self.pool['ir.sequence'].next_by_code(
+                        cr, uid, 'account.banking.mandate')
+            vals['state'] = 'valid'
+            self.write(cr, uid, mandate.id, vals)
         return True
 
     def cancel(self, cr, uid, ids, context=None):

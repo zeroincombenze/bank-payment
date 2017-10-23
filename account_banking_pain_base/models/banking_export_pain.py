@@ -131,7 +131,7 @@ class banking_export_pain(orm.AbstractModel):
                     "full error have been written in the server logs. Here "
                     "is the error, which may give you an idea on the cause "
                     "of the problem : %s")
-                % str(e))
+                % unicode(e))
         return True
 
     def _declare_sepa_file_header(
@@ -200,7 +200,7 @@ class banking_export_pain(orm.AbstractModel):
             # and in "Payment info" in pain.001.001.03/04
             batch_booking = etree.SubElement(group_header_1_0, 'BtchBookg')
             batch_booking.text = \
-                str(gen_args['sepa_export'].batch_booking).lower()
+                unidecode(gen_args['sepa_export'].batch_booking).lower()
         nb_of_transactions_1_6 = etree.SubElement(
             group_header_1_0, 'NbOfTxs')
         control_sum_1_7 = etree.SubElement(group_header_1_0, 'CtrlSum')
@@ -228,10 +228,18 @@ class banking_export_pain(orm.AbstractModel):
         payment_method_2_2.text = gen_args['payment_method']
         nb_of_transactions_2_4 = False
         control_sum_2_5 = False
+        batch_booking_2_3 = False
         if gen_args.get('pain_flavor') != 'pain.001.001.02':
-            batch_booking_2_3 = etree.SubElement(payment_info_2_0, 'BtchBookg')
-            batch_booking_2_3.text = \
-                str(gen_args['sepa_export'].batch_booking).lower()
+            if gen_args['sepa_export'].batch_booking or \
+                    gen_args.get('variant_xsd') != 'CBI-IT':
+                batch_booking_2_3 = etree.SubElement(payment_info_2_0,
+                                                     'BtchBookg')
+                batch_booking_2_3.text = unicode(self.batch_booking).lower()
+
+                batch_booking_2_3 = etree.SubElement(payment_info_2_0,
+                                                     'BtchBookg')
+                batch_booking_2_3.text = \
+                    unidecode(gen_args['sepa_export'].batch_booking).lower()
         # The "SEPA Customer-to-bank
         # Implementation guidelines" for SCT and SDD says that control sum
         # and nb_of_transactions should be present
@@ -290,13 +298,10 @@ class banking_export_pain(orm.AbstractModel):
         initiating_party_1_8 = etree.SubElement(parent_node, 'InitgPty')
         initiating_party_name = etree.SubElement(initiating_party_1_8, 'Nm')
         initiating_party_name.text = my_company_name
-        initiating_party_identifier = self.pool['res.company'].\
-            _get_initiating_party_identifier(
-                cr, uid,
-                gen_args['sepa_export'].payment_order_ids[0].company_id.id,
-                context=context)
-        initiating_party_issuer = gen_args['sepa_export'].\
-            payment_order_ids[0].company_id.initiating_party_issuer
+        payment = gen_args['sepa_export'].payment_order_ids[0]
+        initiating_party_identifier = \
+            payment.company_id.initiating_party_identifier
+        initiating_party_issuer = payment.company_id.initiating_party_issuer
         if not initiating_party_issuer:
             initiating_party_issuer = self.pool['res.company'].\
                 _initiating_party_issuer_default(
@@ -313,15 +318,16 @@ class banking_export_pain(orm.AbstractModel):
         elif self._must_have_initiating_party(gen_args):
             raise Warning(
                 _("Missing 'Initiating Party Issuer' and/or "
-                    "'Initiating Party Identifier' for the company "
-                    "Both fields must have a value."))
+                    "'Initiating Party Identifier' for the company '%s'. "
+                    "Both fields must have a value.")
+                % payment.company_id.name)
         return True
 
     def generate_party_agent(
             self, cr, uid, parent_node, party_type, party_type_label,
             order, party_name, iban, bic, eval_ctx, gen_args, context=None):
-        '''Generate the piece of the XML file corresponding to BIC
-        This code is mutualized between TRF and DD'''
+        """Generate the piece of the XML file corresponding to BIC
+        This code is mutualized between TRF and DD"""
         assert order in ('B', 'C'), "Order can be 'B' or 'C'"
         try:
             if gen_args.get('variant_xsd') == 'CBI-IT':
@@ -403,9 +409,8 @@ class banking_export_pain(orm.AbstractModel):
             gen_args=gen_args, context=context)
         piban = self._prepare_field(
             cr, uid, '%s IBAN' % party_type_label, iban, eval_ctx,
-            gen_args=gen_args,
-            context=context)
-        viban = self._validate_iban(cr, uid, piban, context=context)
+            gen_args=gen_args)
+        viban = self._validate_iban(cr, uid, piban)
         # At C level, the order is : BIC, Name, IBAN
         # At B level, the order is : Name, IBAN, BIC
         if order == 'B':
@@ -440,7 +445,7 @@ class banking_export_pain(orm.AbstractModel):
                     self.generate_creditor_scheme_identification(
                         cr, uid, party,
                         sepa_credid,
-                        'SEPA Creditor Identifier', {'self': self},
+                        'SEPA Creditor Identifier', eval_ctx,
                         'SEPA', gen_args)
                 elif party_type != 'Cdtr' and \
                         gen_args.get('payment_method') != 'DD':
@@ -537,7 +542,7 @@ class banking_export_pain(orm.AbstractModel):
                     _('Error:'),
                     _("Missing 'Structured Communication Type' on payment "
                         "line with reference '%s'.")
-                    % (line.name))
+                    % line.name)
             remittance_info_structured_2_100 = etree.SubElement(
                 remittance_info_2_91, 'Strd')
             creditor_ref_information_2_120 = etree.SubElement(
@@ -585,8 +590,9 @@ class banking_export_pain(orm.AbstractModel):
         csi_other_id.text = self._prepare_field(
             cr, uid, identification_label, identification, eval_ctx,
             gen_args=gen_args, context=context)
-        csi_scheme_name = etree.SubElement(csi_other, 'SchmeNm')
-        csi_scheme_name_proprietary = etree.SubElement(
-            csi_scheme_name, 'Prtry')
-        csi_scheme_name_proprietary.text = scheme_name_proprietary
+        if gen_args.get('variant_xsd') != 'CBI-IT':
+            csi_scheme_name = etree.SubElement(csi_other, 'SchmeNm')
+            csi_scheme_name_proprietary = etree.SubElement(
+                csi_scheme_name, 'Prtry')
+            csi_scheme_name_proprietary.text = scheme_name_proprietary
         return True
