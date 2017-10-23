@@ -14,6 +14,7 @@
 =========================
 
 Account Banking Mandate
+=======================
 
 This module adds a generic model for banking mandates.
 These mandates can be specialized to fit any banking mandates (such as sepa or lsv).
@@ -72,35 +73,24 @@ TODO
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -174,7 +164,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -216,8 +206,8 @@ Credits
 * Sergio Teruel (Incaser)		<sergio@incaser.es>
 
 ### Funders
-
 ### Maintainer
+
 
 
 

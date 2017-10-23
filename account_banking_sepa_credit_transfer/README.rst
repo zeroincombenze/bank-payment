@@ -14,6 +14,7 @@
 =========================
 
 Account Banking SEPA Credit Transfer
+====================================
 
 Module to export payment orders in SEPA XML file format.
 
@@ -80,35 +81,24 @@ No specific configuration.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -182,7 +172,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -229,8 +219,8 @@ Credits
 * Antonio Espinosa <antonioea@antiun.com>
 
 ### Funders
-
 ### Maintainer
+
 
 
 

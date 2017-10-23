@@ -14,6 +14,7 @@
 =========================
 
 Account Payment Purchase
+========================
 
 This module adds 2 fields on purchase orders: *Bank Account* and *Payment
 Mode*. These fields are copied from partner to purchase order and then from
@@ -73,35 +74,24 @@ There is nothing to configure.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -180,7 +170,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -222,8 +212,8 @@ Credits
 * Raphaël Valyi
      
 ### Funders
-
 ### Maintainer
+
 
 
 

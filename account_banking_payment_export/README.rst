@@ -14,6 +14,7 @@
 =========================
 
 Account Banking - Payments Export Infrastructure
+================================================
 
 This module provide an infrastructure to export payment orders.
 It includes some bug fixes and obvious enhancements to payment orders that will hopefully land in offical addons one
@@ -84,35 +85,24 @@ No configuration required.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -187,7 +177,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -236,8 +226,8 @@ Credits
 * Angel Moya <angel.moya@domatix.com>
 
 ### Funders
-
 ### Maintainer
+
 
 
 

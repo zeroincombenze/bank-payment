@@ -22,6 +22,7 @@
     'data': [
         'wizard/export_sepa_view.xml',
         'data/payment_type_sepa_sct.xml',
+        'security/ir.model.access.csv',
     ],
     'demo': [
         'demo/sepa_credit_transfer_demo.xml'

@@ -20,310 +20,123 @@ This module was started during the Akretion-Noviat code sprint of November 21st 
 
 It was updated by Antonio Maria Vigliotti in order to work in Italy.
 
-Differences
-
-This module differs from standard OCA module:
- 
-- Added code to Italian localization
-- Wider coverage with more unit tests
-
 
 [![it](https://github.com/zeroincombenze/grymb/blob/master/flags/it_IT.png)](https://www.facebook.com/groups/openerp.italia/)
 
-Modulo Account Banking PAIN Base
+Account Banking PAIN Base Module
 ================================
 
-Questo modulo contiene le funzione del core dei moduli SEPA Credit Transfer (account_banking_sepa_credit_transfer) e  SEPA Direct Debit (account_banking_sepa_direct_debit).
+Questo modulo contiene le funzioni base utilizzate dai moduli Bonifico SEPA (account_banking_sepa_credit_transfer) e SEPA Direct Debit (account_banking_sepa_direct_debit).
+
+Modificato Antonio Maria Vigliotti per la localizzazione italiana standard CBI.
 
 
-Differenze
+### Funzionalità & Certificati
 
-Questo modulo differisce dalla versiona standard OCA:
- 
-- Aggiunto codice per la localizzazione italiana
-- Maggiore copertura coverage tramite unit test aggiuntive
+Funzione | Status | Note
+--- | --- | ---
+Standard CBI 4.0 | :white_check_mark: | File xml bonifici Italia
+Standard CBI 2.0 | :white_check_mark: | File xml SDD Italia
 
+
+Logo | Ente/Certificato | Data inizio | Da fine | Note
+--- | --- | --- | --- | ---
+[![xml_schema](https://github.com/zeroincombenze/grymb/blob/master/certificates/iso/icons/xml-schema.png)](https://github.com/zeroincombenze/grymb/blob/master/certificates/iso/scope/xml-schema.md) | [ISO + CBI + ABI](http://www.cbi-org.eu/Engine/RAServePG.php/P/250210010307) | 26-06-2015 | 31-12-2017 | Validazione contro schema xml
 
 
 Installation
 ------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Install this module from Odoo Control Panel.
+
+These instruction are just an example to remember what you have to do:
+
+    git clone https://github.com/zeroincombenze/bank-payment
+    for module in account_banking_mandate account_banking_pain_base account_banking_sepa_credit_transfer account_banking_sepa_direct_debit; do
+        mv ODOO_DIR/bank-payment/$module BACKUP_DIR/
+        cp -R bank-payment/$module ODOO_DIR/l10n-italy/
+    sudo service odoo-server restart -i account_banking_pain_base -d MYDB
+
+From UI: go to Setup > Module > Install
+
 
 
 Configuration
 -------------
 
+:it:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-No configuration required.
+* Richiedere alla banca codici CUC e SEPA Creditor Identifier
+* Configurazione > Aziende > Aziende :point_right: Inserire codici CUC in SEPA Initiating Party Identifier e SEPA Creditor Identifier
+* Configurazione > Aziende > Aziende :point_right: Inserire IBAN c/c su cui operare
+* Configurazione > Technical > Sequenze e identificatori > Sequenze :point_right: Inserire sequenza distinte
+* Contabilità > Varie > Modalità di pagamento :point_right: Creare modalità di pagamento SDD e/o BB per ogni c/c
+* Contabilità > Clienti > Clienti :point_right: Inserire IBAN e mandato per clienti con pagamento SDD
+* Contabilità > Fornitori > Fornitori :point_right: Inserire IBAN per fornitori con pagamento BB
+* Contabilità > Pagamento > Direct Debit Orders :point_right: Gestione distinte incasso SDD
+* Contabilità > Pagamento > Ordini di pagamento :point_right: Gestione pagamento BB
 
 
 Usage
 -----
 
------
 
------
+For furthermore information, please visit http://wiki.zeroincombenze.org/it/Odoo/7.0/man/FI
 
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
------
-
-For further information, please visit:
-
-- http://wiki.zeroincombenze.org/en/Odoo/7.0/man/FI
 
 
 Known issues / Roadmap
 ----------------------
 
+:ticket: This module replaces OCA module; PR have to be issued.
+In order to use this module you have to use:
 
+:warning: Use [account_banking_mandate](account_banking_mandate/) replacing OCA module
 
+:warning: Use [account_banking_pain_base](account_banking_pain_base/) module does not exist in OCA repository
 
+:warning: Use [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) replacing OCA module
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--   no known issues
+:warning: Use [account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) replacing OCA module
 
 
 Bug Tracker
 -----------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Bugs are tracked on [GitHub Issues]. In case of trouble, please check there if your issue has already been reported. If you spotted it first, help us smashing it by providing a detailed and welcomed feedback [here].
+Have a bug? Please visit https://odoo-italia.org/index.php/kunena/home
 
 
 Credits
 -------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[![Odoo Italia Associazione]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Contributors
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--   Alexis de Lattre
--   Pedro M. Baeza
--   Stéphane Bidoul <stephane.bidoul@acsone.eu>
--   Ignacio Ibeas - Acysos S.L.
--   Alexandre Fayolle
--   Raphaël Valyi
--   Sandy Carter
--   Stefan Rijnhart (Therp)
--   Antonio Espinosa <antonioea@antiun.com>
--   Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
-
+* Alexis de Lattre
+* Pedro M. Baeza
+* Stéphane Bidoul <stephane.bidoul@acsone.eu>
+* Ignacio Ibeas - Acysos S.L.
+* Alexandre Fayolle
+* Raphaël Valyi
+* Sandy Carter
+* Stefan Rijnhart (Therp)
+* Antonio Espinosa <antonioea@antiun.com>
+* Antonio Maria Vigliotti <antoniomaria.vigliotti@gmail.com>
 
 ### Funders
 
-### Maintainer
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 This module has been financially supported by
 
-- shs-av s.r.l. <www.shs-av.com>
+* Akretion (http://www.akretion.com)
+* SHS-AV s.r.l. <https://www.zeroincombenze.it/>
 
+### Maintainer
 
+[![Odoo Italia Associazione](https://www.odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20126x56.png)](https://odoo-italia.org)
 
-This module is maintained by the Odoo Italia Associazione
+Odoo Italia is a nonprofit organization whose develops Italian Localization for
+Odoo.
 
-
-To contribute to this module, please visit <https://www.odoo-italia.org>.
-
+To contribute to this module, please visit <https://odoo-italia.org/>.
 
 [//]: # (copyright)
 
@@ -342,12 +155,6 @@ is mainly designed for Italian law and markeplace.
 Everytime, every Odoo DB and customized code can be deployed on local server too.
 
 [//]: # (end copyright)
-
-
-
-[GitHub Issues]: https://github.com/OCA/bank-payment/issues
-[here]: https://github.com/OCA/bank-payment/issues/new?body=module:%20account_banking_pain_base%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**
-[Odoo Italia Associazione]: https://odoo-italia.org/images/Immagini/Odoo%20Italia%20-%20250x112%20-%20Bianco%20dietro%20e%20nella%20scritta.png
 
 [//]: # (addons)
 

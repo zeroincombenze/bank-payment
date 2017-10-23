@@ -14,6 +14,7 @@
 =========================
 
 Direct Debit
+============
 
 This module adds support for direct debit orders, analogous to payment orders.
 A new entry in the Accounting/Payment menu allow you to create a direct debit
@@ -70,35 +71,24 @@ Please refer to module *Account Banking SEPA Direct Debit*
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -173,7 +163,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -219,8 +209,8 @@ Credits
 
 
 ### Funders
-
 ### Maintainer
+
 
 
 

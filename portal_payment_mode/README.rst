@@ -15,6 +15,7 @@
     :alt: License: AGPL-3
 
 Portal Payment Mode
+===================
 
 This module extends the functionality of *account_payment_partner* module to
 allow to portal users view theirs invoices adding security permissions to
@@ -59,35 +60,24 @@ Configuration
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -160,7 +150,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -200,8 +190,8 @@ Credits
 * Sergio Teruel <sergio@incaser.es>
 
 ### Funders
-
 ### Maintainer
+
 
 
 

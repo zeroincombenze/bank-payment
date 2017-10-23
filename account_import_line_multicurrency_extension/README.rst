@@ -14,6 +14,7 @@
 =========================
 
 Account Import Line Multi Currency Extension
+============================================
 
 * Improve the view of the import invoice wizard in the bank statement form in order to display more relevant columns. Especially if you work in multi-currency and handle partial payment.
 
@@ -71,35 +72,24 @@ Nothing
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 Known issues / Roadmap
 ----------------------
@@ -163,7 +153,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -201,8 +191,8 @@ Credits
 * Vincent Renaville <vincent.renaville@camptocamp.com>
 
 ### Funders
-
 ### Maintainer
+
 
 
 

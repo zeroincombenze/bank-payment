@@ -344,7 +344,6 @@ class BankingExportSddWizard(models.TransientModel):
                     payment_info_2_0, 'Cdtr', 'B',
                     'self.payment_order_ids[0].mode.bank_id.partner_id.name',
                     'self.payment_order_ids[0].mode.bank_id.acc_number',
-                    'self.payment_order_ids[0].mode.bank_id.bank.bic or '
                     'self.payment_order_ids[0].mode.bank_id.bank_bic',
                     {'self': self}, gen_args,
                     sepa_credid='self.payment_order_ids[0].mode.'

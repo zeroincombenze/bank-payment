@@ -14,6 +14,7 @@
 =========================
 
 Account Payment Draft Move
+==========================
 
 Include draft moves in account payments
 
@@ -69,35 +70,24 @@ There is nothing to configure.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -171,7 +161,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -210,8 +200,8 @@ Credits
 * Alexandre Fayolle
 
 ### Funders
-
 ### Maintainer
+
 
 
 

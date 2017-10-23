@@ -14,6 +14,7 @@
 =========================
 
 Account Banking - Payments Term Filter
+======================================
 
 Payment term filter on payment mode.
 
@@ -68,35 +69,24 @@ There is nothing to configure.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -173,7 +163,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -214,8 +204,8 @@ Credits
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 
 ### Funders
-
 ### Maintainer
+
 
 
 

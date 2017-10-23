@@ -14,6 +14,7 @@
 =========================
 
 Account Payment Sale
+====================
 
 This module should be used when the invoice is based on the sale order.
 
@@ -75,35 +76,24 @@ There is nothing to configure.
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -181,7 +171,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -223,8 +213,8 @@ Credits
 * Raphaël Valyi
 
 ### Funders
-
 ### Maintainer
+
 
 
 

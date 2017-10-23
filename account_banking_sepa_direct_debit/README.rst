@@ -14,6 +14,7 @@
 =========================
 
 Account Banking SEPA Direct Debit
+=================================
 
 Create SEPA files for Direct Debit
 
@@ -82,35 +83,24 @@ To configure this module, you need to:
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -184,7 +174,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -230,8 +220,8 @@ Credits
 
 
 ### Funders
-
 ### Maintainer
+
 
 
 

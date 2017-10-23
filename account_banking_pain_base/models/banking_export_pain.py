@@ -2,7 +2,11 @@
 # © 2013-2015 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
 # © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # © 2016 Antiun Ingenieria S.L. - Antonio Espinosa
+#
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+#
+# [2013: Akretion] First version
+# [2017: SHS-AV] Italian localization
 
 from openerp import models, api, _
 from openerp.exceptions import Warning
@@ -16,7 +20,7 @@ import base64
 
 try:
     from unidecode import unidecode
-except ImportError:
+except ImportError:                                         # pragma: no cover
     unidecode = None
 
 logger = logging.getLogger(__name__)
@@ -98,7 +102,7 @@ class BankingExportPain(models.AbstractModel):
         try:
             root_to_validate = etree.fromstring(xml_string)
             official_pain_schema.assertValid(root_to_validate)
-        except Exception, e:
+        except Exception, e:                                # pragma: no cover
             logger.warning(
                 "The XML file is invalid against the XML Schema Definition")
             logger.warning(xml_string)
@@ -209,9 +213,12 @@ class BankingExportPain(models.AbstractModel):
         payment_method_2_2.text = gen_args['payment_method']
         nb_of_transactions_2_4 = False
         control_sum_2_5 = False
+        batch_booking_2_3 = False
         if gen_args.get('pain_flavor') != 'pain.001.001.02':
-            batch_booking_2_3 = etree.SubElement(payment_info_2_0, 'BtchBookg')
-            batch_booking_2_3.text = unicode(self.batch_booking).lower()
+            if self.batch_booking or gen_args.get('variant_xsd') != 'CBI-IT':
+                batch_booking_2_3 = etree.SubElement(payment_info_2_0,
+                                                     'BtchBookg')
+                batch_booking_2_3.text = unicode(self.batch_booking).lower()
         # The "SEPA Customer-to-bank
         # Implementation guidelines" for SCT and SDD says that control sum
         # and nb_of_transactions should be present
@@ -512,7 +519,7 @@ class BankingExportPain(models.AbstractModel):
                     'line.communication', {'line': line}, 140,
                     gen_args=gen_args, context=context)
         else:
-            if not line.struct_communication_type:
+            if not line.struct_communication_type:          # pragma: no cover
                 raise Warning(
                     _("Missing 'Structured Communication Type' on payment "
                         "line with reference '%s'.")

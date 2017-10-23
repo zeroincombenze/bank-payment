@@ -2,7 +2,11 @@
 # © 2013-2015 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
 # © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # © 2016 Antiun Ingenieria S.L. - Antonio Espinosa
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+#
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+#
+# [2013: Akretion] First version
+# [2017: SHS-AV] Italian localization
 
 from openerp import models, fields, api
 

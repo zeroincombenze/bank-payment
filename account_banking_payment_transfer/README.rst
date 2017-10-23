@@ -14,6 +14,7 @@
 =========================
 
 Account Banking - Payments Transfer Account
+===========================================
 
 Payment order reconciliation infrastructure
 
@@ -74,35 +75,24 @@ To configure this module, you need to:
 Usage
 -----
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
 
------
+
+
+
+
 
 =====
 
@@ -177,7 +167,7 @@ Credits
 
 
 
-[![Odoo Italia Associazione]]
+
 
 
 
@@ -221,8 +211,8 @@ Credits
 * Jose Maria Alzaga <jose.alzaga@aselcis.com>
 
 ### Funders
-
 ### Maintainer
+
 
 
 
