@@ -92,15 +92,16 @@ class banking_export_sepa_wizard(orm.TransientModel):
         If variant file does not exist, standard file is used"""
         xsd_file, variant = self._get_name_n_params(pain_name)
         module_path = 'account_banking_sepa_credit_transfer'
-        if variant:
+        if not variant or variant == 'recommended':
+            variant = ''
+            xsd_file = '%s.xsd' % pain_flavor
+        else:
             if variant.find('used') >= 0:
                 x = variant.split(' ')
                 variant = x[-1]
             if variant == 'Italy':
                 variant = 'CBI-IT'
             xsd_file = '%s-%s.xsd' % (pain_flavor, variant)
-        else:
-            xsd_file = '%s.xsd' % pain_flavor
         xsd_file = addons.\
             get_module_resource(module_path,
                                 'data',

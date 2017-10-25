@@ -234,12 +234,8 @@ class banking_export_pain(orm.AbstractModel):
                     gen_args.get('variant_xsd') != 'CBI-IT':
                 batch_booking_2_3 = etree.SubElement(payment_info_2_0,
                                                      'BtchBookg')
-                batch_booking_2_3.text = unicode(self.batch_booking).lower()
-
-                batch_booking_2_3 = etree.SubElement(payment_info_2_0,
-                                                     'BtchBookg')
                 batch_booking_2_3.text = \
-                    unidecode(gen_args['sepa_export'].batch_booking).lower()
+                    str(gen_args['sepa_export'].batch_booking).lower()
         # The "SEPA Customer-to-bank
         # Implementation guidelines" for SCT and SDD says that control sum
         # and nb_of_transactions should be present

@@ -127,10 +127,10 @@ class payment_order_create(orm.TransientModel):
                         communication = line.invoice.reference
                     elif line.invoice.supplier_invoice_number:
                         communication = line.invoice.supplier_invoice_number
-                # [antoniov: 2015-11-20] text with invoice number
-                if line.invoice.supplier_invoice_number:
-                    communication = "Doc. " + \
-                        line.invoice.supplier_invoice_number
+                # # [antoniov: 2015-11-20] text with invoice number
+                # if line.invoice.supplier_invoice_number:
+                #     communication = "Doc. " + \
+                #         line.invoice.supplier_invoice_number
             else:
                 # Make sure that the communication includes the
                 # customer invoice number (in the case of debit order)

@@ -232,6 +232,11 @@ class TestPaymentRoundtrip(SingleTransactionCase):
                     'type': 'in_invoice'}))
         wf_service = netsvc.LocalService('workflow')
         for invoice_id in self.invoice_ids:
+            # if check total active test fails
+            invoice = invoice_model.browse(cr, uid, invoice_id)
+            if hasattr(invoice, 'check_total'):
+                invoice_model.write(cr, uid, [invoice_id],
+                                    {'check_total': invoice.amount_total})
             wf_service.trg_validate(
                 uid, 'account.invoice', invoice_id, 'invoice_open', cr)
         self.assert_invoices_state('open')
