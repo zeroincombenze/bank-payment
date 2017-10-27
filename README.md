@@ -87,7 +87,7 @@ Descrizione | Odoo Italia | OCA
 Coverage |  [![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0) | [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=7.0)
 Test compatibilità OCA e Odoo | :x: | [Errore import decimal precision](https://github.com/OCA/OCB/issues/629)
 Bonifici Italia | Si, standard CBI | No
-SDD Italia | In fase di rilascio | No
+SDD Italia | Si, standard CBI | No
 account_banking_pain_base | Modifiche per CBI (Italia) | Solo EU
 
 [//]: # (copyright)
