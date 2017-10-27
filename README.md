@@ -15,9 +15,7 @@ Banking addons for Odoo
 
 This project focuses on in- and export of banking communication.
 
-Other features can now be found in these repositories:
- * https://github.com/OCA/bank-statement-import
- * https://github.com/OCA/bank-statement-reconcile
+This version is customized for Italian users.
 
 [//]: # (addons)
 
