@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2010-2017 Akretion (http://www.akretion.com)
-#    Copyright (C) 2016-2017 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+#
+# Copyright 2010-2017, Akretion (http://www.akretion.com)
+# Copyright 2016-2017, SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 # [2013: Akretion] First version
 # [2017: SHS-AV] Italian localization
-
-from openerp.osv import orm, fields
-from openerp.tools.translate import _
-from openerp import netsvc, addons
+#
 from lxml import etree
 
+from openerp import addons, netsvc
+from openerp.osv import fields, orm
+from openerp.tools.translate import _
 
-class banking_export_sepa_wizard(orm.TransientModel):
+
+class BankingExportSepaWizard(orm.TransientModel):
     _name = 'banking.export.sepa.wizard'
     _inherit = ['banking.export.pain']
     _description = 'Export SEPA Credit Transfer File'
@@ -180,7 +182,7 @@ class banking_export_sepa_wizard(orm.TransientModel):
             j = schema.find('"', i) + 1
             k = schema.find('"', j)
             root_name = schema[j:k]
-        except:
+        except BaseException:
             pass
         return pain_ns, root_name
 
@@ -229,7 +231,7 @@ class banking_export_sepa_wizard(orm.TransientModel):
         vals.update({
             'payment_order_ids': [[6, 0, payment_order_ids]],
         })
-        return super(banking_export_sepa_wizard, self).create(
+        return super(BankingExportSepaWizard, self).create(
             cr, uid, vals, context=context)
 
     def create_sepa(self, cr, uid, ids, context=None):

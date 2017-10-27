@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-# © 2014 Compassion CH - Cyril Sester <csester@compassion.ch>
-# © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# © 2015 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
-from openerp.osv import orm, fields
+# Copyright 2014, Compassion CH - Cyril Sester <csester@compassion.ch>
+# Copyright 2014, Serv. Tecnol. Avanzados - Pedro M. Baeza
+# Copyright 2015, Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
+# Copyright 2017, Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
+# Copyright 2017, Associazione Odoo Italia <https://odoo-italia.org>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+#
+from openerp.osv import fields, orm
 from openerp.tools.translate import _
 
 
-class mandate(orm.Model):
+class Mandate(orm.Model):
     """The banking mandate is attached to a bank account and represents an
     authorization that the bank account owner gives to a company for a
     specific operation (such as direct debit)
@@ -85,41 +87,41 @@ class mandate(orm.Model):
             vals['unique_mandate_reference'] = \
                 self.pool['ir.sequence'].next_by_code(
                     cr, uid, 'account.banking.mandate', context=context)
-        return super(mandate, self).create(cr, uid, vals, context=context)
+        return super(Mandate, self).create(cr, uid, vals, context=context)
 
     def _check_dates(self, cr, uid, ids):
-        for mandate in self.browse(cr, uid, ids):
-            if (mandate.signature_date and
-                    mandate.signature_date >
+        for Mandate in self.browse(cr, uid, ids):
+            if (Mandate.signature_date and
+                    Mandate.signature_date >
                     fields.date.context_today(self, cr, uid)):
                 raise orm.except_orm(
                     _('Error:'),
                     _("The date of signature of mandate '%s' is in the "
                         "future !")
-                    % mandate.unique_mandate_reference)
-            if (mandate.signature_date and mandate.last_debit_date and
-                    mandate.signature_date > mandate.last_debit_date):
+                    % Mandate.unique_mandate_reference)
+            if (Mandate.signature_date and Mandate.last_debit_date and
+                    Mandate.signature_date > Mandate.last_debit_date):
                 raise orm.except_orm(
                     _('Error:'),
                     _("The mandate '%s' can't have a date of last debit "
                         "before the date of signature.")
-                    % mandate.unique_mandate_reference)
+                    % Mandate.unique_mandate_reference)
         return True
 
     def _check_valid_state(self, cr, uid, ids):
-        for mandate in self.browse(cr, uid, ids):
-            if mandate.state == 'valid' and not mandate.signature_date:
+        for Mandate in self.browse(cr, uid, ids):
+            if Mandate.state == 'valid' and not Mandate.signature_date:
                 raise orm.except_orm(
                     _('Error:'),
                     _("Cannot validate the mandate '%s' without a date of "
                         "signature.")
-                    % mandate.unique_mandate_reference)
-            if mandate.state == 'valid' and not mandate.partner_bank_id:
+                    % Mandate.unique_mandate_reference)
+            if Mandate.state == 'valid' and not Mandate.partner_bank_id:
                 raise orm.except_orm(
                     _('Error:'),
                     _("Cannot validate the mandate '%s' because it is not "
                         "attached to a bank account.")
-                    % mandate.unique_mandate_reference)
+                    % Mandate.unique_mandate_reference)
         return True
 
     _constraints = [
@@ -139,28 +141,28 @@ class mandate(orm.Model):
         return res
 
     def validate(self, cr, uid, ids, context=None):
-        for mandate in self.browse(cr, uid, ids, context=context):
-            if mandate.state != 'draft':
+        for Mandate in self.browse(cr, uid, ids, context=context):
+            if Mandate.state != 'draft':
                 raise orm.except_orm('StateError',
                                      _('Mandate should be in draft state'))
             vals = {}
-            if not mandate.unique_mandate_reference or \
-                    mandate.unique_mandate_reference == '/':
+            if not Mandate.unique_mandate_reference or \
+                    Mandate.unique_mandate_reference == '/':
                 vals['unique_mandate_reference'] = \
                     self.pool['ir.sequence'].next_by_code(
                         cr, uid, 'account.banking.mandate')
             vals['state'] = 'valid'
-            self.write(cr, uid, mandate.id, vals)
+            self.write(cr, uid, Mandate.id, vals)
         return True
 
     def cancel(self, cr, uid, ids, context=None):
         to_cancel_ids = []
-        for mandate in self.browse(cr, uid, ids, context=context):
-            if mandate.state not in ('draft', 'valid'):
+        for Mandate in self.browse(cr, uid, ids, context=context):
+            if Mandate.state not in ('draft', 'valid'):
                 raise orm.except_orm('StateError',
                                      _('Mandate should be in draft or valid '
                                        'state'))
-            to_cancel_ids.append(mandate.id)
+            to_cancel_ids.append(Mandate.id)
         self.write(
             cr, uid, to_cancel_ids, {'state': 'cancel'}, context=context)
         return True
@@ -170,11 +172,11 @@ class mandate(orm.Model):
         This is for mandates cancelled by mistake
         '''
         to_draft_ids = []
-        for mandate in self.browse(cr, uid, ids, context=context):
-            if mandate.state != 'cancel':
+        for Mandate in self.browse(cr, uid, ids, context=context):
+            if Mandate.state != 'cancel':
                 raise orm.except_orm('StateError',
                                      _('Mandate should be in cancel state'))
-            to_draft_ids.append(mandate.id)
+            to_draft_ids.append(Mandate.id)
         self.write(
             cr, uid, to_draft_ids, {'state': 'draft'}, context=context)
         return True

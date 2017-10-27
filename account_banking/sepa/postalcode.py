@@ -160,13 +160,13 @@ class PostalCode(object):
         max_l = 0
         for key in cls._formats.iterkeys():
             i, p, c = cls.split(str_, key)
-            l = len(p)
-            if l > max_l:
-                max_l = l
-            if l in all:
-                all[l].append((i, p, c))
+            j = len(p)
+            if j > max_l:
+                max_l = j
+            if j in all:
+                all[j].append((i, p, c))
             else:
-                all[l] = [(i, p, c)]
+                all[j] = [(i, p, c)]
         if max_l > 0:
             if len(all[max_l]) > 1:
                 return ('',) + all[max_l][0][1:]

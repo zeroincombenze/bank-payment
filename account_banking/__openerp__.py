@@ -1,31 +1,14 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
-#    Copyright (C) 2009 EduSense BV (<http://www.edusense.nl>).
-#              (C) 2011 Therp BV (<http://therp.nl>).
-#              (C) 2011 Smile (<http://smile.fr>).
+# Copyright 2009, EduSense BV (<http://www.edusense.nl>).
+# Copyright 2011 Therp BV (<http://therp.nl>).
+# Copyright 2011 Smile (<http://smile.fr>).
 #
-#    All other contributions are (C) by their respective contributors
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-#    All Rights Reserved
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
 {
     'name': 'Account Banking',
-    'version': '7.0.0.0.5',
+    'version': '7.0.0.0.6',
     'license': 'AGPL-3',
     'author': "Banking addons community,Odoo Community Association (OCA)",
     'website': 'https://launchpad.net/banking-addons',
@@ -59,45 +42,45 @@
     Changes to default OpenERP:
 
     * Puts focus on the real life messaging with banks:
-      + Bank statement lines upgraded to independent bank transactions.
-      + Banking statements have no special accountancy meaning, they're just
+      * Bank statement lines upgraded to independent bank transactions.
+      * Banking statements have no special accountancy meaning, they're just
         message envelopes for a number of bank transactions.
-      + Bank statements can be either encoded by hand to reflect the document
+      * Bank statements can be either encoded by hand to reflect the document
         version of Bank Statements, or created as an optional side effect of
         importing Bank Transactions.
 
     * Preparations for SEPA:
-      + IBAN accounts are the standard in the SEPA countries
-      + local accounts are derived from SEPA (excluding Turkey) but are
+      * IBAN accounts are the standard in the SEPA countries
+      * local accounts are derived from SEPA (excluding Turkey) but are
         considered to be identical to the corresponding SEPA account.
-      + Banks are identified with either Country + Bank code + Branch code or
+      * Banks are identified with either Country + Bank code + Branch code or
         BIC
-      + Each bank can have its own pace in introducing SEPA into their
+      * Each bank can have its own pace in introducing SEPA into their
         communication with their customers.
-      + National online databases can be used to convert BBAN's to IBAN's.
-      + The SWIFT database is consulted for bank information.
+      * National online databases can be used to convert BBAN's to IBAN's.
+      * The SWIFT database is consulted for bank information.
 
     * Adds dropin extensible import facility for bank communication in:
-      - Drop-in input parser development.
-      - MultiBank (NL) format transaction files available as
+      * Drop-in input parser development.
+      * MultiBank (NL) format transaction files available as
         account_banking_nl_multibank,
 
     * Extends payments for digital banking:
-      + Adapted workflow in payments to reflect banking operations
-      + Relies on account_payment mechanics to extend with export generators.
-      - ClieOp3 (NL) payment and direct debit orders files available as
+      * Adapted workflow in payments to reflect banking operations
+      * Relies on account_payment mechanics to extend with export generators.
+      * ClieOp3 (NL) payment and direct debit orders files available as
         account_banking_nl_clieop
 
     * Additional features for the import/export mechanism:
-      + Automatic matching and creation of bank accounts, banks and partners,
+      * Automatic matching and creation of bank accounts, banks and partners,
         during import of statements.
-      + Automatic matching with invoices and payments.
-      + Sound import mechanism, allowing multiple imports of the same
+      * Automatic matching with invoices and payments.
+      * Sound import mechanism, allowing multiple imports of the same
         transactions repeated over multiple files.
-      + Journal configuration per bank account.
-      + Business logic and format parsing strictly separated to ease the
+      * Journal configuration per bank account.
+      * Business logic and format parsing strictly separated to ease the
         development of new parsers.
-      + No special configuration needed for the parsers, new parsers are
+      * No special configuration needed for the parsers, new parsers are
         recognized and made available at server (re)start.
     ''',
     'installable': True,

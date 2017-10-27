@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-# © 2014 Compassion CH - Cyril Sester <csester@compassion.ch>
-# © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# © 2015 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2014, Compassion CH - Cyril Sester <csester@compassion.ch>
+# Copyright 2014, Serv. Tecnol. Avanzados - Pedro M. Baeza
+# Copyright 2015, Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
+# Copyright 2017, Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
+# Copyright 2017, Associazione Odoo Italia <https://odoo-italia.org>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+#
 {
     'name': 'Account Banking Mandate',
     'summary': 'Banking mandates',
     'version': '7.0.0.1.1',
     'license': 'AGPL-3',
-    'author': "Compassion CH, Odoo Community Association (OCA)",
+    'author': "Compassion CH, Odoo Community Association (OCA), "
+              "Odoo Italia Associazione",
     'website': 'https://github.com/OCA/bank-payment',
     'category': 'Banking addons',
     'depends': ['account_payment'],

@@ -1,31 +1,14 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
+# -*- coding: utf-8 -*-
+# Copyright 2014, Compassion CH (http://www.compassion.ch)
+# Copyright 2017, Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
+# Copyright 2017, Associazione Odoo Italia <https://odoo-italia.org>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
-#    Mandate module for openERP
-#    Copyright (C) 2014 Compassion CH (http://www.compassion.ch)
-#    @author: Cyril Sester <csester@compassion.ch>,
-#             Alexis de Lattre <alexis.delattre@akretion.com>
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
-from openerp.osv import orm, fields
+from openerp.osv import fields, orm
 from openerp.tools.translate import _
 
 
-class payment_line(orm.Model):
+class PaymentLine(orm.Model):
     _inherit = 'payment.line'
 
     _columns = {
@@ -38,8 +21,7 @@ class payment_line(orm.Model):
         ''' If the customer invoice has a mandate, take it
         otherwise, take the first valid mandate of the bank account
         '''
-        if context is None:
-            context = {}
+        context = {} if context is None else context
         if not vals:
             vals = {}
         partner_bank_id = vals.get('bank_id')
@@ -64,7 +46,7 @@ class payment_line(orm.Model):
                     ], context=context)
                 if mandate_ids:
                     vals['mandate_id'] = mandate_ids[0]
-        return super(payment_line, self).create(cr, uid, vals, context=context)
+        return super(PaymentLine, self).create(cr, uid, vals, context=context)
 
     def _check_mandate_bank_link(self, cr, uid, ids):
         for payline in self.browse(cr, uid, ids):

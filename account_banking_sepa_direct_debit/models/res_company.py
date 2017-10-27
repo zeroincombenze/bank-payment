@@ -1,19 +1,21 @@
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2010-2017 Akretion (http://www.akretion.com)
-#    Copyright (C) 2016-2017 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+#
+# Copyright 2010-2017, Akretion (http://www.akretion.com)
+# Copyright 2016-2017, SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 # [2013: Akretion] First version
 # [2017: SHS-AV] Italian localization
-
-from openerp.osv import orm, fields
+#
 import logging
+
+from openerp.osv import fields, orm
 
 logger = logging.getLogger(__name__)
 
 
-class res_company(orm.Model):
+class ResCompany(orm.Model):
     _inherit = 'res.company'
 
     _columns = {
@@ -39,7 +41,7 @@ class res_company(orm.Model):
             return False
         try:
             sci_str = str(sepa_creditor_identifier)
-        except:
+        except BaseException:
             logger.warning(
                 "SEPA Creditor ID should contain only ASCII caracters.")
             return False

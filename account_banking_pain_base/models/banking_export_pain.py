@@ -1,31 +1,34 @@
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2013-2017 Akretion (http://www.akretion.com)
-#    Copyright (C) 2016-2017 SHS-AV s.r.l. <https://www.zeroincombenze.it>
+#
+# Copyright 2013-2017, Akretion (http://www.akretion.com)
+# Copyright 2016-2017, SHS-AV s.r.l. <https://www.zeroincombenze.it>
 #
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 # [2013: Akretion] First version
 # [2017: SHS-AV] Italian localization
-
-from openerp.osv import orm
-from openerp.tools.translate import _
-from openerp.tools.safe_eval import safe_eval
-from datetime import datetime
-from lxml import etree
-from openerp import tools
-import logging
+#
 import base64
+import logging
+from datetime import datetime
 
+from lxml import etree
+
+from openerp import tools
+from openerp.osv import orm
+from openerp.tools.safe_eval import safe_eval
+from openerp.tools.translate import _
 
 try:
     from unidecode import unidecode
 except ImportError:                                         # pragma: no cover
     unidecode = None
 
+
 logger = logging.getLogger(__name__)
 
 
-class banking_export_pain(orm.AbstractModel):
+class BankingExportPain(orm.AbstractModel):
     _name = 'banking.export.pain'
 
     def _validate_iban(self, cr, uid, iban, context=None):
@@ -70,7 +73,7 @@ class banking_export_pain(orm.AbstractModel):
         try:
             value = safe_eval(field_value, eval_ctx)
             value = self._cvt2bankcodeset(value, gen_args, context=context)
-        except:                                             # pragma: no cover
+        except BaseException:
             line = eval_ctx.get('line')
             if line:
                 raise orm.except_orm(
@@ -119,7 +122,7 @@ class banking_export_pain(orm.AbstractModel):
         try:
             root_to_validate = etree.fromstring(xml_string)
             official_pain_schema.assertValid(root_to_validate)
-        except Exception, e:                                # pragma: no cover
+        except Exception as e:                               # pragma: no cover
             logger.warning(
                 "The XML file is invalid against the XML Schema Definition")
             logger.warning(xml_string)
