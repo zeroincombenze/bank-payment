@@ -1,27 +1,31 @@
 # -*- coding: utf-8 -*-
-# © 2013-2015 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
-# © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# © 2016 Antiun Ingenieria S.L. - Antonio Espinosa
 #
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2013-2015, Akretion - Alexis de Lattre
+# <alexis.delattre@akretion.com>
+# Copyright 2014, Serv. Tecnol. Avanzados - Pedro M. Baeza
+# Copyright 2016, Antiun Ingenieria S.L. - Antonio Espinosa
+# Copyright 2017, Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>
+# Copyright 2017, Associazione Odoo Italia <https://odoo-italia.org>
+#
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 #
 # [2013: Akretion] First version
 # [2017: SHS-AV] Italian localization
+import base64
+import logging
+from datetime import datetime
 
-from openerp import models, api, _
+from lxml import etree
+
+from openerp import _, api, models, tools
 from openerp.exceptions import Warning
 from openerp.tools.safe_eval import safe_eval
-from datetime import datetime
-from lxml import etree
-from openerp import tools
-import logging
-import base64
-
 
 try:
     from unidecode import unidecode
 except ImportError:                                         # pragma: no cover
     unidecode = None
+
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +40,8 @@ class BankingExportPain(models.AbstractModel):
         if self.env['res.partner.bank'].is_iban_valid(iban):
             return iban.replace(' ', '')
         else:
-            raise Warning(_("This IBAN is not valid : %s") % iban)
+            raise Warning(                                   # pragma: no cover
+                _("This IBAN is not valid : %s") % iban)
 
     def _cvt2bankcodeset(self, value, gen_args=None, context=None):
         # [antoniov: 2017-06-29] code extracted from body of prepare_field
@@ -70,23 +75,23 @@ class BankingExportPain(models.AbstractModel):
         try:
             value = safe_eval(field_value, eval_ctx)
             value = self._cvt2bankcodeset(value, gen_args, context=context)
-        except:
+        except:                                              # pragma: no cover
             line = eval_ctx.get('line')
             if line:
-                raise Warning(
+                raise Warning(                               # pragma: no cover
                     _("Cannot compute the '%s' of the Payment Line with "
                         "reference '%s'.")
                     % (field_name, line.name))
             else:
-                raise Warning(
+                raise Warning(                               # pragma: no cover
                     _("Cannot compute the '%s'.") % field_name)
         if not isinstance(value, (str, unicode)):
-            raise Warning(
+            raise Warning(                                   # pragma: no cover
                 _("The type of the field '%s' is %s. It should be a string "
                     "or unicode.")
                 % (field_name, type(value)))
         if not value:
-            raise Warning(
+            raise Warning(                                   # pragma: no cover
                 _("The '%s' is empty or 0. It should have a non-null value.")
                 % field_name)
         if max_size and len(value) > max_size:              # pragma: no cover
@@ -107,7 +112,7 @@ class BankingExportPain(models.AbstractModel):
                 "The XML file is invalid against the XML Schema Definition")
             logger.warning(xml_string)
             logger.warning(e)
-            raise Warning(
+            raise Warning(                                   # pragma: no cover
                 _("The generated XML file is not valid against the official "
                     "XML Schema Definition. The generated XML file and the "
                     "full error have been written in the server logs. Here "
@@ -155,7 +160,7 @@ class BankingExportPain(models.AbstractModel):
             'filename': filename,
             'file': base64.encodestring(xml_string),
             'state': 'finish',
-            })
+        })
 
         action = {
             'name': _('SEPA File'),
@@ -300,7 +305,7 @@ class BankingExportPain(models.AbstractModel):
                 iniparty_org_other, 'Issr')
             iniparty_org_other_issuer.text = initiating_party_issuer
         elif self._must_have_initiating_party(gen_args):
-            raise Warning(
+            raise Warning(                                   # pragma: no cover
                 _("Missing 'Initiating Party Issuer' and/or "
                     "'Initiating Party Identifier' for the company '%s'. "
                     "Both fields must have a value.")
@@ -353,10 +358,10 @@ class BankingExportPain(models.AbstractModel):
                 party_agent_bic = etree.SubElement(
                     party_agent_institution, gen_args.get('bic_xml_tag'))
                 party_agent_bic.text = bic
-        except Warning:
+        except Warning:                                      # pragma: no cover
             if order == 'C':
                 if iban[0:2] != gen_args['initiating_party_country_code']:
-                    raise Warning(
+                    raise Warning(                           # pragma: no cover
                         _('Error:'),
                         _("The bank account with IBAN '%s' of partner '%s' "
                             "must have an associated BIC because it is a "
@@ -462,7 +467,7 @@ class BankingExportPain(models.AbstractModel):
                                                      context=context)
                         party_twn.text = town
                         if not town:
-                            raise Warning(
+                            raise Warning(                   # pragma: no cover
                                 _('Error:'),
                                 _("Partner %s w/o town" % partner.name))
                 else:
@@ -520,7 +525,7 @@ class BankingExportPain(models.AbstractModel):
                     gen_args=gen_args, context=context)
         else:
             if not line.struct_communication_type:          # pragma: no cover
-                raise Warning(
+                raise Warning(                               # pragma: no cover
                     _("Missing 'Structured Communication Type' on payment "
                         "line with reference '%s'.")
                     % line.name)
