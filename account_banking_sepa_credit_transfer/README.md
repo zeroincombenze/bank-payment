@@ -12,6 +12,7 @@
 
 
 
+
 [![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 
 Sepa Credit Transfer
@@ -30,7 +31,6 @@ The Implementation Guidelines for SEPA Credit Transfer published by the
 European Payments Council (http://http://www.europeanpaymentscouncil.eu)
 use PAIN version 001.001.03, so it's probably the version of PAIN that you
 should try first.
-
 
 
 
