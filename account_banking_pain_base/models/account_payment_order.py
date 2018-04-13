@@ -98,7 +98,7 @@ class AccountPaymentOrder(models.Model):
                     '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
                 for unallowed_ascii_char in unallowed_ascii_chars:
                     value = value.replace(unallowed_ascii_char, '-')
-        except:
+        except BaseException:
             line = eval_ctx.get('line')
             if line:
                 raise UserError(
