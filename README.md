@@ -9,11 +9,9 @@
 
 
 [![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
-================================================================================================
-================================================================================================
 
-OCA banking payment addons for Odoo
-===================================
+Banking payments addons for Odoo
+================================
 
 On version 10.0, this project focus on payment interface. The indentation below 
 indicates the dependency graph of the main modules.
@@ -63,13 +61,23 @@ addon | version | OCA version | summary
 
 [//]: # (end addons)
 
-----
 
-OCA, or the Odoo Community Association, is a nonprofit organization whose 
-mission is to support the collaborative development of Odoo features and 
-promote its widespread use.
+[![it](https://github.com/zeroincombenze/grymb/blob/master/flags/it_IT.png)](https://www.facebook.com/groups/openerp.italia/)
 
-http://odoo-community.org/
+Moduli aggiuntivi pagamenti bancari
+===================================
+
+Progetto per la gestione dell'interfacciamento con le banche.
+
+Differenze rispetto localizzazione ufficiale Odoo/OCA
+
+Descrizione | Odoo Italia | OCA
+--- | --- | ---
+Coverage |  [![codecov](https://codecov.io/gh/zeroincombenze/bank-payment/branch/10.0/graph/badge.svg)](https://codecov.io/gh/zeroincombenze/bank-payment/branch/7.0) | [![Coverage Status](https://coveralls.io/repos/OCA/bank-payment/badge.svg?branch=7.0)](https://coveralls.io/r/OCA/bank-payment?branch=10.0)
+Bonifici Italia | Standard CBI, in fase di porting | No
+SDD Italia | Standard CBI, in fase di porting | No
+account_banking_pain_base | Standard CBI, in fase di porting | Solo EU
+account_banking_mandate | Standard CBI, in fase di porting | Validazione ripristina numero anche se assente
 
 [//]: # (copyright)
 
