@@ -25,9 +25,9 @@ addons:
       - libxml2-dev
       - libxslt1-dev
       - zlib1g-dev
-      - simplejson
       - python-ldap
       - python-psycopg2
+      - python-simplejson
       - expect-dev
       - python-setuptools
 
