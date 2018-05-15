@@ -8,9 +8,61 @@
 [![try it](http://www.zeroincombenze.it/wp-content/uploads/ci-ct/prd/button-try-it-9.svg)](http://erp9.zeroincombenze.it)
 
 
-[![en](https://github.com/zeroincombenze/grymb/blob/master/flags/en_US.png)](https://www.facebook.com/groups/openerp.italia/)
-================================================================================================
-================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 
 OCA banking payment addons for Odoo
 ===================================
@@ -43,7 +95,7 @@ addon | version | OCA version | summary
 [account_banking_pain_base](account_banking_pain_base/) | 9.0.1.0.0 | :repeat: | Base module for PAIN file generation
 [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 9.0.1.0.0 | :repeat: | Create SEPA XML files for Credit Transfers
 [account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 9.0.1.0.0 | :repeat: | Create SEPA files for Direct Debit
-[account_payment_mode](account_payment_mode/) | 9.0.1.0.0 | :repeat: | Account Payment Mode
+[account_payment_mode](account_payment_mode/) | 9.0.1.0.0 | 9.0.1.0.1 | Account Payment Mode
 [account_payment_order](account_payment_order/) | 9.0.1.2.0 | 9.0.1.3.0 | Account Payment Order
 [account_payment_partner](account_payment_partner/) | 9.0.1.1.0 | :repeat: | Adds payment mode on partners and invoices
 [account_payment_purchase](account_payment_purchase/) | 9.0.1.0.0 | :repeat: | Adds Bank Account and Payment Mode on Purchase Orders
