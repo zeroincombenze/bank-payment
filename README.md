@@ -64,6 +64,8 @@
 
 
 
+
+
 [![en](http://www.shs-av.com/wp-content/en_US.png)](http://wiki.zeroincombenze.org/it/Odoo/7.0/man)
 
 OCA banking payment addons for Odoo
@@ -92,13 +94,13 @@ Available addons
 ----------------
 addon | version | OCA version | summary
 --- | --- | --- | ---
-[account_banking_mandate](account_banking_mandate/) | 9.0.1.1.0 | :repeat: | Banking mandates
+[account_banking_mandate](account_banking_mandate/) | 9.0.1.1.0 | 9.0.1.1.1 | Banking mandates
 [account_banking_mandate_sale](account_banking_mandate_sale/) | 9.0.1.0.0 | :repeat: | Adds mandates on sale orders
 [account_banking_pain_base](account_banking_pain_base/) | 9.0.1.0.0 | :repeat: | Base module for PAIN file generation
 [account_banking_sepa_credit_transfer](account_banking_sepa_credit_transfer/) | 9.0.1.0.0 | :repeat: | Create SEPA XML files for Credit Transfers
 [account_banking_sepa_direct_debit](account_banking_sepa_direct_debit/) | 9.0.1.0.0 | :repeat: | Create SEPA files for Direct Debit
 [account_payment_mode](account_payment_mode/) | 9.0.1.0.0 | 9.0.1.0.1 | Account Payment Mode
-[account_payment_order](account_payment_order/) | 9.0.1.2.0 | 9.0.1.3.0 | Account Payment Order
+[account_payment_order](account_payment_order/) | 9.0.1.2.0 | 9.0.1.4.0 | Account Payment Order
 [account_payment_partner](account_payment_partner/) | 9.0.1.1.0 | :repeat: | Adds payment mode on partners and invoices
 [account_payment_purchase](account_payment_purchase/) | 9.0.1.0.0 | :repeat: | Adds Bank Account and Payment Mode on Purchase Orders
 [account_payment_sale](account_payment_sale/) | 9.0.1.0.0 | :repeat: | Adds payment mode on sale orders
