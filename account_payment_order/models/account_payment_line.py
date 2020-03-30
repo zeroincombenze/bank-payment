@@ -39,7 +39,7 @@ class AccountPaymentLine(models.Model):
     amount_currency = fields.Monetary(
         string="Amount", currency_field='currency_id')
     amount_company_currency = fields.Monetary(
-        compute='compute_amount_company_currency',
+        compute='_compute_amount_company_currency',
         string='Amount in Company Currency', readonly=True,
         currency_field='company_currency_id')  # v8 field : amount
     partner_id = fields.Many2one(
@@ -54,10 +54,13 @@ class AccountPaymentLine(models.Model):
         help="Label of the payment that will be seen by the destinee")
     communication_type = fields.Selection([
         ('normal', 'Free'),
+        ('structured', 'Structured'),
         ], string='Communication Type', required=True, default='normal')
     # v8 field : state
     bank_line_id = fields.Many2one(
-        'bank.payment.line', string='Bank Payment Line', readonly=True)
+        'bank.payment.line', string='Bank Payment Line', readonly=True,
+        index=True,
+    )
 
     _sql_constraints = [(
         'name_company_unique',
@@ -76,7 +79,7 @@ class AccountPaymentLine(models.Model):
     @api.multi
     @api.depends(
         'amount_currency', 'currency_id', 'company_currency_id', 'date')
-    def compute_amount_company_currency(self):
+    def _compute_amount_company_currency(self):
         for line in self:
             if line.currency_id and line.company_currency_id:
                 line.amount_company_currency = line.currency_id.with_context(
@@ -119,7 +122,7 @@ class AccountPaymentLine(models.Model):
             self.partner_id = False
             self.partner_bank_id = False
             self.amount_currency = 0.0
-            self.currency_id = False
+            self.currency_id = self.env.user.company_id.currency_id
             self.communication = False
 
     def invoice_reference_type2communication_type(self):
@@ -127,7 +130,7 @@ class AccountPaymentLine(models.Model):
         localization modules"""
         # key = value of 'reference_type' field on account_invoice
         # value = value of 'communication_type' field on account_payment_line
-        res = {'none': 'normal'}
+        res = {'none': 'normal', 'structured': 'structured'}
         return res
 
     @api.multi

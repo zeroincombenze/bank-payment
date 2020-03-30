@@ -2,7 +2,7 @@
 # © 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields, api, _
+from odoo import api, models, _
 from odoo.exceptions import UserError
 from lxml import etree
 
@@ -14,9 +14,10 @@ class AccountPaymentOrder(models.Model):
     def generate_payment_file(self):
         """Creates the SEPA Direct Debit file. That's the important code !"""
         self.ensure_one()
-        if self.payment_method_id.code != 'sepa_direct_debit':
+        pay_method = self.payment_method_id
+        if pay_method.code != 'sepa_direct_debit':
             return super(AccountPaymentOrder, self).generate_payment_file()
-        pain_flavor = self.payment_method_id.pain_version
+        pain_flavor = pay_method.pain_version
         # We use pain_flavor.startswith('pain.008.001.xx')
         # to support country-specific extensions such as
         # pain.008.001.02.ch.01 (cf l10n_ch_sepa)
@@ -42,12 +43,12 @@ class AccountPaymentOrder(models.Model):
                   "Payment Type Code supported for SEPA Direct Debit are "
                   "'pain.008.001.02', 'pain.008.001.03' and "
                   "'pain.008.001.04'.") % pain_flavor)
-        pay_method = self.payment_mode_id.payment_method_id
         xsd_file = pay_method.get_xsd_file_path()
         gen_args = {
             'bic_xml_tag': bic_xml_tag,
             'name_maxsize': name_maxsize,
             'convert_to_ascii': pay_method.convert_to_ascii,
+            'pain_bank_address': pay_method.pain_bank_address,
             'payment_method': 'DD',
             'file_prefix': 'sdd_',
             'pain_flavor': pain_flavor,
@@ -81,7 +82,7 @@ class AccountPaymentOrder(models.Model):
                     % (line.partner_id.name, line.name))
             scheme = line.mandate_id.scheme
             if line.mandate_id.state != 'valid':
-                raise Warning(
+                raise UserError(
                     _("The SEPA Direct Debit mandate with reference '%s' "
                       "for partner '%s' has expired.")
                     % (line.mandate_id.unique_mandate_reference,
@@ -89,7 +90,7 @@ class AccountPaymentOrder(models.Model):
             if line.mandate_id.type == 'oneoff':
                 seq_type = 'OOFF'
                 if line.mandate_id.last_debit_date:
-                    raise Warning(
+                    raise UserError(
                         _("The mandate with reference '%s' for partner "
                           "'%s' has type set to 'One-Off' and it has a "
                           "last debit date set to '%s', so we can't use "
@@ -156,12 +157,11 @@ class AccountPaymentOrder(models.Model):
                     payment_info, 'DrctDbtTxInf')
                 payment_identification = etree.SubElement(
                     dd_transaction_info, 'PmtId')
-                if pain_flavor == 'pain.008.001.02.ch.01':
-                    instruction_identification = etree.SubElement(
-                        payment_identification, 'InstrId')
-                    instruction_identification.text = self._prepare_field(
-                        'Intruction Identification', 'line.name',
-                        {'line': line}, 35, gen_args=gen_args)
+                instruction_identification = etree.SubElement(
+                    payment_identification, 'InstrId')
+                instruction_identification.text = self._prepare_field(
+                    'Instruction Identification', 'line.name',
+                    {'line': line}, 35, gen_args=gen_args)
                 end2end_identification = etree.SubElement(
                     payment_identification, 'EndToEndId')
                 end2end_identification.text = self._prepare_field(
@@ -215,6 +215,11 @@ class AccountPaymentOrder(models.Model):
                     dd_transaction_info, 'Dbtr', 'C',
                     line.partner_bank_id, gen_args, line)
 
+                if line.purpose:
+                    purpose = etree.SubElement(
+                        dd_transaction_info, 'Purp')
+                    etree.SubElement(purpose, 'Cd').text = line.purpose
+
                 self.generate_remittance_info_block(
                     dd_transaction_info, line, gen_args)
 
@@ -227,32 +232,44 @@ class AccountPaymentOrder(models.Model):
             xml_root, gen_args)
 
     @api.multi
-    def finalize_sepa_file_creation(self, xml_root, gen_args):
-        """Save the SEPA Direct Debit file: mark all payments in the file
-        as 'sent'. Write 'last debit date' on mandate and set oneoff
-        mandate to expired.
+    def generated2uploaded(self):
+        """Write 'last debit date' on mandates
+        Set mandates from first to recurring
+        Set oneoff mandates to expired
         """
+        # I call super() BEFORE updating the sequence_type
+        # from first to recurring, so that the account move
+        # is generated BEFORE, which will allow the split
+        # of the account move per sequence_type
+        res = super(AccountPaymentOrder, self).generated2uploaded()
         abmo = self.env['account.banking.mandate']
-        to_expire_mandates = abmo.browse([])
-        first_mandates = abmo.browse([])
-        all_mandates = abmo.browse([])
-        for bline in self.bank_line_ids:
-            if bline.mandate_id in all_mandates:
-                continue
-            all_mandates += bline.mandate_id
-            if bline.mandate_id.type == 'oneoff':
-                to_expire_mandates += bline.mandate_id
-            elif bline.mandate_id.type == 'recurrent':
-                seq_type = bline.mandate_id.recurrent_sequence_type
-                if seq_type == 'final':
+        for order in self:
+            to_expire_mandates = abmo.browse([])
+            first_mandates = abmo.browse([])
+            all_mandates = abmo.browse([])
+            for bline in order.bank_line_ids:
+                if bline.mandate_id in all_mandates:
+                    continue
+                all_mandates += bline.mandate_id
+                if bline.mandate_id.type == 'oneoff':
                     to_expire_mandates += bline.mandate_id
-                elif seq_type == 'first':
-                    first_mandates += bline.mandate_id
-        all_mandates.write(
-            {'last_debit_date': fields.Date.context_today(self)})
-        to_expire_mandates.write({'state': 'expired'})
-        first_mandates.write({
-            'recurrent_sequence_type': 'recurring',
-            })
-        return super(AccountPaymentOrder, self).finalize_sepa_file_creation(
-            xml_root, gen_args)
+                elif bline.mandate_id.type == 'recurrent':
+                    seq_type = bline.mandate_id.recurrent_sequence_type
+                    if seq_type == 'final':
+                        to_expire_mandates += bline.mandate_id
+                    elif seq_type == 'first':
+                        first_mandates += bline.mandate_id
+            all_mandates.write(
+                {'last_debit_date': order.date_generated})
+            to_expire_mandates.write({'state': 'expired'})
+            first_mandates.write({
+                'recurrent_sequence_type': 'recurring',
+                })
+            for first_mandate in first_mandates:
+                first_mandate.message_post(_(
+                    "Automatically switched from <b>First</b> to "
+                    "<b>Recurring</b> when the debit order "
+                    "<a href=# data-oe-model=account.payment.order "
+                    "data-oe-id=%d>%s</a> has been marked as uploaded.")
+                    % (order.id, order.name))
+        return res

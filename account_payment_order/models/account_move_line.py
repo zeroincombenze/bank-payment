@@ -14,7 +14,14 @@ class AccountMoveLine(models.Model):
         help='Bank account on which we should pay the supplier')
     bank_payment_line_id = fields.Many2one(
         'bank.payment.line', string='Bank Payment Line',
-        readonly=True)
+        readonly=True,
+        index=True,
+    )
+    payment_line_ids = fields.One2many(
+        comodel_name='account.payment.line',
+        inverse_name='move_line_id',
+        string="Payment lines",
+    )
 
     @api.multi
     def _prepare_payment_line_vals(self, payment_order):
@@ -47,9 +54,16 @@ class AccountMoveLine(models.Model):
             # in this case
         if payment_order.payment_type == 'outbound':
             amount_currency *= -1
+        partner_bank_id = False
+        if not self.partner_bank_id:
+            # Select partner bank account automatically if there is only one
+            if len(self.partner_id.bank_ids) == 1:
+                partner_bank_id = self.partner_id.bank_ids[0].id
+        else:
+            partner_bank_id = self.partner_bank_id.id
         vals = {
             'order_id': payment_order.id,
-            'partner_bank_id': self.partner_bank_id.id,
+            'partner_bank_id': partner_bank_id,
             'partner_id': self.partner_id.id,
             'move_line_id': self.id,
             'communication': communication,

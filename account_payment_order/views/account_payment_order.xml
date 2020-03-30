@@ -26,6 +26,14 @@
                 <field name="state" widget="statusbar"/>
             </header>
             <sheet>
+                <div class="oe_button_box" name="button_box">
+                    <button name="open_moves" type="object"
+                        attrs="{'invisible': [('move_count', '=', 0)]}"
+                        class="oe_stat_button" icon="fa-pencil-square-o">
+                        <field name="move_count" string="Journal Entries"
+                            widget="statinfo"/>
+                    </button>
+                </div>
                 <div class="oe_title">
                     <label for="name" class="oe_edit_only"/>
                     <h1><field name="name"/></h1>
@@ -49,6 +57,7 @@
                         <field name="date_generated"/>
                         <field name="generated_user_id"/>
                         <field name="date_uploaded"/>
+                        <field name="description"/>
                     </group>
                 </group>
                 <notebook>
@@ -59,9 +68,6 @@
                     <page name="bank-payment-lines" string="Bank Payment Lines">
                         <field name="bank_line_ids"
                             context="{'default_payment_type': payment_type}"/>
-                    </page>
-                    <page name="moves" string="Transfer Journal Entries">
-                        <field name="move_ids"/>
                     </page>
                 </notebook>
             </sheet>
@@ -83,6 +89,7 @@
             <field name="journal_id"/>
             <field name="company_id" groups="base.group_multi_company"/>
             <field name="date_uploaded"/>
+            <field name="description"/>
             <field name="total_company_currency" sum="Total Company Currency"/>
             <field name="company_currency_id" invisible="1"/>
             <field name="state"/>
@@ -95,6 +102,8 @@
     <field name="model">account.payment.order</field>
     <field name="arch" type="xml">
         <search string="Search Payment Orders">
+            <field name="description" filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]" string="Name or Description"/>
+            <field name="journal_id"/>
             <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
             <filter name="open" string="Confirmed" domain="[('state', '=', 'open')]"/>
             <filter name="generated" string="File Generated" domain="[('state', '=', 'generated')]"/>

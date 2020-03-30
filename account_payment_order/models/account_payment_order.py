@@ -86,11 +86,26 @@ class AccountPaymentOrder(models.Model):
         compute='_compute_total', store=True, readonly=True,
         currency_field='company_currency_id')
     bank_line_count = fields.Integer(
-        compute='_bank_line_count', string='Number of Bank Lines',
+        compute='_compute_bank_line_count', string='Number of Bank Lines',
         readonly=True)
     move_ids = fields.One2many(
         'account.move', 'payment_order_id', string='Journal Entries',
         readonly=True)
+    move_count = fields.Integer(
+        compute='_compute_move_count', readonly=True, store=True,
+        string="# of Journal Entries")
+    description = fields.Char()
+
+    @api.depends('move_ids')
+    def _compute_move_count(self):
+        move_data = self.env['account.move'].read_group(
+            [('payment_order_id', 'in', self.ids)],
+            ['payment_order_id'], ['payment_order_id'])
+        mapped_data = dict([
+            (move['payment_order_id'][0], move['payment_order_id_count'])
+            for move in move_data])
+        for order in self:
+            order.move_count = mapped_data.get(order.id, 0)
 
     @api.multi
     def unlink(self):
@@ -126,16 +141,18 @@ class AccountPaymentOrder(models.Model):
                         "is in the past (%s).")
                         % (order.name, order.date_scheduled))
 
-    @api.one
+    @api.multi
     @api.depends(
         'payment_line_ids', 'payment_line_ids.amount_company_currency')
     def _compute_total(self):
-        self.total_company_currency = sum(
-            self.mapped('payment_line_ids.amount_company_currency') or [0.0])
+        for rec in self:
+            rec.total_company_currency = sum(
+                rec.mapped('payment_line_ids.amount_company_currency') or
+                [0.0])
 
     @api.multi
     @api.depends('bank_line_ids')
-    def _bank_line_count(self):
+    def _compute_bank_line_count(self):
         for order in self:
             order.bank_line_count = len(order.bank_line_ids)
 
@@ -358,6 +375,8 @@ class AccountPaymentOrder(models.Model):
             ref = _('Payment order %s') % self.name
         else:
             ref = _('Debit order %s') % self.name
+        if bank_lines and len(bank_lines) == 1:
+            ref += " - " + bank_lines.name
         if self.payment_mode_id.offsetting_account == 'bank_account':
             journal_id = self.journal_id.id
         elif self.payment_mode_id.offsetting_account == 'transfer_account':
@@ -485,3 +504,22 @@ class AccountPaymentOrder(models.Model):
             blines.reconcile_payment_lines()
             if post_move:
                 move.post()
+
+    def open_moves(self):
+        self.ensure_one()
+        action = self.env['ir.actions.act_window'].for_xml_id(
+            'account', 'action_move_journal_line')
+        action.update({
+            'context': self._context,
+            'views': False,
+            'view_id': False,
+            })
+        if self.move_ids:
+            if len(self.move_ids) == 1:
+                action.update({
+                    'view_mode': 'form,tree',
+                    'res_id': self.move_ids[0].id,
+                    })
+            else:
+                action['domain'] = "[('id', 'in', %s)]" % self.move_ids.ids
+        return action

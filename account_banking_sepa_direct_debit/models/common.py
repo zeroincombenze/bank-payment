@@ -19,7 +19,7 @@ def is_sepa_creditor_identifier_valid(sepa_creditor_identifier):
         return False
     try:
         sci = str(sepa_creditor_identifier).lower()
-    except BaseException:
+    except:
         logger.warning(
             "SEPA Creditor ID should contain only ASCII characters.")
         return False
