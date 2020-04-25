@@ -19,6 +19,9 @@
     'depends': [
         'account_payment_order',
     ],
+    'external_dependencies': {
+        'python': ['openupgradelib'],
+    },
     'data': [
         'views/account_banking_mandate_view.xml',
         'views/account_payment_method.xml',
