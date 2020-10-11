@@ -1,74 +1,60 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_banking_pain_base
+#	* account_banking_pain_base
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo (10.0)\n"
+"Project-Id-Version: Odoo (VENV-10.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-28 15:13+0100\n"
-"PO-Revision-Date: 2019-11-19 11:35+0000\n"
+"POT-Creation-Date: 2020-06-23 07:34+0000\n"
+"PO-Revision-Date: 2020-06-23 07:34+0000\n"
 "Last-Translator: Antonio M. Vigliotti <antoniomaria.vigliotti@gmail.com>\n"
 "Language-Team: Zeroincombenze (https://www.zeroincombenze.it)\n"
 "Language: it_IT\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.7.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_banking_pain_base
 #: sql_constraint:account.payment.method:0
-#: sql_constraint:account.payment.method
-msgid ""
-"A payment method of the same type already exists with this code and PAIN "
-"version"
-msgstr ""
-"Esiste già un metodo di pagamento dello stesso tipo con questo codice e "
-"versione PAIN"
+msgid "A payment method of the same type already exists with this code and PAIN version"
+msgstr "Esiste già un metodo di pagamento dello stesso tipo con questo codice e versione PAIN"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Account Management"
 msgstr "Gestione conto"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Advance Payment"
 msgstr "Pagamento in anticipo"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Agricultural Transfer"
 msgstr "Trasferimento agricolo"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Air"
 msgstr "Aria"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Alimony Payment"
 msgstr "Pagamento alimenti"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Anesthesia Services"
 msgstr "Servizi di anestesia"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
-#, fuzzy
 msgid "Annuity"
-msgstr "Rendita"
+msgstr "Annuity"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_method_pain_bank_address
@@ -87,122 +73,104 @@ msgstr "Addebito cumulativo"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Bonus Payment"
-msgstr ""
+msgstr "Bonus Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Bonus Payment."
-msgstr ""
+msgstr "Bonus Payment."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
-#: selection:account.payment.order,charge_bearer
 msgid "Borne by Creditor"
 msgstr "Sostenuto dal creditore"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
-#: selection:account.payment.order,charge_bearer
 msgid "Borne by Debtor"
 msgstr "Sostenuto dal debitore"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Bus"
-msgstr ""
+msgstr "Bus"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Business Expenses"
-msgstr ""
+msgstr "Business Expenses"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Cable TV Bill"
 msgstr "Bolletta TV via cavo"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Cancellation Fee"
-msgstr ""
+msgstr "Cancellation Fee"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:103
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:103
+#, python-format
 msgid "Cannot compute the field '{field_name}'."
 msgstr "Impossibile calcolare il campo \"{field_name}\"."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Car Loan Principal Repayment"
-msgstr ""
+msgstr "Car Loan Principal Repayment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Card Bulk Clearing"
-msgstr ""
+msgstr "Card Bulk Clearing"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Cash Management Transfer"
-msgstr ""
+msgstr "Cash Management Transfer"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_line_category_purpose
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_bank_payment_line_category_purpose
 msgid "Category Purpose"
-msgstr ""
+msgstr "Category Purpose"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_order_charge_bearer
 msgid "Charge Bearer"
-msgstr ""
+msgstr "Charge Bearer"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Charity Payment"
-msgstr ""
+msgstr "Charity Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Child Benefit"
-msgstr ""
+msgstr "Child Benefit"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Collection Payment"
-msgstr ""
+msgstr "Collection Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Commercial Payment"
 msgstr "Pagamento commerciale"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Commission"
 msgstr "Provvigione"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Commodity Transfer"
 msgstr "Trasferimento merce"
 
@@ -213,15 +181,13 @@ msgstr "Aziende"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Consumer Third Party Consolidated Payment"
-msgstr ""
+msgstr "Consumer Third Party Consolidated Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Convalescent Care Facility"
-msgstr ""
+msgstr "Convalescent Care Facility"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_method_convert_to_ascii
@@ -230,426 +196,334 @@ msgstr "Convertire in ASCII"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Copyright"
 msgstr "Copyright"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Costs"
 msgstr "Costi"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Credit Card Payment"
 msgstr "Pagamento con carta di credito"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Credit Card Payment "
 msgstr "Pagamento con carta di credito "
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:500
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:500
+#, python-format
 msgid "Creditor name"
 msgstr "Nome creditore"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:109
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:109
-msgid ""
-"Data for evaluation:\n"
-"\tcontext: {eval_ctx}\n"
-"\tfield path: {field_value}"
-msgstr ""
-"Dati per la valutazione:\n"
-"\tcontesto: {eval_ctx}\n"
-"\tpercorso campo: {field_value}"
+#, python-format
+msgid "Data for evaluation:\n"
+"	context: {eval_ctx}\n"
+"	field path: {field_value}"
+msgstr "Dati per la valutazione:\n"
+"	contesto: {eval_ctx}\n"
+"	percorso campo: {field_value}"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Debit  Card  Payment"
 msgstr "Pagamento con carta di debito"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Debit Card Payment"
 msgstr "Pagamento con carta di debito"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:502
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:502
+#, python-format
 msgid "Debtor name"
 msgstr "Nome debitore"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Deliver Against Payment"
-msgstr ""
+msgstr "Deliver Against Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Dental Services"
 msgstr "Servizi odontoiatrici"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Derivatives"
 msgstr "Derivati"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Dividend"
 msgstr "Dividendo"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Durable Medicale Equipment"
-msgstr ""
+msgstr "Durable Medicale Equipment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Electricity Bill"
 msgstr "Bolletta elettricità"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_config_settings_group_pain_multiple_identifier
-msgid ""
-"Enable this option if your country requires several SEPA/PAIN identifiers"
-" like in Spain."
-msgstr ""
-"Abilita questa opzione se il tuo paese richiede diversi identificatori "
-"SEPA/PAIN come in Spagna."
+msgid "Enable this option if your country requires several SEPA/PAIN identifiers like in Spain."
+msgstr "Abilita questa opzione se il tuo paese richiede diversi identificatori SEPA/PAIN come in Spagna."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Energies"
 msgstr "Energie"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Estate Tax"
 msgstr "Imposta di successione"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Fee Collection"
-msgstr ""
+msgstr "Fee Collection"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Ferry"
 msgstr "Traghetto"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
-#: selection:account.payment.order,charge_bearer
 msgid "Following Service Level"
-msgstr ""
+msgstr "Following Service Level"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_order_charge_bearer
-msgid ""
-"Following service level : transaction charges are to be applied following"
-" the rules agreed in the service level and/or scheme (SEPA Core messages "
-"must use this). Shared : transaction charges on the debtor side are to be"
-" borne by the debtor, transaction charges on the creditor side are to be "
-"borne by the creditor. Borne by creditor : all transaction charges are to"
-" be borne by the creditor. Borne by debtor : all transaction charges are "
-"to be borne by the debtor."
-msgstr ""
+msgid "Following service level : transaction charges are to be applied following the rules agreed in the service level and/or scheme (SEPA Core messages must use this). Shared : transaction charges on the debtor side are to be borne by the debtor, transaction charges on the creditor side are to be borne by the creditor. Borne by creditor : all transaction charges are to be borne by the creditor. Borne by debtor : all transaction charges are to be borne by the debtor."
+msgstr "Following service level : transaction charges are to be applied following the rules agreed in the service level and/or scheme (SEPA Core messages must use this). Shared : transaction charges on the debtor side are to be borne by the debtor, transaction charges on the creditor side are to be borne by the creditor. Borne by creditor : all transaction charges are to be borne by the creditor. Borne by debtor : all transaction charges are to be borne by the debtor."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Foreign Exchange"
 msgstr "Cambio valuta estera"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Gas Bill"
 msgstr "Bolletta del gas"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Government Insurance"
-msgstr ""
+msgstr "Government Insurance"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Government Payment"
-msgstr ""
+msgstr "Government Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Health Insurance"
 msgstr "Assicurazione sulla salute"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Hedging"
-msgstr ""
+msgstr "Hedging"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,priority:0
-#: selection:account.payment.line,priority
 msgid "High"
 msgstr "Alto"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Home Health Care"
-msgstr ""
+msgstr "Home Health Care"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Hospital Care"
-msgstr ""
+msgstr "Hospital Care"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Housing Loan Repayment"
-msgstr ""
+msgstr "Housing Loan Repayment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Housing Tax"
 msgstr "Imposta sulla casa"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_method_convert_to_ascii
-msgid ""
-"If active, Odoo will convert each accented character to the corresponding"
-" unaccented character, so that only ASCII characters are used in the "
-"generated PAIN file."
-msgstr ""
-"Se abilitato, Odoo convertirà ogni carattere accentato al corrispondente "
-"carattere non accentato, così nel file PAIN generato saranno utilizzati "
-"solo caratteri ASCII."
+msgid "If active, Odoo will convert each accented character to the corresponding unaccented character, so that only ASCII characters are used in the generated PAIN file."
+msgstr "Se abilitato, Odoo convertirà ogni carattere accentato al corrispondente carattere non accentato, così nel file PAIN generato saranno utilizzati solo caratteri ASCII."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_method_pain_bank_address
-msgid ""
-"If enabled, the name and address of the bank will be set in the "
-"appropriate XML tags (if the bank account is linked to a bank and if the "
-"information is set on the related bank). Some banks reject PAIN XML files"
-" that contain the name and address of the bank, although the ISO 20022 "
-"standard and the EPC guidelines specify this possibility."
-msgstr ""
-"Se abilitato, il nome e l'indirizzo della banca saranno impostati negli "
-"appositi tag XML (se il conto bancario è associato a una banca avente le "
-"informazioni necessarie impostate). Alcune banche rifiutano i file PAIN "
-"XML che contengono il nome e l'indirizzo della banca, anche se ISO 20022 "
-"standard e le linee guida EPC specificano questa possibilità."
+msgid "If enabled, the name and address of the bank will be set in the appropriate XML tags (if the bank account is linked to a bank and if the information is set on the related bank). Some banks reject PAIN XML files that contain the name and address of the bank, although the ISO 20022 standard and the EPC guidelines specify this possibility."
+msgstr "Se abilitato, il nome e l'indirizzo della banca saranno impostati negli appositi tag XML (se il conto bancario è associato a una banca avente le informazioni necessarie impostate). Alcune banche rifiutano i file PAIN XML che contengono il nome e l'indirizzo della banca, anche se ISO 20022 standard e le linee guida EPC specificano questa possibilità."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_line_category_purpose
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_line_purpose
 #: model:ir.model.fields,help:account_banking_pain_base.field_bank_payment_line_category_purpose
 #: model:ir.model.fields,help:account_banking_pain_base.field_bank_payment_line_purpose
-msgid ""
-"If neither your bank nor your local regulations oblige you to set the "
-"category purpose, leave the field empty."
-msgstr ""
-"Se né la banca né le regole locali impongono di impostare la categoria di"
-" utilizzo, lasciare il campo vuoto."
+msgid "If neither your bank nor your local regulations oblige you to set the category purpose, leave the field empty."
+msgstr "Se né la banca né le regole locali impongono di impostare la categoria di utilizzo, lasciare il campo vuoto."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_order_batch_booking
-msgid ""
-"If true, the bank statement will display only one debit line for all the "
-"wire transfers of the SEPA XML file ; if false, the bank statement will "
-"display one debit line per wire transfer of the SEPA XML file."
-msgstr ""
+msgid "If true, the bank statement will display only one debit line for all the wire transfers of the SEPA XML file ; if false, the bank statement will display one debit line per wire transfer of the SEPA XML file."
+msgstr "If true, the bank statement will display only one debit line for all the wire transfers of the SEPA XML file ; if false, the bank statement will display one debit line per wire transfer of the SEPA XML file."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Income Tax"
-msgstr ""
+msgstr "Income Tax"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_config_settings_initiating_party_identifier
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_mode_initiating_party_identifier
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_res_company_initiating_party_identifier
 msgid "Initiating Party Identifier"
-msgstr ""
+msgstr "Initiating Party Identifier"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_config_settings_initiating_party_issuer
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_mode_initiating_party_issuer
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_res_company_initiating_party_issuer
 msgid "Initiating Party Issuer"
-msgstr ""
+msgstr "Initiating Party Issuer"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_config_settings_initiating_party_scheme
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_mode_initiating_party_scheme
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_res_company_initiating_party_scheme
 msgid "Initiating Party Scheme"
-msgstr ""
+msgstr "Initiating Party Scheme"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Installment"
-msgstr ""
+msgstr "Installment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Instalment Hire Purchase Agreement"
-msgstr ""
+msgstr "Instalment Hire Purchase Agreement"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,local_instrument:0
-#: selection:account.payment.line,local_instrument
 msgid "Instant Transfer"
-msgstr ""
+msgstr "Instant Transfer"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Insurance Premium"
-msgstr ""
+msgstr "Insurance Premium"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Interest"
-msgstr ""
+msgstr "Interest"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Intermediate Care Facility"
-msgstr ""
+msgstr "Intermediate Care Facility"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Intra Company Payment"
 msgstr "Pagamento tra aziende"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Intra-Company Payment"
 msgstr "Pagamento tra aziende"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Irrevocable Credit Card Payment"
 msgstr "Pagamento irrevocabile con carta di credito"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Irrevocable Debit Card Payment"
 msgstr "Pagamento irrevocabile con carta di debito"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Labor Insurance"
 msgstr "Assicurazione sul lavoro"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "License Fee"
-msgstr ""
+msgstr "License Fee"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Life Insurance"
 msgstr "Assicurazione sulla vita"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Liquidity Management"
-msgstr ""
+msgstr "Liquidity Management"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Loan"
-msgstr ""
+msgstr "Loan"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Loan Repayment"
-msgstr ""
+msgstr "Loan Repayment"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_line_local_instrument
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_bank_payment_line_local_instrument
 msgid "Local Instrument"
-msgstr ""
+msgstr "Local Instrument"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Long Term Care Facility"
-msgstr ""
+msgstr "Long Term Care Facility"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Medical Services"
 msgstr "Servizi medici"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:339
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:339
 #, python-format
-msgid ""
-"Missing 'Initiating Party Issuer' and/or 'Initiating Party Identifier' "
-"for the company '%s'. Both fields must have a value."
-msgstr ""
+msgid "Missing 'Initiating Party Issuer' and/or 'Initiating Party Identifier' for the company '%s'. Both fields must have a value."
+msgstr "Missing 'Initiating Party Issuer' and/or 'Initiating Party Identifier' for the company '%s'. Both fields must have a value."
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Multiple Service Types"
 msgstr "Tipi di servizio multiplo"
 
@@ -660,64 +534,54 @@ msgstr "Identificativi multipli"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Netting"
-msgstr ""
+msgstr "Netting"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Network Charge"
-msgstr ""
+msgstr "Network Charge"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Network Communication"
-msgstr ""
+msgstr "Network Communication"
 
 #. module: account_banking_pain_base
-#: code:addons/account_banking_pain_base/models/account_payment_method.py:31
 #: code:addons/account_banking_pain_base/models/account_payment_method.py:31
 #, python-format
 msgid "No XSD file path found for payment method '%s'"
-msgstr ""
+msgstr "No XSD file path found for payment method '%s'"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,priority:0
-#: selection:account.payment.line,priority
 msgid "Normal"
 msgstr "Normale"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Not Otherwise Specified"
-msgstr ""
+msgstr "Not Otherwise Specified"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Opening Fee"
-msgstr ""
+msgstr "Opening Fee"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Other"
 msgstr "Altro"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Other Payment"
 msgstr "Altro pagamento"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Other Telecom Related Bill"
-msgstr ""
+msgstr "Other Telecom Related Bill"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_method_pain_version
@@ -726,19 +590,17 @@ msgstr "Versione PAIN"
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:498
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:498
+#, python-format
 msgid "Partner name"
 msgstr "Nome soggetto"
 
 #. module: account_banking_pain_base
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:148
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:148
 #, python-format
 msgid "Partner's bank account is '%s'."
 msgstr "Il conto bancario del partner è '%s'."
 
 #. module: account_banking_pain_base
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:144
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:144
 #, python-format
 msgid "Payment Line has reference '%s'."
@@ -766,35 +628,29 @@ msgstr "Ordine di pagamento"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Payment Terms"
 msgstr "Termini di pagamento"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Pension Payment"
-msgstr ""
+msgstr "Pension Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Preauthorized debit"
-msgstr ""
+msgstr "Preauthorized debit"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Precious Metal"
 msgstr "Metallo prezioso"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Price Payment"
-msgstr ""
+msgstr "Price Payment"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_line_priority
@@ -804,63 +660,54 @@ msgstr "Priorità"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Property Insurance"
-msgstr ""
+msgstr "Property Insurance"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Purchase Sale Of Goods"
-msgstr ""
+msgstr "Purchase Sale Of Goods"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Purchase Sale Of Services"
-msgstr ""
+msgstr "Purchase Sale Of Services"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_line_purpose
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_bank_payment_line_purpose
 msgid "Purpose"
-msgstr "Scopo"
+msgstr "Purpose"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Railway"
 msgstr "Ferrovia"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Receipt Payment"
 msgstr "Ricevuta di pagamento"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Receive Against Payment"
-msgstr ""
+msgstr "Receive Against Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Recurring Installment Payment"
-msgstr ""
+msgstr "Recurring Installment Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Rent"
 msgstr "Affitto"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Royalties"
-msgstr ""
+msgstr "Royalties"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,field_description:account_banking_pain_base.field_account_payment_order_sepa
@@ -880,75 +727,59 @@ msgstr "Identificatori SEPA/PAIN nelle modalità di pagamento"
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Salary Payment"
 msgstr "Pagamento stipendio"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Savings"
-msgstr ""
+msgstr "Savings"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Securities"
-msgstr ""
+msgstr "Securities"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.order,charge_bearer:0
-#: selection:account.payment.order,charge_bearer
 msgid "Shared"
 msgstr "Condiviso"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Social Security Benefit"
-msgstr ""
+msgstr "Social Security Benefit"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Study"
 msgstr "Studio"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Subscription"
-msgstr ""
+msgstr "Subscription"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Supplier Payment"
 msgstr "Pagamento fornitore"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Tax Payment"
 msgstr "Pagamento imposte"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Telephone Bill"
 msgstr "Bolletta del telefono"
 
 #. module: account_banking_pain_base
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:127
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:127
 #, python-format
 msgid "The '%s' is empty or 0. It should have a non-null value."
@@ -956,21 +787,11 @@ msgstr "Il '%s' è vuoto o 0. Dovrebbe avere valore non nullo."
 
 #. module: account_banking_pain_base
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:167
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:167
 #, python-format
-msgid ""
-"The generated XML file is not valid against the official XML Schema "
-"Definition. The generated XML file and the full error have been written "
-"in the server logs. Here is the error, which may give you an idea on the "
-"cause of the problem : %s"
-msgstr ""
-"Il file XML generato non è valido per la Definizione dello Schema XML. Il"
-" file XML generato e l'errore completo sono stati scritti nel log del "
-"server. Qui c'è l'errore, che potrebbe aiutare a capire la causa "
-"dell'errore: %s"
+msgid "The generated XML file is not valid against the official XML Schema Definition. The generated XML file and the full error have been written in the server logs. Here is the error, which may give you an idea on the cause of the problem : %s"
+msgstr "Il file XML generato non è valido per la Definizione dello Schema XML. Il file XML generato e l'errore completo sono stati scritti nel log del server. Qui c'è l'errore, che potrebbe aiutare a capire la causa dell'errore: %s"
 
 #. module: account_banking_pain_base
-#: code:addons/account_banking_pain_base/models/account_payment_order.py:122
 #: code:addons/account_banking_pain_base/models/account_payment_order.py:122
 #, python-format
 msgid "The type of the field '%s' is %s. It should be a string or unicode."
@@ -979,134 +800,115 @@ msgstr "Il tipo del campo '%s' è %s. Dovrebbe essere string oppure unicode."
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_line_priority
 #: model:ir.model.fields,help:account_banking_pain_base.field_bank_payment_line_priority
-msgid ""
-"This field will be used as 'Instruction Priority' in the generated PAIN "
-"file."
-msgstr ""
+msgid "This field will be used as 'Instruction Priority' in the generated PAIN file."
+msgstr "This field will be used as 'Instruction Priority' in the generated PAIN file."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_config_settings_initiating_party_identifier
 #: model:ir.model.fields,help:account_banking_pain_base.field_res_company_initiating_party_identifier
-msgid ""
-"This will be used as the 'Initiating Party Identifier' in the PAIN files "
-"generated by Odoo."
-msgstr ""
+msgid "This will be used as the 'Initiating Party Identifier' in the PAIN files generated by Odoo."
+msgstr "This will be used as the 'Initiating Party Identifier' in the PAIN files generated by Odoo."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_mode_initiating_party_identifier
-msgid ""
-"This will be used as the 'Initiating Party Identifier' in the PAIN files "
-"generated by Odoo. If not defined, Initiating Party Identifier from "
-"company will be used.\n"
+msgid "This will be used as the 'Initiating Party Identifier' in the PAIN files generated by Odoo. If not defined, Initiating Party Identifier from company will be used.\n"
 "Common format (13): \n"
 "- Country code (2, optional)\n"
 "- Company idenfier (N, VAT)\n"
 "- Service suffix (N, issued by bank)"
-msgstr ""
+msgstr "This will be used as the 'Initiating Party Identifier' in the PAIN files generated by Odoo. If not defined, Initiating Party Identifier from company will be used.\n"
+"Common format (13): \n"
+"- Country code (2, optional)\n"
+"- Company idenfier (N, VAT)\n"
+"- Service suffix (N, issued by bank)"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_config_settings_initiating_party_issuer
 #: model:ir.model.fields,help:account_banking_pain_base.field_res_company_initiating_party_issuer
-msgid ""
-"This will be used as the 'Initiating Party Issuer' in the PAIN files "
-"generated by Odoo."
-msgstr ""
+msgid "This will be used as the 'Initiating Party Issuer' in the PAIN files generated by Odoo."
+msgstr "This will be used as the 'Initiating Party Issuer' in the PAIN files generated by Odoo."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_mode_initiating_party_issuer
-msgid ""
-"This will be used as the 'Initiating Party Issuer' in the PAIN files "
-"generated by Odoo. If not defined, Initiating Party Issuer from company "
-"will be used.\n"
+msgid "This will be used as the 'Initiating Party Issuer' in the PAIN files generated by Odoo. If not defined, Initiating Party Issuer from company will be used.\n"
 "Common format (13): \n"
 "- Country code (2, optional)\n"
 "- Company idenfier (N, VAT)\n"
 "- Service suffix (N, issued by bank)"
-msgstr ""
+msgstr "This will be used as the 'Initiating Party Issuer' in the PAIN files generated by Odoo. If not defined, Initiating Party Issuer from company will be used.\n"
+"Common format (13): \n"
+"- Country code (2, optional)\n"
+"- Company idenfier (N, VAT)\n"
+"- Service suffix (N, issued by bank)"
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_config_settings_initiating_party_scheme
 #: model:ir.model.fields,help:account_banking_pain_base.field_res_company_initiating_party_scheme
-msgid ""
-"This will be used as the 'Initiating Party Scheme Name' in the PAIN files"
-" generated by Odoo."
-msgstr ""
+msgid "This will be used as the 'Initiating Party Scheme Name' in the PAIN files generated by Odoo."
+msgstr "This will be used as the 'Initiating Party Scheme Name' in the PAIN files generated by Odoo."
 
 #. module: account_banking_pain_base
 #: model:ir.model.fields,help:account_banking_pain_base.field_account_payment_mode_initiating_party_scheme
-msgid ""
-"This will be used as the 'Initiating Party Scheme Name' in the PAIN files"
-" generated by Odoo. This value is determined by the financial institution"
-" that will process the file. If not defined, no scheme will be used.\n"
-msgstr ""
+msgid "This will be used as the 'Initiating Party Scheme Name' in the PAIN files generated by Odoo. This value is determined by the financial institution that will process the file. If not defined, no scheme will be used.\n"
+""
+msgstr "This will be used as the 'Initiating Party Scheme Name' in the PAIN files generated by Odoo. This value is determined by the financial institution that will process the file. If not defined, no scheme will be used.\n"
+""
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Trade"
 msgstr "Commercio"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Trade Services"
-msgstr ""
+msgstr "Trade Services"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "Trade Settlement Payment"
-msgstr ""
+msgstr "Trade Settlement Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,category_purpose
-#: selection:account.payment.line,purpose
 msgid "Treasury Payment"
-msgstr ""
+msgstr "Treasury Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Trust Fund"
-msgstr ""
+msgstr "Trust Fund"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Unemployment Disability Benefit"
-msgstr ""
+msgstr "Unemployment Disability Benefit"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "VAT Payment"
 msgstr "Pagamento IVA"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Value Added Tax Payment"
-msgstr ""
+msgstr "Value Added Tax Payment"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Vision Care"
-msgstr ""
+msgstr "Vision Care"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,purpose:0
-#: selection:account.payment.line,purpose
 msgid "Water Bill"
 msgstr "Bolletta dell'acqua"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "WithHolding"
-msgstr ""
+msgstr "WithHolding"
 
 #. module: account_banking_pain_base
 #: model:ir.model,name:account_banking_pain_base.model_account_config_settings
@@ -1115,62 +917,32 @@ msgstr "account.config.settings"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.line,category_purpose:0
-#: selection:account.payment.line,category_purpose
 msgid "ePayment"
 msgstr "Pagamento elettronico"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
 msgid "pain.001.001.02"
 msgstr "pain.001.001.02"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
 msgid "pain.001.001.03 (recommended for credit transfer)"
-msgstr ""
+msgstr "pain.001.001.03 (recommended for credit transfer)"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
 msgid "pain.001.001.04"
 msgstr "pain.001.001.04"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
 msgid "pain.001.001.05"
 msgstr "pain.001.001.05"
 
 #. module: account_banking_pain_base
 #: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
 msgid "pain.001.003.03 (credit transfer in Germany)"
-msgstr ""
-
-#. module: account_banking_pain_base
-#: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
-msgid "pain.008.001.02 (recommended for direct debit)"
-msgstr "pain.008.001.02 (consigliato per addebito diretto)"
-
-#. module: account_banking_pain_base
-#: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
-msgid "pain.008.001.03"
-msgstr "pain.008.001.03"
-
-#. module: account_banking_pain_base
-#: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
-msgid "pain.008.001.04"
-msgstr "pain.008.001.04"
-
-#. module: account_banking_pain_base
-#: selection:account.payment.method,pain_version:0
-#: selection:account.payment.method,pain_version
-msgid "pain.008.003.02 (direct debit in Germany)"
-msgstr "pain.008.003.02 (addebito diretto in Germania)"
+msgstr "pain.001.003.03 (credit transfer in Germany)"
 
 

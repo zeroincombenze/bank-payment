@@ -20,13 +20,13 @@ Avaiable Addons / Moduli disponibili
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
 | Name / Nome                          | Version    | OCA Ver.   | Description / Descrizione                                                        |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
-| account_banking_mandate              | 10.0.2.0.0 | |same|     | Banking mandates                                                                 |
+| account_banking_mandate              | 10.0.2.0.1 | |same|     | Banking mandates                                                                 |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
 | account_banking_mandate_sale         | 10.0.1.0.1 | |same|     | Adds mandates on sale orders                                                     |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
 | account_banking_pain_base            | 10.0.1.1.3 | |same|     | Base module for PAIN file generation                                             |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
-| account_banking_sepa_credit_transfer | 10.0.1.1.0 | |same|     | Create SEPA XML files for Credit Transfers                                       |
+| account_banking_sepa_credit_transfer | |halt|     | |same|     | Create SEPA XML files for Credit Transfers                                       |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
 | account_banking_sepa_direct_debit    | 10.0.1.1.3 | |same|     | Create SEPA files for Direct Debit                                               |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
@@ -44,7 +44,7 @@ Avaiable Addons / Moduli disponibili
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
 | account_payment_order                | 10.0.1.6.0 | |same|     | Account Payment Order                                                            |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
-| account_payment_partner              | 10.0.1.2.0 | |same|     | Adds payment mode on partners and invoices                                       |
+| account_payment_partner              | |halt|     | |same|     | Adds payment mode on partners and invoices                                       |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
 | account_payment_purchase             | 10.0.1.0.0 | |same|     | Adds Bank Account and Payment Mode on Purchase Orders                            |
 +--------------------------------------+------------+------------+----------------------------------------------------------------------------------+
@@ -61,6 +61,17 @@ Avaiable Addons / Moduli disponibili
 
 
 
+OCA comparation / Confronto con OCA
+-----------------------------------
+
+
++-----------------------------------------------------------------+-------------------+----------------+--------------------------------+
+| Description / Descrizione                                       | Zeroincombenze    | OCA            | Notes / Note                   |
++-----------------------------------------------------------------+-------------------+----------------+--------------------------------+
+| Coverage / Copertura test                                       |  |Codecov Status| | |OCA Codecov|  |                                |
++-----------------------------------------------------------------+-------------------+----------------+--------------------------------+
+
+
 
 Getting started / Come iniziare
 ===============================
@@ -74,6 +85,8 @@ Prerequisites / Prerequisiti
 
 * python 2.7+ (best 2.7.5+)
 * postgresql 9.2+ (best 9.5)
+* openupgradelib>=2.0.0
+* unidecode
 
 
 Installation / Installazione
@@ -89,7 +102,7 @@ Installation / Installazione
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
@@ -99,12 +112,15 @@ Installation / Installazione
 ::
 
     cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
     git clone https://github.com/zeroincombenze/tools.git
     cd ./tools
     ./install_tools.sh -p
     source /opt/odoo/dev/activate_tools
+    # Odoo installation
     odoo_install_repository bank-payment -b 10.0 -O zero
-    venv_mgr create /opt/odoo/VENV-10.0 -O 10.0 -DI
+    vem create /opt/odoo/VENV-10.0 -O 10.0 -DI
+
 
 
 Upgrade / Aggiornamento
@@ -121,8 +137,15 @@ Upgrade / Aggiornamento
 
 ::
 
+    cd $HOME
+    # Tools installation & activation: skip if you have installed this tool
+    git clone https://github.com/zeroincombenze/tools.git
+    cd ./tools
+    ./install_tools.sh -p
+    source /opt/odoo/dev/activate_tools
+    # Odoo upgrade
     odoo_install_repository bank-payment -b 10.0 -O zero -U
-    venv_mgr amend /opt/odoo/VENV-10.0 -O 10.0 -DI
+    vem amend /opt/odoo/VENV-10.0 -O 10.0 -DI
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -181,7 +204,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2020-03-30
+Last Update / Ultimo aggiornamento: 2020-10-11
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
@@ -240,4 +263,5 @@ Last Update / Ultimo aggiornamento: 2020-03-30
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+

@@ -13,7 +13,7 @@ python:
   - "2.7"
 
 virtualenv:
-  system_site_packages: true
+  system_site_packages: false
 
 git:
   submodules: false
@@ -25,27 +25,28 @@ services:
 addons:
   apt:
     sources:
-      - pov-wkhtmltopdf
-#    Search your sources alias here:
-#      https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
+      # Search your sources alias here:
+      # https://github.com/travis-ci/apt-source-whitelist/blob/master/ubuntu.json
     packages:
-      # - build-essential                 # Already in TravisCI
-      # - curl                            # Already in TravisCI
+      # - build-essential                 # Pre-installed
+      # - curl                            # Pre-installed
       - expect-dev
-      - less-plugin-clean-css
-      # - lessc                           # Already in TravisCI
+      # - less-plugin-clean-css           # Pre-installed
+      # - lessc                           # Pre-installed
       - libffi-dev
       - libssl-dev
-      # - nodejs                          # Already in TravisCI
-      # - npm                             # Already in TravisCI
+      # - nodejs                          # Pre-installed
+      # - npm                             # Pre-installed
       - python-dev
+      # - python-setuptools               # Pre-installed
+      # - wkhtmltopdf                     # Pre-installed
       - zlib1g
 
 before_install:
-# Use Zeroincombenze(R) tools
+  # Use Zeroincombenze(R) tools
   - git clone https://github.com/zeroincombenze/tools.git ${HOME}/tools --single-branch --depth=1
-  # - mv ${HOME}/tools ${HOME}
-  - export PATH=${HOME}/tools/maintainer-quality-tools/travis:${PATH}
+  - ${HOME}/tools/install_tools.sh -qopt
+  - source ${HOME}/dev/activate_tools
   - export PYTHONPATH=${HOME}/tools
 
 install:
@@ -57,8 +58,8 @@ install:
 
 env:
   global:
+  - TRAVIS_DEBUG_MODE="2"
   - LANG=en_US
-  - TRAVIS_DEBUG_MODE="1"
   - WKHTMLTOPDF_VERSION="0.12.4"
   - VERSION="10.0" TESTS="0" LINT_CHECK="0" ODOO_TNLBOT="0"
 
@@ -75,7 +76,7 @@ env:
 #  - TESTS="1.0" ODOO_REPO="OCA/OCB" UNIT_TEST="1"
 
 virtualenv:
-  system_site_packages: true
+  system_site_packages: false
 
 script:
   - travis_run_tests
