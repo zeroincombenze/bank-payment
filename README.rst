@@ -11,9 +11,28 @@
 Overview / Panoramica
 =====================
 
-|en| N/A
+|en| OCA banking payment addons for Odoo
+========================================
 
-|it| N/D
+On version 10.0, this project focus on payment interface. The indentation below indicates the dependency graph of the main modules.
+
+    * account_banking_payment_export - Basic export functionality of payment orders
+    * account_banking_sepa_credit_transfer - Export of payment orders in SEPA format
+    * account_direct_debit - Debit order infrastructure analogous to Odoo native payment orders
+    * account_banking_sepa_direct_debit - Export of debit orders in SEPA format
+
+Other features can now be found in these repositories:
+
+ * https://github.com/OCA/bank-statement-import
+ * https://github.com/OCA/bank-statement-reconcile
+
+
+
+|it| Pagamenti bancari
+
+Moduli per la gestione dei pagamenti bancari, principalmente Sepa.
+
+
 Avaiable Addons / Moduli disponibili
 ------------------------------------
 
@@ -204,7 +223,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 |
 
 
-Last Update / Ultimo aggiornamento: 2020-10-11
+Last Update / Ultimo aggiornamento: 2020-10-12
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Alfa-red.png
     :target: https://odoo-community.org/page/development-status
