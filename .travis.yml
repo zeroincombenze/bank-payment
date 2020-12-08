@@ -33,6 +33,7 @@ addons:
       - expect-dev
       # - less-plugin-clean-css           # Pre-installed
       # - lessc                           # Pre-installed
+      - libevent-dev
       - libffi-dev
       - libssl-dev
       # - nodejs                          # Pre-installed

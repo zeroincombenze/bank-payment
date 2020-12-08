@@ -1,6 +1,6 @@
 
 ============================
-|icon| partner_bank 10.0.0.2
+|icon| partner_bank 10.0.0.3
 ============================
 
 
@@ -16,7 +16,6 @@
 
 Overview / Panoramica
 =====================
-=====================
 
 |en| 
 This module add some features to bank account:
@@ -24,6 +23,7 @@ This module add some features to bank account:
 * Add bank account sheet in partner view like Odoo version before 10.0
 * Extend bank type with 'iban' (with check) and normal
 * Add bic/swift code in partner bank view
+* Make visible the account number in invoice form
 
 
 
@@ -34,10 +34,10 @@ This module add some features to bank account:
 
 Questo modulo estende le funzionalità dei conti bancari:
 
-* Permette di inserire le banche da linguetta contabilità del cliente come nelle versioni Odoo precedenti alla 10.0
+* Permette di inserire le banche da tab contabilità del cliente come nelle versioni Odoo precedenti alla 10.0
 * Estende il tipo con 'iban' (con relativo controllo) e 'normal'
 * Aggiunge il codice bic/swift nella vista conti bancari
-
+* Rende visibile in conto bancario in fattura
 
 
 |
@@ -58,28 +58,36 @@ Installation / Installazione
 +---------------------------------+------------------------------------------+
 | |en|                            | |it|                                     |
 +---------------------------------+------------------------------------------+
-| These instruction are just an   | Istruzioni di esempio valide solo per    |
-| example to remember what        | distribuzioni Linux CentOS 7, Ubuntu 14+ |
-| you have to do on Linux.        | e Debian 8+                              |
+| These instructions are just an  | Istruzioni di esempio valide solo per    |
+| example; use on Linux CentOS 7+ | distribuzioni Linux CentOS 7+,           |
+| Ubuntu 14+ and Debian 8+        | Ubuntu 14+ e Debian 8+                   |
 |                                 |                                          |
 | Installation is built with:     | L'installazione è costruita con:         |
 +---------------------------------+------------------------------------------+
-| `Zeroincombenze Tools <https://github.com/zeroincombenze/tools>`__         |
+| `Zeroincombenze Tools <https://zeroincombenze-tools.readthedocs.io/>`__    |
 +---------------------------------+------------------------------------------+
 | Suggested deployment is:        | Posizione suggerita per l'installazione: |
 +---------------------------------+------------------------------------------+
-| /home/odoo/10.0/bank-payment/                                              |
+| $HOME/10.0                                                                 |
 +----------------------------------------------------------------------------+
 
 ::
 
     cd $HOME
+    # *** Tools installation & activation ***
+    # Case 1: you have not installed zeroincombenze tools
     git clone https://github.com/zeroincombenze/tools.git
-    cd ./tools
+    cd $HOME/tools
     ./install_tools.sh -p
-    source /opt/odoo/dev/activate_tools
-    odoo_install_repository bank-payment -b 10.0 -O zero
-    venv_mgr create /opt/odoo/VENV-10.0 -O 10.0 -DI
+    source $HOME/devel/activate_tools
+    # Case 2: you have already installed zeroincombenze tools
+    cd $HOME/tools
+    ./install_tools.sh -U
+    source $HOME/devel/activate_tools
+    # *** End of tools installation or upgrade ***
+    # Odoo repository installation; OCB repository must be installed
+    odoo_install_repository bank-payment -b 10.0 -O zero -o $HOME/10.0
+    vem create $HOME/10.0/venv_odoo -O 10.0 -a "*" -DI -o $HOME/10.0
 
 From UI: go to:
 
@@ -87,24 +95,30 @@ From UI: go to:
 * |menu| Apps > Update Apps List
 * |menu| Setting > Apps |right_do| Select **partner_bank** > Install
 
+
 |
 
 Upgrade / Aggiornamento
 -----------------------
 
 
-+---------------------------------+------------------------------------------+
-| |en|                            | |it|                                     |
-+---------------------------------+------------------------------------------+
-| When you want upgrade and you   | Per aggiornare, se avete installato con  |
-| installed using above           | le istruzioni di cui sopra:              |
-| statements:                     |                                          |
-+---------------------------------+------------------------------------------+
-
 ::
 
-    odoo_install_repository bank-payment -b 10.0 -O zero -U
-    venv_mgr amend /opt/odoo/VENV-10.0 -O 10.0 -DI
+    cd $HOME
+    # *** Tools installation & activation ***
+    # Case 1: you have not installed zeroincombenze tools
+    git clone https://github.com/zeroincombenze/tools.git
+    cd $HOME/tools
+    ./install_tools.sh -p
+    source $HOME/devel/activate_tools
+    # Case 2: you have already installed zeroincombenze tools
+    cd $HOME/tools
+    ./install_tools.sh -U
+    source $HOME/devel/activate_tools
+    # *** End of tools installation or upgrade ***
+    # Odoo repository upgrade
+    odoo_install_repository bank-payment -b 10.0 -o $HOME/10.0 -U
+    vem amend $HOME/10.0/venv_odoo -o $HOME/10.0
     # Adjust following statements as per your system
     sudo systemctl restart odoo
 
@@ -144,6 +158,18 @@ An Enhancement Proposal may be submitted if your idea gains ground.
 
 |it| Se hai proposte per migliorare questo modulo, puoi inviare una mail a <cc@shs-av.com> per un iniziale contatto.
 
+ChangeLog History / Cronologia modifiche
+----------------------------------------
+
+10.0.0.3 (2020-12-07-07)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Show bank name in IBAN / Mostra nome banca in IBAN
+* [IMP] Select IBAN in in invoice / Selezione IBAN in fattura
+* [IMP] Deactivable IBAN / IBAN disattivabili
+* [IMP] Account type: IBAN or bank / Tipo di conto: IBAN o banca
+
+
 |
 |
 
@@ -173,6 +199,12 @@ Contributors / Collaboratori
 
 
 
+Maintainer / Manutenzione
+-------------------------
+
+
+
+
 |
 
 ----------------
@@ -195,7 +227,7 @@ La distribuzione `Zeroincombenze® <https://wiki.zeroincombenze.org/en/Odoo>`__ 
 
 This module is part of bank-payment project.
 
-Last Update / Ultimo aggiornamento: 2020-03-28
+Last Update / Ultimo aggiornamento: 2020-12-08
 
 .. |Maturity| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
@@ -254,4 +286,5 @@ Last Update / Ultimo aggiornamento: 2020-03-28
 .. |FatturaPA| image:: https://raw.githubusercontent.com/zeroincombenze/grymb/master/certificates/ade/icons/fatturapa.png
    :target: https://github.com/zeroincombenze/grymb/blob/master/certificates/ade/scope/fatturapa.md
 .. |chat_with_us| image:: https://www.shs-av.com/wp-content/chat_with_us.gif
-   :target: https://tawk.to/85d4f6e06e68dd4e358797643fe5ee67540e408b
+   :target: https://t.me/axitec_helpdesk
+

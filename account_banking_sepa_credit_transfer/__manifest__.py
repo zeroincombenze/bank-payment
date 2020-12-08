@@ -23,5 +23,5 @@
         'demo/sepa_credit_transfer_demo.xml'
     ],
     'post_init_hook': 'update_bank_journals',
-    'installable': False,
+    'installable': True,
 }
