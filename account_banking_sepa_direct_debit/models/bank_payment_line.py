@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-# © 2015-2016 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2015-2016 Akretion - Alexis de Lattre
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, api
 
@@ -19,5 +18,5 @@ class BankPaymentLine(models.Model):
         """
         hashcode = super(BankPaymentLine, self).\
             move_line_offsetting_account_hashcode()
-        hashcode += '-' + unicode(self.mandate_id.recurrent_sequence_type)
+        hashcode += '-' + str(self.mandate_id.recurrent_sequence_type)
         return hashcode

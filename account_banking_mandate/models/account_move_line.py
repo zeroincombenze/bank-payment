@@ -1,9 +1,10 @@
-# -*- coding: utf-8 -*-
 # Copyright Akretion (http://www.akretion.com/)
-# Copyright 2017 Carlos Dauden <carlos.dauden@tecnativa.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2017-2021 Carlos Dauden <carlos.dauden@tecnativa.com>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class AccountMoveLine(models.Model):
@@ -20,19 +21,25 @@ class AccountMoveLine(models.Model):
         if payment_order.payment_type != 'inbound':
             return vals
         mandate = self.mandate_id
-        partner_bank_id = False
         if not mandate and vals.get('mandate_id', False):
             mandate = mandate.browse(vals['mandate_id'])
+        partner_bank_id = vals.get('partner_bank_id', False)
         if not mandate:
-            partner_bank_id = vals.get('partner_bank_id', False)
-            if partner_bank_id:
-                domain = [('partner_bank_id', '=', partner_bank_id)]
-            else:
-                domain = [('partner_id', '=', self.partner_id.id)]
-            domain.append(('state', '=', 'valid'))
-            mandate = mandate.search(domain, limit=1)
+            mandate = self.partner_id._get_first_valid_mandate(
+                partner_bank_id=partner_bank_id)
         vals.update({
             'mandate_id': mandate.id,
             'partner_bank_id': mandate.partner_bank_id.id or partner_bank_id,
         })
         return vals
+
+    @api.multi
+    @api.constrains('mandate_id', 'company_id')
+    def _check_company_constrains(self):
+        for ml in self:
+            mandate = ml.mandate_id
+            if mandate.company_id and mandate.company_id != ml.company_id:
+                raise ValidationError(_(
+                    "The item %s of journal %s has a different company than "
+                    "that of the linked mandate %s).") %
+                    (ml.name, ml.move_id.name, ml.mandate_id.display_name))

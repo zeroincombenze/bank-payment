@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
 # © 2009 EduSense BV (<http://www.edusense.nl>)
-# © 2011-2013 Therp BV (<http://therp.nl>)
-# © 2013-2014 ACSONE SA (<http://acsone.eu>).
+# © 2011-2013 Therp BV (<https://therp.nl>)
+# © 2013-2014 ACSONE SA (<https://acsone.eu>).
 # © 2014-2016 Tecnativa - Pedro M. Baeza
-# © 2016 Akretion (<http://www.akretion.com>).
-# © 2016 Aselcis (<http://www.aselcis.com>).
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# © 2016 Akretion (<https://www.akretion.com>).
+# © 2016 Aselcis (<https://www.aselcis.com>).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Account Payment Order',
-    'version': '10.0.1.6.0',
+    'version': '12.0.2.0.0',
     'license': 'AGPL-3',
     'author': "ACSONE SA/NV, "
               "Therp BV, "
@@ -21,9 +20,9 @@
     'depends': [
         'account_payment_partner',
         'base_iban',  # for manual_bank_tranfer
-        'document',  # to see the attachments on payment.order
     ],
     'data': [
+        'views/account_payment_method.xml',
         'security/payment_security.xml',
         'security/ir.model.access.csv',
         'wizard/account_payment_line_create_view.xml',

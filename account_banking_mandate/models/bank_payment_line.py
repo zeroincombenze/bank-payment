@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
-# © 2014 Compassion CH - Cyril Sester <csester@compassion.ch>
-# © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# © 2015-2016 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2014 Compassion CH - Cyril Sester <csester@compassion.ch>
+# Copyright 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
+# Copyright 2015-16 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class BankPaymentLine(models.Model):

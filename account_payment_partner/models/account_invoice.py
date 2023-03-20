@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-16 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
 # Copyright 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class AccountInvoice(models.Model):
@@ -21,27 +21,50 @@ class AccountInvoice(models.Model):
     @api.onchange('partner_id', 'company_id')
     def _onchange_partner_id(self):
         res = super(AccountInvoice, self)._onchange_partner_id()
-        if self.partner_id:
+        company_id = self.company_id.id or self.env.context.get('force_company')
+        if self.partner_id and company_id:
             if self.type == 'in_invoice':
-                pay_mode = self.partner_id.supplier_payment_mode_id
+                pay_mode = self.with_context(
+                    force_company=company_id
+                ).partner_id.supplier_payment_mode_id
                 self.payment_mode_id = pay_mode
                 if (
-                        pay_mode and
-                        pay_mode.payment_type == 'outbound' and
-                        pay_mode.payment_method_id.bank_account_required and
-                        self.commercial_partner_id.bank_ids):
-                    self.partner_bank_id =\
-                        self.commercial_partner_id.bank_ids[0]
+                    pay_mode and
+                    pay_mode.payment_type == 'outbound' and
+                    pay_mode.payment_method_id.bank_account_required and
+                    self.commercial_partner_id.bank_ids
+                ):
+                    self.partner_bank_id = \
+                        self.commercial_partner_id.bank_ids.filtered(
+                            lambda b: b.company_id == self.company_id or not
+                            b.company_id)[:1]
+                else:
+                    self.partner_bank_id = False
+
             elif self.type == 'out_invoice':
                 # No bank account assignation is done here as this is only
                 # needed for printing purposes and it can conflict with
                 # SEPA direct debit payments. Current report prints it.
-                self.payment_mode_id = self.partner_id.customer_payment_mode_id
+                self.payment_mode_id = self.with_context(
+                    force_company=company_id,
+                ).partner_id.customer_payment_mode_id
         else:
             self.payment_mode_id = False
             if self.type == 'in_invoice':
                 self.partner_bank_id = False
         return res
+
+    @api.onchange('payment_mode_id')
+    def _onchange_payment_mode_id(self):
+        pay_mode = self.payment_mode_id
+        if (
+            pay_mode and
+            pay_mode.payment_type == 'outbound' and not
+            pay_mode.payment_method_id.bank_account_required
+        ):
+            self.partner_bank_id = False
+        elif not self.payment_mode_id:
+            self.partner_bank_id = False
 
     @api.model
     def create(self, vals):
@@ -60,17 +83,6 @@ class AccountInvoice(models.Model):
                             invoice[field], invoice,
                         )
         return super(AccountInvoice, self).create(vals)
-
-    @api.onchange('payment_mode_id')
-    def payment_mode_id_change(self):
-        if (
-                self.payment_mode_id and
-                self.payment_mode_id.payment_type == 'outbound' and
-                not self.payment_mode_id.payment_method_id.
-                bank_account_required):
-            self.partner_bank_id = False
-        elif not self.payment_mode_id:
-            self.partner_bank_id = False
 
     @api.model
     def line_get_convert(self, line, part):
@@ -96,6 +108,23 @@ class AccountInvoice(models.Model):
         if invoice.type == 'in_invoice':
             vals['partner_bank_id'] = invoice.partner_bank_id.id
         return vals
+
+    @api.constrains('company_id', 'payment_mode_id')
+    def _check_payment_mode_company_constrains(self):
+        for rec in self.sudo():
+            if (rec.payment_mode_id and rec.company_id !=
+                    rec.payment_mode_id.company_id):
+                raise ValidationError(
+                    _("The company of the invoice %s does not match "
+                      "with that of the payment mode") % rec.name)
+
+    @api.constrains('partner_id', 'partner_bank_id')
+    def validate_partner_bank_id(self):
+        """Inhibit the validation of the bank account by default, as core
+        rules are not the expected one for the bank-payment suite.
+        """
+        if self.env.context.get('use_old_partner_bank_id_check'):
+            super().validate_partner_bank_id()
 
     def partner_banks_to_show(self):
         self.ensure_one()

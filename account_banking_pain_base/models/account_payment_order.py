@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # © 2013-2016 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
 # © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # © 2016 Antiun Ingenieria S.L. - Antonio Espinosa
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, fields, api, _, tools
 from odoo.exceptions import UserError
@@ -70,7 +69,7 @@ class AccountPaymentOrder(models.Model):
                     sepa = False
                     break
             sepa = order.compute_sepa_final_hook(sepa)
-            self.sepa = sepa
+            order.sepa = sepa
 
     @api.multi
     def compute_sepa_final_hook(self, sepa):
@@ -92,14 +91,13 @@ class AccountPaymentOrder(models.Model):
             # cf section 1.4 "Character set" of the SEPA Credit Transfer
             # Scheme Customer-to-bank guidelines
             if gen_args.get('convert_to_ascii'):
-                if isinstance(value, unicode):
-                    value = unidecode(value)
+                value = unidecode(value)
                 unallowed_ascii_chars = [
                     '"', '#', '$', '%', '&', '*', ';', '<', '>', '=', '@',
                     '[', ']', '^', '_', '`', '{', '}', '|', '~', '\\', '!']
                 for unallowed_ascii_char in unallowed_ascii_chars:
                     value = value.replace(unallowed_ascii_char, '-')
-        except:
+        except Exception:
             error_msg_prefix = _("Cannot compute the field '{field_name}'.") \
                 .format(
                 field_name=field_name)
@@ -117,7 +115,7 @@ class AccountPaymentOrder(models.Model):
                 + error_msg_details_list
                 + [error_msg_data]))
 
-        if not isinstance(value, (str, unicode)):
+        if not isinstance(value, str):
             raise UserError(
                 _("The type of the field '%s' is %s. It should be a string "
                     "or unicode.")
@@ -158,7 +156,7 @@ class AccountPaymentOrder(models.Model):
         try:
             root_to_validate = etree.fromstring(xml_string)
             official_pain_schema.assertValid(root_to_validate)
-        except Exception, e:
+        except Exception as e:
             logger.warning(
                 "The XML file is invalid against the XML Schema Definition")
             logger.warning(xml_string)
@@ -169,7 +167,7 @@ class AccountPaymentOrder(models.Model):
                     "full error have been written in the server logs. Here "
                     "is the error, which may give you an idea on the cause "
                     "of the problem : %s")
-                % unicode(e))
+                % str(e))
         return True
 
     @api.multi
@@ -217,7 +215,7 @@ class AccountPaymentOrder(models.Model):
             # batch_booking is in "Group header" with pain.001.001.02
             # and in "Payment info" in pain.001.001.03/04
             batch_booking = etree.SubElement(group_header, 'BtchBookg')
-            batch_booking.text = unicode(self.batch_booking).lower()
+            batch_booking.text = str(self.batch_booking).lower()
         nb_of_transactions = etree.SubElement(
             group_header, 'NbOfTxs')
         control_sum = etree.SubElement(group_header, 'CtrlSum')
@@ -245,7 +243,7 @@ class AccountPaymentOrder(models.Model):
         control_sum = False
         if gen_args.get('pain_flavor') != 'pain.001.001.02':
             batch_booking = etree.SubElement(payment_info, 'BtchBookg')
-            batch_booking.text = unicode(self.batch_booking).lower()
+            batch_booking.text = str(self.batch_booking).lower()
         # The "SEPA Customer-to-bank
         # Implementation guidelines" for SCT and SDD says that control sum
         # and nb_of_transactions should be present
@@ -342,45 +340,6 @@ class AccountPaymentOrder(models.Model):
                 % self.company_id.name)
         return True
 
-    @api.model
-    def generate_fininst_postal_address(self, parent_node, bank, gen_args):
-        if not gen_args.get('pain_bank_address') or not bank:
-            return
-        # name is a required field on res.bank
-        name = etree.SubElement(parent_node, 'Nm')
-        name.text = self._prepare_field(
-            'Bank Name', 'bank.name',
-            {'bank': bank}, 140, gen_args=gen_args)
-        if not (bank.country or bank.city):
-            return
-        postal_address = etree.SubElement(parent_node, 'PstlAdr')
-        if bank.zip:
-            bankzip = etree.SubElement(postal_address, 'PstCd')
-            bankzip.text = self._prepare_field(
-                'Bank Zip', 'bank.zip',
-                {'bank': bank}, 16, gen_args=gen_args)
-        if bank.city:
-            city = etree.SubElement(postal_address, 'TwnNm')
-            city.text = self._prepare_field(
-                'Bank City', 'bank.city',
-                {'bank': bank}, 35, gen_args=gen_args)
-        if bank.country:
-            country_code = etree.SubElement(postal_address, 'Ctry')
-            country_code.text = self._prepare_field(
-                'Bank Country Code', 'bank.country.code',
-                {'bank': bank}, 2, gen_args=gen_args)
-        if bank.street:
-            adrline1 = etree.SubElement(postal_address, 'AdrLine')
-            adrline1.text = self._prepare_field(
-                'Bank Address Line1', 'bank.street',
-                {'bank': bank}, 70, gen_args=gen_args)
-        if bank.street2:
-            adrline2 = etree.SubElement(postal_address, 'AdrLine')
-            adrline2.text = self._prepare_field(
-                'Bank Address Line2', 'bank.street2',
-                {'bank': bank}, 70, gen_args=gen_args)
-
-    @api.model
     def generate_party_agent(
             self, parent_node, party_type, order, partner_bank, gen_args,
             bank_line=None):
@@ -400,8 +359,6 @@ class AccountPaymentOrder(models.Model):
             party_agent_bic = etree.SubElement(
                 party_agent_institution, gen_args.get('bic_xml_tag'))
             party_agent_bic.text = partner_bank.bank_bic
-            self.generate_fininst_postal_address(
-                party_agent_institution, partner_bank.bank_id, gen_args)
         else:
             if order == 'B' or (
                     order == 'C' and gen_args['payment_method'] == 'DD'):
@@ -409,8 +366,6 @@ class AccountPaymentOrder(models.Model):
                     parent_node, '%sAgt' % party_type)
                 party_agent_institution = etree.SubElement(
                     party_agent, 'FinInstnId')
-                self.generate_fininst_postal_address(
-                    party_agent_institution, partner_bank.bank_id, gen_args)
                 party_agent_other = etree.SubElement(
                     party_agent_institution, 'Othr')
                 party_agent_other_identification = etree.SubElement(
@@ -476,17 +431,11 @@ class AccountPaymentOrder(models.Model):
             if partner.street:
                 adrline1 = etree.SubElement(postal_address, 'AdrLine')
                 adrline1.text = self._prepare_field(
-                    'Address Line1', 'partner.street',
-                    {'partner': partner}, 70, gen_args=gen_args)
-            if partner.street2:
-                adrline2 = etree.SubElement(postal_address, 'AdrLine')
-                adrline2.text = self._prepare_field(
-                    'Address Line2', 'partner.street2',
+                    'Adress Line1', 'partner.street',
                     {'partner': partner}, 70, gen_args=gen_args)
 
         return True
 
-    @api.model
     def generate_party_block(
             self, parent_node, party_type, order, partner_bank, gen_args,
             bank_line=None):
@@ -500,7 +449,7 @@ class AccountPaymentOrder(models.Model):
             party_type_label = _("Creditor name")
         elif party_type == 'Dbtr':
             party_type_label = _("Debtor name")
-        name = 'partner_bank.partner_id.name'
+        name = 'partner_bank.acc_holder_name or partner_bank.partner_id.name'
         eval_ctx = {'partner_bank': partner_bank}
         party_name = self._prepare_field(
             party_type_label, name, eval_ctx, gen_args.get('name_maxsize'),

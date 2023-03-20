@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   © 2013-2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
-  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+  License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <!--
     Customize all mandate views (and actions) to fit SEPA mandate style
@@ -17,11 +17,12 @@
         <field name="partner_id" position="after">
             <field name="scheme" attrs="{'invisible': [('format', '!=', 'sepa')],
                                          'required': [('format', '=', 'sepa')]}"/>
-            <field name="type" attrs="{'invisible': [('format', '!=', 'sepa')],
-                                       'required': [('format', '=', 'sepa')]}"/>
             <field name="recurrent_sequence_type"
                    attrs="{'invisible': ['|', ('type', '=', 'oneoff'), ('format', '!=', 'sepa')],
                            'required': [('type', '=', 'recurrent')]}"/>
+        </field>
+        <field name="type" position="attributes">
+            <attribute name="attrs">{'required': [('format', '=', 'sepa')]}</attribute>
         </field>
     </field>
 </record>

@@ -1,14 +1,12 @@
-# -*- coding: utf-8 -*-
 # Copyright 2013-2016 Akretion (www.akretion.com)
-# Copyright 2014-2017 Tecnativa - Pedro M. Baeza
+# Copyright 2014-2018 Tecnativa - Pedro M. Baeza
 # Copyright 2016 Tecnativa - Antonio Espinosa
-# Copyright 2017 Carlos Dauden <carlos.dauden@tecnativa.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'Account Banking SEPA Direct Debit',
     'summary': 'Create SEPA files for Direct Debit',
-    'version': '10.0.1.1.3',
+    'version': '12.0.1.3.0',
     'license': 'AGPL-3',
     'author': "Akretion, "
               "Tecnativa, "

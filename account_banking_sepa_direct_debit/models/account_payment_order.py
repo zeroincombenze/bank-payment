@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-# © 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2018 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models, _
+from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import UserError
 from lxml import etree
 
@@ -14,10 +14,9 @@ class AccountPaymentOrder(models.Model):
     def generate_payment_file(self):
         """Creates the SEPA Direct Debit file. That's the important code !"""
         self.ensure_one()
-        pay_method = self.payment_method_id
-        if pay_method.code != 'sepa_direct_debit':
+        if self.payment_method_id.code != 'sepa_direct_debit':
             return super(AccountPaymentOrder, self).generate_payment_file()
-        pain_flavor = pay_method.pain_version
+        pain_flavor = self.payment_method_id.pain_version
         # We use pain_flavor.startswith('pain.008.001.xx')
         # to support country-specific extensions such as
         # pain.008.001.02.ch.01 (cf l10n_ch_sepa)
@@ -43,12 +42,12 @@ class AccountPaymentOrder(models.Model):
                   "Payment Type Code supported for SEPA Direct Debit are "
                   "'pain.008.001.02', 'pain.008.001.03' and "
                   "'pain.008.001.04'.") % pain_flavor)
+        pay_method = self.payment_mode_id.payment_method_id
         xsd_file = pay_method.get_xsd_file_path()
         gen_args = {
             'bic_xml_tag': bic_xml_tag,
             'name_maxsize': name_maxsize,
             'convert_to_ascii': pay_method.convert_to_ascii,
-            'pain_bank_address': pay_method.pain_bank_address,
             'payment_method': 'DD',
             'file_prefix': 'sdd_',
             'pain_flavor': pain_flavor,
@@ -70,44 +69,27 @@ class AccountPaymentOrder(models.Model):
             transactions_count_a += 1
             priority = line.priority
             categ_purpose = line.category_purpose
-            # The field line.date is the requested payment date
-            # taking into account the 'date_prefered' setting
-            # cf account_banking_payment_export/models/account_payment.py
-            # in the inherit of action_open()
-            if not line.mandate_id:
-                raise UserError(
-                    _("Missing SEPA Direct Debit mandate on the "
-                      "bank payment line with partner '%s' "
-                      "(reference '%s').")
-                    % (line.partner_id.name, line.name))
             scheme = line.mandate_id.scheme
-            if line.mandate_id.state != 'valid':
-                raise UserError(
-                    _("The SEPA Direct Debit mandate with reference '%s' "
-                      "for partner '%s' has expired.")
-                    % (line.mandate_id.unique_mandate_reference,
-                       line.mandate_id.partner_id.name))
             if line.mandate_id.type == 'oneoff':
                 seq_type = 'OOFF'
-                if line.mandate_id.last_debit_date:
-                    raise UserError(
-                        _("The mandate with reference '%s' for partner "
-                          "'%s' has type set to 'One-Off' and it has a "
-                          "last debit date set to '%s', so we can't use "
-                          "it.")
-                        % (line.mandate_id.unique_mandate_reference,
-                           line.mandate_id.partner_id.name,
-                           line.mandate_id.last_debit_date))
             elif line.mandate_id.type == 'recurrent':
                 seq_type_map = {
                     'recurring': 'RCUR',
                     'first': 'FRST',
                     'final': 'FNAL',
                 }
-                seq_type_label = \
-                    line.mandate_id.recurrent_sequence_type
+                seq_type_label = line.mandate_id.recurrent_sequence_type
                 assert seq_type_label is not False
                 seq_type = seq_type_map[seq_type_label]
+            else:
+                raise exceptions.UserError(_(
+                    "Invalid mandate type in '%s'. Valid ones are 'Recurrent' "
+                    "or 'One-Off'"
+                ) % line.mandate_id.unique_mandate_reference)
+            # The field line.date is the requested payment date
+            # taking into account the 'date_preferred' setting
+            # cf account_banking_payment_export/models/account_payment.py
+            # in the inherit of action_open()
             key = (line.date, priority, categ_purpose, seq_type, scheme)
             if key in lines_per_group:
                 lines_per_group[key].append(line)
@@ -115,7 +97,8 @@ class AccountPaymentOrder(models.Model):
                 lines_per_group[key] = [line]
 
         for (requested_date, priority, categ_purpose, sequence_type, scheme),\
-                lines in lines_per_group.items():
+                lines in list(lines_per_group.items()):
+            requested_date = fields.Date.to_string(requested_date)
             # B. Payment info
             payment_info, nb_of_transactions_b, control_sum_b = \
                 self.generate_start_payment_info_block(
@@ -189,8 +172,13 @@ class AccountPaymentOrder(models.Model):
                     mandate_related_info, 'DtOfSgntr')
                 mandate_signature_date.text = self._prepare_field(
                     'Mandate Signature Date',
-                    'line.mandate_id.signature_date',
-                    {'line': line}, 10, gen_args=gen_args)
+                    'signature_date',
+                    {
+                        'line': line,
+                        'signature_date': fields.Date.to_string(
+                            line.mandate_id.signature_date,
+                        ),
+                    }, 10, gen_args=gen_args)
                 if sequence_type == 'FRST' and line.mandate_id.last_debit_date:
                     amendment_indicator = etree.SubElement(
                         mandate_related_info, 'AmdmntInd')
@@ -223,9 +211,9 @@ class AccountPaymentOrder(models.Model):
                 self.generate_remittance_info_block(
                     dd_transaction_info, line, gen_args)
 
-            nb_of_transactions_b.text = unicode(transactions_count_b)
+            nb_of_transactions_b.text = str(transactions_count_b)
             control_sum_b.text = '%.2f' % amount_control_sum_b
-        nb_of_transactions_a.text = unicode(transactions_count_a)
+        nb_of_transactions_a.text = str(transactions_count_a)
         control_sum_a.text = '%.2f' % amount_control_sum_a
 
         return self.finalize_sepa_file_creation(
@@ -266,7 +254,7 @@ class AccountPaymentOrder(models.Model):
                 'recurrent_sequence_type': 'recurring',
                 })
             for first_mandate in first_mandates:
-                first_mandate.message_post(_(
+                first_mandate.message_post(body=_(
                     "Automatically switched from <b>First</b> to "
                     "<b>Recurring</b> when the debit order "
                     "<a href=# data-oe-model=account.payment.order "

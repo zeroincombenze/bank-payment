@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2013-2014 ACSONE SA (<http://acsone.eu>).
+# © 2013-2014 ACSONE SA (<https://acsone.eu>).
 # © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # © 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
@@ -13,6 +12,20 @@ class AccountInvoice(models.Model):
 
     payment_order_ok = fields.Boolean(
         compute="_compute_payment_order_ok",
+    )
+    # we restore this field from <=v11 for now for preserving behavior
+    # TODO: Check if we can remove it and base everything in something at
+    # payment mode or company level
+    reference_type = fields.Selection(
+        selection=[
+            ('none', 'Free Reference'),
+            ('structured', 'Structured Reference'),
+        ],
+        string='Payment Reference',
+        required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
+        default='none',
     )
 
     @api.depends('payment_mode_id', 'move_id', 'move_id.line_ids',
@@ -27,12 +40,6 @@ class AccountInvoice(models.Model):
             if not payment_mode:
                 payment_mode = invoice.payment_mode_id
             invoice.payment_order_ok = payment_mode.payment_order_ok
-
-    @api.model
-    def _get_reference_type(self):
-        rt = super(AccountInvoice, self)._get_reference_type()
-        rt.append(('structured', _('Structured Reference')))
-        return rt
 
     @api.model
     def line_get_convert(self, line, part):
@@ -72,7 +79,8 @@ class AccountInvoice(models.Model):
                 lambda x: (
                     not x.reconciled and x.payment_mode_id.payment_order_ok and
                     x.account_id.internal_type in ('receivable', 'payable') and
-                    not x.payment_line_ids
+                    not any(p_state in ('draft', 'open', 'generated')
+                            for p_state in x.payment_line_ids.mapped('state'))
                 )
             )
             if not applicable_lines:
@@ -104,12 +112,12 @@ class AccountInvoice(models.Model):
                     line.create_payment_line_from_move_line(payorder)
                     count += 1
                 if new_payorder:
-                    inv.message_post(_(
+                    inv.message_post(body=_(
                         '%d payment lines added to the new draft payment '
                         'order %s which has been automatically created.')
                         % (count, payorder.name))
                 else:
-                    inv.message_post(_(
+                    inv.message_post(body=_(
                         '%d payment lines added to the existing draft '
                         'payment order %s.')
                         % (count, payorder.name))

@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Compassion CH - Cyril Sester <csester@compassion.ch>
 # Copyright 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
 # Copyright 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
 # Copyright 2017 Carlos Dauden <carlos.dauden@tecnativa.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 
-from odoo import models, fields, api
+from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class AccountInvoice(models.Model):
@@ -36,16 +36,19 @@ class AccountInvoice(models.Model):
         creation, using same method as upstream."""
         onchanges = {
             '_onchange_partner_id': ['mandate_id'],
-            'payment_mode_id_change': ['mandate_id'],
+            '_onchange_payment_mode_id': ['mandate_id'],
         }
-        for onchange_method, changed_fields in onchanges.items():
+        for onchange_method, changed_fields in list(onchanges.items()):
             if any(f not in vals for f in changed_fields):
                 invoice = self.new(vals)
+                invoice = invoice.with_context(
+                    force_company=invoice.company_id.id
+                )
                 getattr(invoice, onchange_method)()
                 for field in changed_fields:
                     if field not in vals and invoice[field]:
                         vals[field] = invoice._fields[field].convert_to_write(
-                            invoice[field], invoice
+                            invoice[field], invoice,
                         )
         return super(AccountInvoice, self).create(vals)
 
@@ -78,7 +81,16 @@ class AccountInvoice(models.Model):
         return res
 
     @api.onchange('payment_mode_id')
-    def payment_mode_id_change(self):
-        res = super(AccountInvoice, self).payment_mode_id_change()
+    def _onchange_payment_mode_id(self):
+        super(AccountInvoice, self)._onchange_payment_mode_id()
         self.set_mandate()
-        return res
+
+    @api.constrains('mandate_id', 'company_id')
+    def _check_company_constrains(self):
+        for inv in self:
+            if inv.mandate_id.company_id and inv.mandate_id.company_id != \
+                    inv.company_id:
+                raise ValidationError(_(
+                    "The invoice %s has a different company than "
+                    "that of the linked mandate %s).") %
+                    (inv.name, inv.mandate_id.display_name))

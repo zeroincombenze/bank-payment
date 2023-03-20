@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-# © 2010-2016 Akretion (www.akretion.com)
-# © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2010-2016 Akretion (www.akretion.com)
+# Copyright 2014-2018 Tecnativa - Pedro M. Baeza
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, api, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from lxml import etree
 
@@ -11,33 +10,20 @@ from lxml import etree
 class AccountPaymentOrder(models.Model):
     _inherit = 'account.payment.order'
 
-    @api.model
-    def _get_line_key(self, line):
-        # The field line.date is the requested payment date
-        # taking into account the 'date_prefered' setting
-        # cf account_banking_payment_export/models/account_payment.py
-        # in the inherit of action_open()
-        return (
-            line.date,
-            line.priority,
-            line.local_instrument,
-            line.category_purpose
-        )
-
     @api.multi
     def generate_payment_file(self):
         """Creates the SEPA Credit Transfer file. That's the important code!"""
         self.ensure_one()
-        pay_method = self.payment_method_id
-        if pay_method.code != 'sepa_credit_transfer':
+        if self.payment_method_id.code != 'sepa_credit_transfer':
             return super(AccountPaymentOrder, self).generate_payment_file()
 
-        pain_flavor = pay_method.pain_version
-        if not pain_flavor:
-            pain_flavor = 'pain.001.001.03'
+        pain_flavor = self.payment_method_id.pain_version
         # We use pain_flavor.startswith('pain.001.001.xx')
         # to support country-specific extensions such as
         # pain.001.001.03.ch.02 (cf l10n_ch_sepa)
+        if not pain_flavor:
+            raise UserError(
+                _("PAIN version '%s' is not supported.") % pain_flavor)
         if pain_flavor.startswith('pain.001.001.02'):
             bic_xml_tag = 'BIC'
             name_maxsize = 70
@@ -72,12 +58,11 @@ class AccountPaymentOrder(models.Model):
         else:
             raise UserError(
                 _("PAIN version '%s' is not supported.") % pain_flavor)
-        xsd_file = pay_method.get_xsd_file_path()
+        xsd_file = self.payment_method_id.get_xsd_file_path()
         gen_args = {
             'bic_xml_tag': bic_xml_tag,
             'name_maxsize': name_maxsize,
-            'convert_to_ascii': pay_method.convert_to_ascii,
-            'pain_bank_address': pay_method.pain_bank_address,
+            'convert_to_ascii': self.payment_method_id.convert_to_ascii,
             'payment_method': 'TRF',
             'file_prefix': 'sct_',
             'pain_flavor': pain_flavor,
@@ -96,15 +81,22 @@ class AccountPaymentOrder(models.Model):
         # key = (requested_date, priority, local_instrument, categ_purpose)
         # values = list of lines as object
         for line in self.bank_line_ids:
-            key = self._get_line_key(line)
+            priority = line.priority
+            local_instrument = line.local_instrument
+            categ_purpose = line.category_purpose
+            # The field line.date is the requested payment date
+            # taking into account the 'date_prefered' setting
+            # cf account_banking_payment_export/models/account_payment.py
+            # in the inherit of action_open()
+            key = (line.date, priority, local_instrument, categ_purpose)
             if key in lines_per_group:
                 lines_per_group[key].append(line)
             else:
                 lines_per_group[key] = [line]
-        for block_info, lines in lines_per_group.items():
-            requested_date, priority,\
-                local_instrument, categ_purpose = block_info[:4]
+        for (requested_date, priority, local_instrument, categ_purpose),\
+                lines in list(lines_per_group.items()):
             # B. Payment info
+            requested_date = fields.Date.to_string(requested_date)
             payment_info, nb_of_transactions_b, control_sum_b = \
                 self.generate_start_payment_info_block(
                     pain_root,
@@ -118,7 +110,6 @@ class AccountPaymentOrder(models.Model):
                         'requested_date': requested_date,
                         'local_instrument': local_instrument or 'NOinstr',
                         'category_purpose': categ_purpose or 'NOcateg',
-                        'optional_args': block_info[4:]
                     }, gen_args)
             self.generate_party_block(
                 payment_info, 'Dbtr', 'B',
@@ -174,12 +165,12 @@ class AccountPaymentOrder(models.Model):
                 self.generate_remittance_info_block(
                     credit_transfer_transaction_info, line, gen_args)
             if not pain_flavor.startswith('pain.001.001.02'):
-                nb_of_transactions_b.text = unicode(transactions_count_b)
+                nb_of_transactions_b.text = str(transactions_count_b)
                 control_sum_b.text = '%.2f' % amount_control_sum_b
         if not pain_flavor.startswith('pain.001.001.02'):
-            nb_of_transactions_a.text = unicode(transactions_count_a)
+            nb_of_transactions_a.text = str(transactions_count_a)
             control_sum_a.text = '%.2f' % amount_control_sum_a
         else:
-            nb_of_transactions_a.text = unicode(transactions_count_a)
+            nb_of_transactions_a.text = str(transactions_count_a)
             control_sum_a.text = '%.2f' % amount_control_sum_a
         return self.finalize_sepa_file_creation(xml_root, gen_args)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014 Akretion - Alexis de Lattre <alexis.delattre@akretion.com>
 # Copyright 2014 Tecnativa - Pedro M. Baeza
 # Copyright 2018 Tecnativa - Carlos Dauden
@@ -6,7 +5,7 @@
 
 {
     'name': 'Account Payment Partner',
-    'version': '10.0.1.2.0',
+    'version': '12.0.1.0.3',
     'category': 'Banking addons',
     'license': 'AGPL-3',
     'summary': 'Adds payment mode on partners and invoices',
