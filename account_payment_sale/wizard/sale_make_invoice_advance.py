@@ -1,24 +1,16 @@
-# -*- coding: utf-8 -*-
-# © 2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
+# Copyright 2016 Akretion - Alexis de Lattre
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, api
+from odoo import models
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
-    _inherit = 'sale.advance.payment.inv'
+    _inherit = "sale.advance.payment.inv"
 
-    @api.multi
     def _create_invoice(self, order, so_line, amount):
         """Copy payment mode from sale order to invoice"""
-        inv = super(SaleAdvancePaymentInv, self)._create_invoice(
-            order, so_line, amount)
-        vals = {}
-        if order.payment_mode_id:
-            vals['payment_mode_id'] = order.payment_mode_id.id
-            if order.payment_mode_id.bank_account_link == 'fixed':
-                vals['partner_bank_id'] =\
-                    order.payment_mode_id.fixed_journal_id.bank_account_id.id
+        inv = super()._create_invoice(order, so_line, amount)
+        vals = order._get_payment_mode_vals({})
         if vals:
             inv.write(vals)
         return inv

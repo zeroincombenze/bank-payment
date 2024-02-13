@@ -1,49 +1,72 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Akretion (Alexis de Lattre <alexis.delattre@akretion.com>)
 # © 2014 Serv. Tecnol. Avanzados - Pedro M. Baeza
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import api, fields, models
+from odoo.fields import first
 
 
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = "account.move.line"
 
     partner_bank_id = fields.Many2one(
-        'res.partner.bank', string='Partner Bank Account',
-        help='Bank account on which we should pay the supplier')
+        comodel_name="res.partner.bank",
+        string="Partner Bank Account",
+        compute="_compute_partner_bank_id",
+        readonly=False,
+        store=True,
+        help="Bank account on which we should pay the supplier",
+    )
     bank_payment_line_id = fields.Many2one(
-        'bank.payment.line', string='Bank Payment Line',
-        readonly=True,
-        index=True,
+        comodel_name="bank.payment.line", readonly=True, index=True
     )
     payment_line_ids = fields.One2many(
-        comodel_name='account.payment.line',
-        inverse_name='move_line_id',
+        comodel_name="account.payment.line",
+        inverse_name="move_line_id",
         string="Payment lines",
     )
 
-    @api.multi
+    @api.depends(
+        "move_id", "move_id.invoice_partner_bank_id", "move_id.payment_mode_id"
+    )
+    def _compute_partner_bank_id(self):
+        for ml in self:
+            if (
+                ml.move_id.type in ("in_invoice", "in_refund")
+                and not ml.reconciled
+                and ml.payment_mode_id.payment_order_ok
+                and ml.account_id.internal_type in ("receivable", "payable")
+                and not any(
+                    p_state in ("draft", "open", "generated")
+                    for p_state in ml.payment_line_ids.mapped("state")
+                )
+            ):
+                ml.partner_bank_id = ml.move_id.invoice_partner_bank_id.id
+            else:
+                ml.partner_bank_id = ml.partner_bank_id
+
     def _prepare_payment_line_vals(self, payment_order):
         self.ensure_one()
-        assert payment_order, 'Missing payment order'
-        aplo = self.env['account.payment.line']
+        assert payment_order, "Missing payment order"
+        aplo = self.env["account.payment.line"]
         # default values for communication_type and communication
-        communication_type = 'normal'
-        communication = self.move_id.ref or self.move_id.name
+        communication_type = "normal"
+        communication = self.ref or self.name
         # change these default values if move line is linked to an invoice
-        if self.invoice_id:
-            if self.invoice_id.reference_type != 'none':
-                communication = self.invoice_id.reference
-                ref2comm_type =\
-                    aplo.invoice_reference_type2communication_type()
-                communication_type =\
-                    ref2comm_type[self.invoice_id.reference_type]
+        if self.move_id.is_invoice():
+            if (self.move_id.reference_type or "none") != "none":
+                communication = self.move_id.ref
+                ref2comm_type = aplo.invoice_reference_type2communication_type()
+                communication_type = ref2comm_type[self.move_id.reference_type]
             else:
                 if (
-                        self.invoice_id.type in ('in_invoice', 'in_refund') and
-                        self.invoice_id.reference):
-                    communication = self.invoice_id.reference
+                    self.move_id.type in ("in_invoice", "in_refund")
+                    and self.move_id.ref
+                ):
+                    communication = self.move_id.ref
+                elif "out" in self.move_id.type:
+                    # Force to only put invoice number here
+                    communication = self.move_id.name
         if self.currency_id:
             currency_id = self.currency_id.id
             amount_currency = self.amount_residual_currency
@@ -52,31 +75,25 @@ class AccountMoveLine(models.Model):
             amount_currency = self.amount_residual
             # TODO : check that self.amount_residual_currency is 0
             # in this case
-        if payment_order.payment_type == 'outbound':
+        if payment_order.payment_type == "outbound":
             amount_currency *= -1
-        partner_bank_id = False
-        if not self.partner_bank_id:
-            # Select partner bank account automatically if there is only one
-            if len(self.partner_id.bank_ids) == 1:
-                partner_bank_id = self.partner_id.bank_ids[0].id
-        else:
-            partner_bank_id = self.partner_bank_id.id
+        partner_bank_id = self.partner_bank_id.id or first(self.partner_id.bank_ids).id
         vals = {
-            'order_id': payment_order.id,
-            'partner_bank_id': partner_bank_id,
-            'partner_id': self.partner_id.id,
-            'move_line_id': self.id,
-            'communication': communication,
-            'communication_type': communication_type,
-            'currency_id': currency_id,
-            'amount_currency': amount_currency,
+            "order_id": payment_order.id,
+            "partner_bank_id": partner_bank_id,
+            "partner_id": self.partner_id.id,
+            "move_line_id": self.id,
+            "communication": communication,
+            "communication_type": communication_type,
+            "currency_id": currency_id,
+            "amount_currency": amount_currency,
+            "date": False,
             # date is set when the user confirms the payment order
-            }
+        }
         return vals
 
-    @api.multi
     def create_payment_line_from_move_line(self, payment_order):
-        aplo = self.env['account.payment.line']
+        vals_list = []
         for mline in self:
-            aplo.create(mline._prepare_payment_line_vals(payment_order))
-        return
+            vals_list.append(mline._prepare_payment_line_vals(payment_order))
+        return self.env["account.payment.line"].create(vals_list)
